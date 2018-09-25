@@ -24,7 +24,7 @@ TODO: Add long description of the pod here.
   s.homepage         = 'https://github.com/DiegoCaroli/Trimmer'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'DiegoCaroli' => 'diegocaroli+dtt@gmail.com' }
+  s.author           = { 'Diego Caroli' }
   s.source           = { :git => 'https://github.com/DiegoCaroli/Trimmer.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
