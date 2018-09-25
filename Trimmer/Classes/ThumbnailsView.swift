@@ -46,7 +46,7 @@ class ThumbnailsView: UIView {
     }
 
     /// Return the number of thumbnails that will be genearate
-    private var thumbnailsCount: Int {
+    open var thumbnailsCount: Int {
         var number = bounds.width / thumbnailSize.width
         number.round(.toNearestOrAwayFromZero)
         return Int(number)
