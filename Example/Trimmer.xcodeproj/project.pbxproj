@@ -30,7 +30,7 @@
 /* Begin PBXFileReference section */
 		156974D995EE9E9145CD2B03 /* Pods-Trimmer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trimmer_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trimmer_Tests/Pods-Trimmer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		16E8AD436EE9E8672FC1B593 /* Pods-Trimmer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trimmer_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trimmer_Example/Pods-Trimmer_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		4ECECFBAFDB4E1EA9D6D9DC7 /* Trimmer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = Trimmer.podspec; path = ../Trimmer.podspec; sourceTree = "<group>"; };
+		4ECECFBAFDB4E1EA9D6D9DC7 /* Trimmer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Trimmer.podspec; path = ../Trimmer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		607FACD01AFB9204008FA782 /* Trimmer_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trimmer_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,10 +42,10 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		74AA4616B3EEE1A05B8F321D /* Pods_Trimmer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trimmer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9FEDA555FC0DEBB8C270C116 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		9FEDA555FC0DEBB8C270C116 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C63CC20BDEC084B5B4DDF0C9 /* Pods-Trimmer_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trimmer_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trimmer_Tests/Pods-Trimmer_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		DB3BD8A72DD5DAC446A1C11C /* Pods-Trimmer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trimmer_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trimmer_Example/Pods-Trimmer_Example.release.xcconfig"; sourceTree = "<group>"; };
-		E7FCD56AA63231CF98F63155 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		E7FCD56AA63231CF98F63155 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		FD639CE613D8571A66FAF16D /* Pods_Trimmer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trimmer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 

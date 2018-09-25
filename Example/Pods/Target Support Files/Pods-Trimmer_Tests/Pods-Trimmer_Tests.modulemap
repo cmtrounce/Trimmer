@@ -1,0 +1,6 @@
+framework module Pods_Trimmer_Tests {
+  umbrella header "Pods-Trimmer_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

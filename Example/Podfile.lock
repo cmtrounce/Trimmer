@@ -1,0 +1,16 @@
+PODS:
+  - Trimmer (0.1.0)
+
+DEPENDENCIES:
+  - Trimmer (from `../`)
+
+EXTERNAL SOURCES:
+  Trimmer:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Trimmer: 44d4465e5d428e2b3f3c1af3e6c1845f75b05331
+
+PODFILE CHECKSUM: f0bf1fac349ae88dbf6bcb8450131a468169ac7d
+
+COCOAPODS: 1.5.3

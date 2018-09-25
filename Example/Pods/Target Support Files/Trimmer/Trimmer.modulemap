@@ -1,0 +1,6 @@
+framework module Trimmer {
+  umbrella header "Trimmer-umbrella.h"
+
+  export *
+  module * { export * }
+}

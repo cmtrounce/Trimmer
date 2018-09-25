@@ -1,0 +1,22 @@
+{
+  "name": "Trimmer",
+  "version": "0.1.0",
+  "summary": "A short description of Trimmer.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/DiegoCaroli/Trimmer",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "DiegoCaroli": "diegocaroli+dtt@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/DiegoCaroli/Trimmer.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "Trimmer/Classes/**/*"
+}
