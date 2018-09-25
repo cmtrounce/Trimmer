@@ -17,6 +17,8 @@
 		F18E33AE215A5E4C0092276D /* TrimmerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18E33AB215A5E4C0092276D /* TrimmerViewTests.swift */; };
 		F18E33AF215A5E4C0092276D /* ThumbnailsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18E33AC215A5E4C0092276D /* ThumbnailsViewTests.swift */; };
 		F18E33B0215A5E4C0092276D /* TrimmingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18E33AD215A5E4C0092276D /* TrimmingControllerTests.swift */; };
+		F1AA91B4215A65BA0062BCBB /* IMG_0065.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F1AA91B3215A65B90062BCBB /* IMG_0065.m4v */; };
+		F1AA91B5215A65C50062BCBB /* IMG_0065.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F1AA91B3215A65B90062BCBB /* IMG_0065.m4v */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,7 @@
 		F18E33AB215A5E4C0092276D /* TrimmerViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrimmerViewTests.swift; sourceTree = "<group>"; };
 		F18E33AC215A5E4C0092276D /* ThumbnailsViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailsViewTests.swift; sourceTree = "<group>"; };
 		F18E33AD215A5E4C0092276D /* TrimmingControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrimmingControllerTests.swift; sourceTree = "<group>"; };
+		F1AA91B3215A65B90062BCBB /* IMG_0065.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = IMG_0065.m4v; sourceTree = "<group>"; };
 		FD639CE613D8571A66FAF16D /* Pods_Trimmer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trimmer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -98,11 +101,12 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				F18E3391215A47D00092276D /* ViewController.swift */,
-				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				F1AA91B2215A65B90062BCBB /* Resources */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				F18E3391215A47D00092276D /* ViewController.swift */,
 			);
 			name = "Example for Trimmer";
 			path = Trimmer;
@@ -163,6 +167,14 @@
 				C63CC20BDEC084B5B4DDF0C9 /* Pods-Trimmer_Tests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F1AA91B2215A65B90062BCBB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F1AA91B3215A65B90062BCBB /* IMG_0065.m4v */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1AA91B4215A65BA0062BCBB /* IMG_0065.m4v in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
@@ -261,6 +274,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1AA91B5215A65C50062BCBB /* IMG_0065.m4v in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
