@@ -110,13 +110,20 @@ open class TrimmingController: NSObject {
 
 //MARK: TrimmerViewDelegate
 extension TrimmingController: TrimmerViewDelegate {
-    public func trimmerDidChangeDraggingPosition(
-        _ trimmer: TrimmerView,
-        with currentTimePointer: CMTime) {
+    
+    public func trimmerDidBeginDragging(_ trimmer: TrimmerView,
+                                        with currentTimeTrim: CMTime) {
+        
+        assert(currentTimeTrim.seconds >= 0)
         
         pause()
         playPauseButton.isHidden = true
-        
+    }
+    
+    public func trimmerDidChangeDraggingPosition(
+        _ trimmer: TrimmerView,
+        with currentTimePointer: CMTime) {
+
         assert(currentTimePointer.seconds >= 0)
         
         assert(currentTimePointer.seconds <= trimmerView.thumbnailsView.asset.duration.seconds)
@@ -134,6 +141,12 @@ extension TrimmingController: TrimmerViewDelegate {
         endTime: CMTime) {
         
         playPauseButton.isHidden = false
+        
+        let tolerance: CMTime = isTimePrecisionInfinity ? .indefinite : .zero
+        player?.seek(
+            to: startTime,
+            toleranceBefore: tolerance,
+            toleranceAfter: tolerance)
         
         assert(startTime.seconds >= 0)
         
