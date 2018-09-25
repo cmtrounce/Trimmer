@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'Trimmer'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of Trimmer.'
+  s.summary          = 'Trimmer lets a user to trim a video.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -31,6 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '11.0'
 
   s.source_files = 'Trimmer/Classes/**/*'
+  s.swift_version = '4.2'
   
   # s.resource_bundles = {
   #   'Trimmer' => ['Trimmer/Assets/*.png']
