@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'Trimmer_Example' do
+  pod 'Trimmer', :path => '../'
+
+  target 'Trimmer_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
