@@ -9,15 +9,15 @@
 import UIKit
 import AVFoundation
 
-class TrimmingController: NSObject {
+open class TrimmingController: NSObject {
     
     // MARK: IBInspectable
     /// Precision when the value is true show only the keyframe for optimization
-    @IBInspectable var isTimePrecisionInfinity: Bool = false
+    @IBInspectable open var isTimePrecisionInfinity: Bool = false
     
     // MARK: IBOutlets
-    @IBOutlet var playPauseButton: UIButton!
-    @IBOutlet var trimmerView: TrimmerView!{
+    @IBOutlet open var playPauseButton: UIButton!
+    @IBOutlet open var trimmerView: TrimmerView!{
         didSet {
             trimmerView.delegate = self
         }
@@ -32,7 +32,7 @@ class TrimmingController: NSObject {
 
     
     // MARK: IBActions
-    @IBAction func playPauseButtonPressed() {
+    @IBAction open func playPauseButtonPressed() {
         if !isPlaying {
             player?.play()
             startPlaybackTimeChecker()
@@ -47,7 +47,7 @@ class TrimmingController: NSObject {
     }
     
     // MARK: Methods
-    func setupPlayerLayer(for url: URL, with playerView: UIView) {
+    open func setupPlayerLayer(for url: URL, with playerView: UIView) {
         let playerLayer = AVPlayerLayer()
         playerLayer.frame = playerView.bounds
         player = AVPlayer(url: url)
@@ -57,7 +57,7 @@ class TrimmingController: NSObject {
         playerView.addSubview(playPauseButton)
     }
     
-    func generateThumbnails(for asset: AVAsset) {
+    open func generateThumbnails(for asset: AVAsset) {
         trimmerView.thumbnailsView.asset = asset
     }
     
@@ -110,7 +110,7 @@ class TrimmingController: NSObject {
 
 //MARK: TrimmerViewDelegate
 extension TrimmingController: TrimmerViewDelegate {
-    func trimmerDidChangeDraggingPosition(
+    public func trimmerDidChangeDraggingPosition(
         _ trimmer: TrimmerView,
         with currentTimePointer: CMTime) {
         
@@ -128,7 +128,7 @@ extension TrimmingController: TrimmerViewDelegate {
             toleranceAfter: tolerance)
     }
     
-    func trimmerDidEndDragging(
+    public func trimmerDidEndDragging(
         _ trimmer: TrimmerView,
         with startTime: CMTime,
         endTime: CMTime) {

@@ -10,7 +10,7 @@
 import UIKit
 import AVFoundation
 
-@objc protocol TrimmerViewDelegate: class {
+@objc public protocol TrimmerViewDelegate: class {
     @objc optional func trimmerDidBeginDragging(
         _ trimmer: TrimmerView,
         with currentTimeTrim: CMTime)
@@ -26,10 +26,10 @@ import AVFoundation
 }
 
 @IBDesignable
-class TrimmerView: UIView {
+open class TrimmerView: UIView {
     
     // MARK: IBInspectable
-    @IBInspectable var mainColor: UIColor = .orange {
+    @IBInspectable open var mainColor: UIColor = .orange {
         didSet {
             trimView.layer.borderColor = mainColor.cgColor
             leftDraggableView.backgroundColor = mainColor
@@ -37,20 +37,20 @@ class TrimmerView: UIView {
         }
     }
     
-    @IBInspectable var borderWidth: CGFloat = 2 {
+    @IBInspectable open var borderWidth: CGFloat = 2 {
         didSet {
             trimView.layer.borderWidth = borderWidth
         }
     }
     
-    @IBInspectable var alphaView: CGFloat = 0.7 {
+    @IBInspectable open var alphaView: CGFloat = 0.7 {
         didSet {
             leftMaskView.alpha = alphaView
             rightMaskView.alpha = alphaView
         }
     }
     
-    @IBInspectable var draggableViewWidth: CGFloat = 20 {
+    @IBInspectable open var draggableViewWidth: CGFloat = 20 {
         didSet {
             dimmingViewLeadingAnchor = thumbnailsView.leadingAnchor
                 .constraint(equalTo: leadingAnchor, constant: draggableViewWidth)
@@ -65,7 +65,7 @@ class TrimmerView: UIView {
         }
     }
     
-    @IBInspectable var timePointerViewWidth: CGFloat = 2 {
+    @IBInspectable open var timePointerViewWidth: CGFloat = 2 {
         didSet {
             timePointerViewWidthgAnchor = timePointerView.widthAnchor
                 .constraint(equalToConstant: timePointerViewWidth)
@@ -74,7 +74,7 @@ class TrimmerView: UIView {
         }
     }
     
-    @IBInspectable var leftImage: UIImage? = nil {
+    @IBInspectable open var leftImage: UIImage? = nil {
         didSet {
             leftImageView.image = leftImage
             leftImageViewCenterX = leftImageView.centerXAnchor
@@ -84,7 +84,7 @@ class TrimmerView: UIView {
         }
     }
     
-    @IBInspectable var rightImage: UIImage? = nil {
+    @IBInspectable open var rightImage: UIImage? = nil {
         didSet {
             rightImageView.image = rightImage
             rightImageViewCenterX = rightImageView.centerXAnchor
@@ -94,11 +94,11 @@ class TrimmerView: UIView {
         }
     }
     
-    @IBInspectable var minVideoDurationAfterTrimming: Double = 0
+    @IBInspectable open var minVideoDurationAfterTrimming: Double = 0
     
-    @IBInspectable var isTimePointerVisible: Bool = true
+    @IBInspectable open var isTimePointerVisible: Bool = true
     
-    weak var delegate: TrimmerViewDelegate?
+    open weak var delegate: TrimmerViewDelegate?
     
     //MARK: Views
     lazy var trimView: UIView = {
@@ -285,7 +285,7 @@ class TrimmerView: UIView {
         .constraint(equalTo: rightDraggableView.centerYAnchor)
     
     // MARK: View Life Cycle
-    override func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         
         setup()
