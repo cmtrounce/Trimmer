@@ -177,6 +177,7 @@ open class TrimmerView: UIView {
     
     var thumbnailsView: ThumbnailsView = {
         let thumbsView = ThumbnailsView()
+        thumbsView.frame = .zero
         thumbsView.translatesAutoresizingMaskIntoConstraints = false
         thumbsView.isUserInteractionEnabled = true
         return thumbsView
@@ -203,6 +204,14 @@ open class TrimmerView: UIView {
         let endPosition = rightDraggableView.frame.minX - thumbnailsView.frame.origin.x
         
         return thumbnailsView.getTime(from: endPosition)
+    }
+    
+    var thumbnailViewRect: CGRect {
+        return CGRect(
+            x: draggableViewWidth,
+            y: 0,
+            width: bounds.width - 2 * draggableViewWidth,
+            height: bounds.height)
     }
     
     // MARK: Constraints
@@ -289,6 +298,7 @@ open class TrimmerView: UIView {
         super.awakeFromNib()
         
         setup()
+        thumbnailsView.frame = thumbnailViewRect
         
         trimViewLeadingConstraint.priority = .defaultHigh
         trimViewTrailingConstraint.priority = .defaultHigh
