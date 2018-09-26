@@ -29,7 +29,9 @@ open class TrimmingController: NSObject {
     private var playbackTimeCheckerTimer: Timer?
     private var tolBefore: CMTime = CMTime.zero
     private var tolAfter: CMTime = CMTime.zero
-
+    private var tolerance: CMTime {
+        return isTimePrecisionInfinity ? .indefinite : .zero
+    }
     
     // MARK: IBActions
     @IBAction open func playPauseButtonPressed() {
@@ -128,7 +130,6 @@ extension TrimmingController: TrimmerViewDelegate {
         
         assert(currentTimePointer.seconds <= trimmerView.thumbnailsView.asset.duration.seconds)
         
-        let tolerance: CMTime = isTimePrecisionInfinity ? .indefinite : .zero
         player?.seek(
             to: currentTimePointer,
             toleranceBefore: tolerance,
@@ -142,7 +143,6 @@ extension TrimmingController: TrimmerViewDelegate {
         
         playPauseButton.isHidden = false
         
-        let tolerance: CMTime = isTimePrecisionInfinity ? .indefinite : .zero
         player?.seek(
             to: startTime,
             toleranceBefore: tolerance,
