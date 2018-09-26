@@ -7,22 +7,34 @@
 //
 
 import XCTest
+import AVFoundation
 @testable import Trimmer
 
 class TrimmingControllerTests: XCTestCase {
     
     var trimmingController: TrimmingController!
+    var bundle: Bundle!
+    var fileURL: URL!
+    var asset: AVAsset!
 
     override func setUp() {
         super.setUp()
         
         trimmingController = TrimmingController()
         trimmingController.trimmerView = TrimmerView()
+        trimmingController.trimmerView.thumbnailsView = ThumbnailsView()
         trimmingController.playPauseButton = UIButton()
+        
+        bundle = Bundle(for: type(of: self))
+        fileURL = bundle.url(forResource: "IMG_0065", withExtension: "m4v")
+        asset = AVAsset(url: fileURL)
     }
 
     override func tearDown() {
         trimmingController = nil
+        bundle = nil
+        fileURL = nil
+        asset = nil
         
         super.tearDown()
     }
@@ -40,6 +52,12 @@ class TrimmingControllerTests: XCTestCase {
         trimmingController.playPauseButtonPressed()
         trimmingController.playPauseButtonPressed()
         XCTAssertEqual(trimmingController.playPauseButton.currentTitle, "Play")
+    }
+    
+    func testGenerateAsset() {
+        trimmingController.trimmerView.thumbnailsView.asset = asset
+        XCTAssertGreaterThan(trimmingController.trimmerView.thumbnailsView.thumbnailsCount,
+                                       0)
     }
 
 }
