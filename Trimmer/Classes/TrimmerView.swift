@@ -277,7 +277,7 @@ open class TrimmerView: UIView {
     private lazy var timePointerViewWidthgAnchor = timePointerView.widthAnchor
         .constraint(equalToConstant: timePointerViewWidth)
     private lazy var timePointerViewHeightAnchor = timePointerView.heightAnchor
-        .constraint(equalToConstant: bounds.height - timePointerViewWidth * 2)
+        .constraint(equalToConstant: bounds.height - borderWidth * 2)
     private lazy var timePointerViewTopAnchor = timePointerView.topAnchor
         .constraint(equalTo: topAnchor, constant: borderWidth)
     private lazy var timePointerViewLeadingAnchor = timePointerView.leadingAnchor
