@@ -175,7 +175,7 @@ open class TrimmerView: UIView {
         return view
     }()
     
-    open var thumbnailsView: ThumbnailsView = {
+    var thumbnailsView: ThumbnailsView = {
         let thumbsView = ThumbnailsView()
         thumbsView.frame = .zero
         thumbsView.translatesAutoresizingMaskIntoConstraints = false
@@ -348,7 +348,6 @@ open class TrimmerView: UIView {
         
         thumbnailsView.frame = thumbnailViewRect
        
-        
     }
     
     // MARK: Setups views

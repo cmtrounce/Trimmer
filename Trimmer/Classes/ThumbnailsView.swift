@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-open class ThumbnailsView: UIView {
+class ThumbnailsView: UIView {
     
     // MARK: Properties
     private let thumbsStackView: UIStackView = {
@@ -24,8 +24,6 @@ open class ThumbnailsView: UIView {
             self.setNeedsLayout()
         }
     }
-    
-//    private var shouldRegenerateThumbnailsAfterLayout: Bool = false
     
     private lazy var assetImageGenerator: AVAssetImageGenerator = {
         let generator = AVAssetImageGenerator(asset: asset)
@@ -96,34 +94,27 @@ open class ThumbnailsView: UIView {
         setup()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     // MARK: View Life Cycle
-    override open func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         setup()
     }
     
-    open override func didMoveToSuperview() {
+    override func didMoveToSuperview() {
         super.didMoveToSuperview()
         self.setNeedsLayout()
     }
     
     
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         
         thumbsStackView.frame = bounds
         lastThumbnailsCount = currentThumbnailsCount
-        
-//        if shouldRegenerateThumbnailsAfterLayout {
-//            shouldRegenerateThumbnailsAfterLayout = false
-//
-//            regenerateThumbViews(count: currentThumbnailsCount)
-//            generateThumbnails()
-//        }
     }
     
     // MARK: Methods

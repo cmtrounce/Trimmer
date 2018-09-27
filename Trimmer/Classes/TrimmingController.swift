@@ -59,7 +59,7 @@ open class TrimmingController: NSObject {
         playerView.addSubview(playPauseButton)
     }
     
-    open func generateThumbnails(for asset: AVAsset) {
+    open func setup( asset: AVAsset) {
         trimmerView.thumbnailsView.asset = asset
     }
     
