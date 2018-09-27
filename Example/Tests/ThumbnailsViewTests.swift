@@ -51,7 +51,7 @@ class ThumbnailsViewTests: XCTestCase {
     }
     
     func testGenerateImageCountThumbnails() {
-        XCTAssertEqual(trimmerView.thumbnailsView.thumbnailsCount,
+        XCTAssertEqual(trimmerView.thumbnailsView.currentThumbnailsCount,
                        4)
         
     }

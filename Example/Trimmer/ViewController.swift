@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        trimmingController.generateThumbnails(for: asset)
+        trimmingController.trimmerView.thumbnailsView.asset = asset
         
     }
 

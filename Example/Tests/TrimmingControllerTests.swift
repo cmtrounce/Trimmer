@@ -56,7 +56,7 @@ class TrimmingControllerTests: XCTestCase {
     
     func testGenerateAsset() {
         trimmingController.trimmerView.thumbnailsView.asset = asset
-        XCTAssertGreaterThan(trimmingController.trimmerView.thumbnailsView.thumbnailsCount,
+        XCTAssertGreaterThan(trimmingController.trimmerView.thumbnailsView.currentThumbnailsCount,
                                        0)
     }
 

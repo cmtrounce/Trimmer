@@ -9,8 +9,8 @@
 import UIKit
 import AVFoundation
 
-class ThumbnailsView: UIView {
-
+open class ThumbnailsView: UIView {
+    
     // MARK: Properties
     private let thumbsStackView: UIStackView = {
         let stackView = UIStackView()
@@ -18,19 +18,42 @@ class ThumbnailsView: UIView {
         stackView.distribution = .fillEqually
         return stackView
     }()
-
-    var asset: AVAsset! {
+    
+    open var asset: AVAsset! {
         didSet {
-            thumbnailSize = getThumbnailSize(from: asset)
-            regenerateThumbViews(count: thumbnailsCount)
-            generateThumbnails()
+            self.setNeedsLayout()
         }
     }
-
-    private lazy var assetImageGenerator: AVAssetImageGenerator = setupAssetImageGenerator(with: asset)
     
-    private lazy var thumbnailSize: CGSize = getThumbnailSize(from: asset)
-
+//    private var shouldRegenerateThumbnailsAfterLayout: Bool = false
+    
+    private lazy var assetImageGenerator: AVAssetImageGenerator = {
+        let generator = AVAssetImageGenerator(asset: asset)
+        generator.appliesPreferredTrackTransform = true
+        generator.requestedTimeToleranceAfter = CMTime.zero
+        generator.requestedTimeToleranceBefore = CMTime.zero
+        generator.maximumSize = thumbnailSize
+        return generator
+    }()
+    
+    private lazy var thumbnailSize: CGSize = {
+        guard let track = asset.tracks(withMediaType: AVMediaType.video).first
+            else { fatalError() }
+        
+        let targetSize = bounds.size
+        let assetSize = track.naturalSize.applying(track.preferredTransform)
+        
+        assert(targetSize.width > 0)
+        assert(targetSize.height > 0)
+        
+        let aspectWidth = targetSize.width / assetSize.width
+        let aspectHeight = targetSize.height / assetSize.height
+        let aspectRatio = min(aspectWidth, aspectHeight)
+        
+        return CGSize(width: assetSize.width * aspectRatio,
+                      height: assetSize.height * aspectRatio)
+    }()
+    
     private var totalTimeLength: Int {
         return Int(videoDuration.seconds * Double(videoDuration.timescale))
     }
@@ -39,102 +62,100 @@ class ThumbnailsView: UIView {
     var videoDuration: CMTime {
         return asset.duration
     }
-
+    
     /// Return the width size that contains the thumbnails
     var durationSize: CGFloat {
         return bounds.width
     }
-
+    
     /// Return the number of thumbnails that will be genearate
-    open var thumbnailsCount: Int {
+    open var currentThumbnailsCount: Int {
+        guard asset != nil else { return 0 }
         var number = bounds.width / thumbnailSize.width
         number.round(.toNearestOrAwayFromZero)
         return Int(number)
     }
-
+    
+    var lastThumbnailsCount: Int = 0 {
+        didSet {
+            if lastThumbnailsCount != oldValue {
+                regenerateThumbViews(count: lastThumbnailsCount)
+                generateThumbnails()
+            }
+        }
+    }
+    
     /// Return the length of each step of the video
     private var videoStep: Int {
-        return totalTimeLength / thumbnailsCount
+        return totalTimeLength / currentThumbnailsCount
     }
-
+    
     // MARK: Inits
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-
-    required init?(coder aDecoder: NSCoder) {
+    
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     // MARK: View Life Cycle
-    override func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         setup()
     }
-
-    override func layoutSubviews() {
+    
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        self.setNeedsLayout()
+    }
+    
+    
+    override open func layoutSubviews() {
         super.layoutSubviews()
-
+        
         thumbsStackView.frame = bounds
+        lastThumbnailsCount = currentThumbnailsCount
+        
+//        if shouldRegenerateThumbnailsAfterLayout {
+//            shouldRegenerateThumbnailsAfterLayout = false
+//
+//            regenerateThumbViews(count: currentThumbnailsCount)
+//            generateThumbnails()
+//        }
     }
     
     // MARK: Methods
     private func setup() {
         addSubview(thumbsStackView)
     }
-
-    private func setupAssetImageGenerator(with asset: AVAsset) -> AVAssetImageGenerator {
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        generator.requestedTimeToleranceAfter = CMTime.zero
-        generator.requestedTimeToleranceBefore = CMTime.zero
-        generator.maximumSize = getThumbnailSize(from: asset)
-        return generator
-    }
-
-    /// Return the size of the thumbnail
-    private func getThumbnailSize(from asset: AVAsset) -> CGSize {
-        guard let track = asset.tracks(withMediaType: AVMediaType.video).first
-            else { fatalError() }
-        let assetSize = track.naturalSize.applying(track.preferredTransform)
-
-        assert(bounds.width > 0)
-        assert(bounds.height > 0)
-        
-        let aspetWidth = bounds.width / assetSize.width
-        let aspetHeight = bounds.height / assetSize.height
-        let ascpectRatio = min(aspetWidth, aspetHeight)
-
-        return CGSize(width: assetSize.width * ascpectRatio,
-                      height: assetSize.height * ascpectRatio)
-    }
-
+    
     /// Generate the thumbnail for each image view
     private func generateThumbnails() {
         assetImageGenerator.cancelAllCGImageGeneration()
-
-        let frameForTimes: [NSValue] = (0..<thumbnailsCount).map {
+        
+        let frameForTimes: [NSValue] = (0..<currentThumbnailsCount).map {
             let cmTime = CMTime(value: Int64($0 * videoStep),
                                 timescale: Int32(videoDuration.timescale))
             return NSValue(time: cmTime)
         }
-
+        
         assert(frameForTimes.count == thumbsStackView.arrangedSubviews.count)
         
         DispatchQueue.global(qos: .userInitiated).async { [assetImageGenerator] in
             var index = 0
             
             assetImageGenerator.generateCGImagesAsynchronously(
-                forTimes: frameForTimes) { (time, image, _, _, error) in
-                    
+            forTimes: frameForTimes) { (time, image, _, _, error) in
+                
                 guard error == nil else {
                     print("\nError = \(error!)\n")
                     return
                 }
                 
                 guard let image = image else { return }
-                    
+                
                 DispatchQueue.main.async { [weak self] in
                     guard let imageViews = self?.thumbsStackView
                         .arrangedSubviews as? [UIImageView] else { return }
@@ -144,36 +165,32 @@ class ThumbnailsView: UIView {
             }
         }
     }
-
+    
     /// Return the video time from a position of a view
     func getTime(from position: CGFloat) -> CMTime? {
-        guard let asset = asset else { return nil }
-
         let normalizedRatio = getNormalizedPosition(from: position)
-
+        
         let positionTimeValue = Double(normalizedRatio)
             * Double(asset.duration.value)
-
+        
         return CMTime(
             value: Int64(positionTimeValue),
             timescale: asset.duration.timescale)
     }
-
+    
     /// Normalized time
     func getNormalizedTime(from time: CMTime) -> CGFloat? {
-        guard let asset = asset else { return nil }
-
         let result = CGFloat(time.seconds / asset.duration.seconds)
         assert(result < 1.05)
         return result
     }
-
+    
     /// Return the the position of a view from the video time
     func getPosition(from time: CMTime) -> CGFloat? {
         return getNormalizedTime(from: time)
             .map { $0 * durationSize }
     }
-
+    
     /// Normalized position
     func getNormalizedPosition(from position: CGFloat) -> CGFloat {
         return max(min(1, position / durationSize), 0)

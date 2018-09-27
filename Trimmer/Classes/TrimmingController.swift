@@ -128,7 +128,7 @@ extension TrimmingController: TrimmerViewDelegate {
 
         assert(currentTimePointer.seconds >= 0)
         
-        assert(currentTimePointer.seconds <= trimmerView.thumbnailsView.asset.duration.seconds)
+//        assert(currentTimePointer.seconds <= trimmerView.thumbnailsView.asset.duration.seconds)
         
         player?.seek(
             to: currentTimePointer,

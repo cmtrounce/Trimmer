@@ -1,7 +1,7 @@
 {
   "name": "Trimmer",
-  "version": "0.1.0",
-  "summary": "A short description of Trimmer.",
+  "version": "0.1.2",
+  "summary": "Trimmer lets a user to trim a video.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/DiegoCaroli/Trimmer",
   "license": {
@@ -9,14 +9,15 @@
     "file": "LICENSE"
   },
   "authors": {
-    "DiegoCaroli": "diegocaroli+dtt@gmail.com"
+    "Diego Caroli": "d_caroli@icloud.com"
   },
   "source": {
     "git": "https://github.com/DiegoCaroli/Trimmer.git",
-    "tag": "0.1.0"
+    "tag": "0.1.2"
   },
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "Trimmer/Classes/**/*"
+  "source_files": "Trimmer/Classes/**/*",
+  "swift_version": "4.2"
 }

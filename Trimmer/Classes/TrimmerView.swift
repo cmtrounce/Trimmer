@@ -175,7 +175,7 @@ open class TrimmerView: UIView {
         return view
     }()
     
-    var thumbnailsView: ThumbnailsView = {
+    open var thumbnailsView: ThumbnailsView = {
         let thumbsView = ThumbnailsView()
         thumbsView.frame = .zero
         thumbsView.translatesAutoresizingMaskIntoConstraints = false
@@ -298,7 +298,6 @@ open class TrimmerView: UIView {
         super.awakeFromNib()
         
         setup()
-        thumbnailsView.frame = thumbnailViewRect
         
         trimViewLeadingConstraint.priority = .defaultHigh
         trimViewTrailingConstraint.priority = .defaultHigh
@@ -342,6 +341,14 @@ open class TrimmerView: UIView {
             rightImageViewCenterX,
             rightImageViewCenterY
             ])
+    }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        thumbnailsView.frame = thumbnailViewRect
+       
+        
     }
     
     // MARK: Setups views
