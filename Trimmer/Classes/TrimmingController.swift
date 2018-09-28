@@ -157,29 +157,30 @@ extension TrimmingController: TrimmerViewDelegate {
         assert(endTime.seconds <= trimmerView.thumbnailsView.asset.duration.seconds)
     }
     
-    public func trimmerDidBeginScrabbing(_ trimmer: TrimmerView,
-                                         with currentTimeTrim: CMTime) {
-        playPauseButton.isHidden = true
-        player?.seek(
-            to: currentTimeTrim,
-            toleranceBefore: tolerance,
-            toleranceAfter: tolerance)
-        trimmerView.seek(to: currentTimeTrim)
-        
-        assert(currentTimeTrim.seconds >= 0)
-    }
-    
-    public func trimmerDidEndScrabbing(_ trimmer: TrimmerView,
-                                       with currentTimeTrim: CMTime) {
-        playPauseButton.isHidden = false
-        
-        player?.seek(
-            to: currentTimeTrim,
-            toleranceBefore: tolerance,
-            toleranceAfter: tolerance)
-        
-        assert(currentTimeTrim.seconds >= 0)
-    }
+    //FIXME: Add the delegate scrubbing 
+//    public func trimmerDidBeginScrabbing(_ trimmer: TrimmerView,
+//                                         with currentTimeTrim: CMTime) {
+//        playPauseButton.isHidden = true
+//        player?.seek(
+//            to: currentTimeTrim,
+//            toleranceBefore: tolerance,
+//            toleranceAfter: tolerance)
+//        trimmerView.seek(to: currentTimeTrim)
+//
+//        assert(currentTimeTrim.seconds >= 0)
+//    }
+//
+//    public func trimmerDidEndScrabbing(_ trimmer: TrimmerView,
+//                                       with currentTimeTrim: CMTime) {
+//        playPauseButton.isHidden = false
+//
+//        player?.seek(
+//            to: currentTimeTrim,
+//            toleranceBefore: tolerance,
+//            toleranceAfter: tolerance)
+//
+//        assert(currentTimeTrim.seconds >= 0)
+//    }
     
 }
 

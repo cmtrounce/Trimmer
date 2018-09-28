@@ -24,11 +24,11 @@ import AVFoundation
         with startTime: CMTime,
         endTime: CMTime)
     
-    @objc optional func trimmerDidBeginScrabbing(
+    @objc optional func trimmerScrubbingDidBegin(
         _ trimmer: TrimmerView,
         with currentTimeT: CMTime)
     
-    @objc optional func trimmerDidEndScrabbing(
+    @objc optional func trimmerScrubbingDidEnd(
         _ trimmer: TrimmerView,
         with currentTimeTrim: CMTime)
 }
@@ -482,24 +482,17 @@ open class TrimmerView: UIView {
         sender.setTranslation(.zero, in: view)
         let position = sender.location(in: view)
         
-        print("View frame = \(view.frame)")
-        print("Position = \(position)")
-        print("Translation = \(translation)")
-        print("Constraint constant = \(timePointerViewLeadingAnchor.constant)\n")
-        
         switch sender.state {
         case .began:
-            print("Start 🔴🔴🔴")
             currentPointerLeadingConstraint = position.x + view.frame.minX - draggableViewWidth
         case .changed:
              currentPointerLeadingConstraint += translation.x
              let time = thumbnailsView.getTime(from: currentPointerLeadingConstraint)!
-             delegate?.trimmerDidBeginScrabbing!(self,
+             delegate?.trimmerScrubbingDidBegin!(self,
                                                  with: time)
         case .failed, .ended, .cancelled:
-            print("end")
-//            delegate?.trimmerDidEndScrabbing?(self,
-//                                             with: currentPointerTime!)
+            delegate?.trimmerScrubbingDidEnd?(self,
+                                             with: currentPointerTime!)
         default:
             break
         }
