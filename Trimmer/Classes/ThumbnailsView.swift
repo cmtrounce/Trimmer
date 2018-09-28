@@ -30,6 +30,7 @@ class ThumbnailsView: UIView {
         generator.appliesPreferredTrackTransform = true
         generator.requestedTimeToleranceAfter = CMTime.zero
         generator.requestedTimeToleranceBefore = CMTime.zero
+        generator.appliesPreferredTrackTransform = true
         
         let scale = UIScreen.main.nativeScale
         let generatorSize = CGSize(
@@ -46,23 +47,16 @@ class ThumbnailsView: UIView {
             else { fatalError() }
         
         let targetSize = bounds.size
-        let assetSize = track.naturalSize
+        let assetSize = track.naturalSize.applying(track.preferredTransform)
         
         assert(targetSize.width > 0)
         assert(targetSize.height > 0)
         
-        let aspectWidth = targetSize.width / assetSize.width
-        let aspectHeight = targetSize.height / assetSize.height
-        let aspectRatio = min(aspectWidth, aspectHeight)
+        let scaleFactor = targetSize.height / assetSize.height
+        let newWidth = assetSize.width * scaleFactor
         
-        if assetSize.height > assetSize.width {
-            return CGSize(width: assetSize.width * aspectRatio,
-                          height: assetSize.height * aspectRatio)
-        } else {
-            return CGSize(width: assetSize.height * aspectRatio,
-                          height: assetSize.width * aspectRatio)
-        }
-        
+        return CGSize(width: newWidth,
+                      height: assetSize.height)
     }()
     
     private var totalTimeLength: Int {

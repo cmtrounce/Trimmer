@@ -488,11 +488,12 @@ open class TrimmerView: UIView {
         case .changed:
              currentPointerLeadingConstraint += translation.x
              let time = thumbnailsView.getTime(from: currentPointerLeadingConstraint)!
-             delegate?.trimmerScrubbingDidBegin!(self,
-                                                 with: time)
+//             delegate?.trimmerScrubbingDidBegin!(self,
+//                                                 with: time)
         case .failed, .ended, .cancelled:
-            delegate?.trimmerScrubbingDidEnd?(self,
-                                             with: currentPointerTime!)
+            print("end")
+//            delegate?.trimmerScrubbingDidEnd?(self,
+//                                             with: currentPointerTime!)
         default:
             break
         }
@@ -549,9 +550,6 @@ open class TrimmerView: UIView {
         let offsetPosition = thumbnailsView
             .convert(CGPoint(x: newPosition, y: 0), to: trimView)
             .x - draggableViewWidth
-        
-        //        let offsetPosition = newPosition
-        //            - leftDraggableView.frame.maxX
         
         let maxPosition = rightDraggableView.frame.minX
             - leftDraggableView.frame.maxX
