@@ -30,6 +30,14 @@ class ThumbnailsView: UIView {
         generator.appliesPreferredTrackTransform = true
         generator.requestedTimeToleranceAfter = CMTime.zero
         generator.requestedTimeToleranceBefore = CMTime.zero
+        
+        let scale = UIScreen.main.nativeScale
+        let generatorSize = CGSize(
+            width: thumbnailSize.width * scale,
+            height: thumbnailSize.height * scale)
+        
+        generator.maximumSize = generatorSize
+        
         return generator
     }()
     
