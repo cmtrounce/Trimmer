@@ -23,6 +23,10 @@ import AVFoundation
         _ trimmer: TrimmerView,
         with startTime: CMTime,
         endTime: CMTime)
+    
+    @objc optional func trimmerDidBeginScrabbing(
+        _ trimmer: TrimmerView,
+        with currentTimeTrim: CMTime)
 }
 
 @IBDesignable
@@ -401,6 +405,11 @@ open class TrimmerView: UIView {
             target: self,
             action: #selector(handlePan))
         rightDraggableView.addGestureRecognizer(rightPanGesture)
+        
+        let thumbsPanGesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(handleScrabbingPan))
+        trimView.addGestureRecognizer(thumbsPanGesture)
     }
     
     @objc func handlePan(_ sender: UIPanGestureRecognizer) {
@@ -454,6 +463,16 @@ open class TrimmerView: UIView {
         default:
             break
         }
+    }
+    
+    @objc func handleScrabbingPan(_ sender: UIPanGestureRecognizer) {
+        guard let view = sender.view else { return }
+         let translation = sender.translation(in: view)
+        
+        let time = thumbnailsView.getTime(from: translation.x)!
+
+        delegate?.trimmerDidBeginScrabbing!(self,
+                                           with: time)
     }
     
     //MARK: Methods
