@@ -39,7 +39,7 @@ class ThumbnailsView: UIView {
             else { fatalError() }
         
         let targetSize = bounds.size
-        let assetSize = track.naturalSize.applying(track.preferredTransform)
+        let assetSize = track.naturalSize
         
         assert(targetSize.width > 0)
         assert(targetSize.height > 0)
@@ -48,8 +48,8 @@ class ThumbnailsView: UIView {
         let aspectHeight = targetSize.height / assetSize.height
         let aspectRatio = min(aspectWidth, aspectHeight)
         
-        return CGSize(width: assetSize.width * aspectRatio,
-                      height: assetSize.height * aspectRatio)
+        return CGSize(width: assetSize.height * aspectRatio,
+                      height: assetSize.width * aspectRatio)
     }()
     
     private var totalTimeLength: Int {
