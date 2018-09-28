@@ -169,5 +169,17 @@ extension TrimmingController: TrimmerViewDelegate {
         assert(currentTimeTrim.seconds >= 0)
     }
     
+    public func trimmerDidEndScrabbing(_ trimmer: TrimmerView,
+                                       with currentTimeTrim: CMTime) {
+        playPauseButton.isHidden = false
+        
+        player?.seek(
+            to: currentTimeTrim,
+            toleranceBefore: tolerance,
+            toleranceAfter: tolerance)
+        
+        assert(currentTimeTrim.seconds >= 0)
+    }
+    
 }
 
