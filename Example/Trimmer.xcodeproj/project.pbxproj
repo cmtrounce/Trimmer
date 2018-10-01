@@ -230,12 +230,10 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = G8TLTA9GAD;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = G8TLTA9GAD;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -507,7 +505,7 @@
 			baseConfigurationReference = 16E8AD436EE9E8672FC1B593 /* Pods-Trimmer_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = G8TLTA9GAD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Trimmer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -523,7 +521,7 @@
 			baseConfigurationReference = DB3BD8A72DD5DAC446A1C11C /* Pods-Trimmer_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = G8TLTA9GAD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Trimmer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -538,7 +536,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 156974D995EE9E9145CD2B03 /* Pods-Trimmer_Tests.debug.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = G8TLTA9GAD;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -561,7 +559,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C63CC20BDEC084B5B4DDF0C9 /* Pods-Trimmer_Tests.release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = G8TLTA9GAD;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
