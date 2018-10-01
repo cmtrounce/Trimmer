@@ -49,13 +49,10 @@ open class TrimmingController: NSObject {
     }
     
     // MARK: Methods
-    open func setupPlayerLayer(for url: URL, with playerView: UIView) {
-        let playerLayer = AVPlayerLayer()
-        playerLayer.frame = playerView.bounds
+    open func setupPlayerLayer(for url: URL, with playerView: VideoPreviewView) {
         player = AVPlayer(url: url)
-        
-        playerLayer.player = player
-        playerView.layer.addSublayer(playerLayer)
+
+        playerView.setPlayer(player!)
         playerView.addSubview(playPauseButton)
     }
     
