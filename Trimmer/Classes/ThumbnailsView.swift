@@ -78,7 +78,7 @@ class ThumbnailsView: UIView {
         guard asset != nil else { return 0 }
         var number = bounds.width / thumbnailSize.width
         number.round(.toNearestOrAwayFromZero)
-        return Int(number)
+        return abs(Int(number))
     }
     
     var lastThumbnailsCount: Int = 0 {
