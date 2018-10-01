@@ -26,11 +26,15 @@ import AVFoundation
     
     @objc optional func trimmerScrubbingDidBegin(
         _ trimmer: TrimmerView,
-        with currentTimeT: CMTime)
+        with currentTimeScrub: CMTime)
+    
+    @objc optional func trimmerScrubbingDidChange(
+        _ trimmer: TrimmerView,
+        with currentTimeScrub: CMTime)
     
     @objc optional func trimmerScrubbingDidEnd(
         _ trimmer: TrimmerView,
-        with currentTimeTrim: CMTime)
+        with currentTimeScrub: CMTime)
 }
 
 @IBDesignable
@@ -213,12 +217,12 @@ open class TrimmerView: UIView {
         
         return thumbnailsView.getTime(from: endPosition)
     }
-    
-    var currentPointerTime: CMTime? {
-        let startPosition = timePointerView.frame.maxX - thumbnailsView.frame.origin.x
-        
-        return thumbnailsView.getTime(from: startPosition)
-    }
+//
+//    var currentPointerTime: CMTime? {
+//        let startPosition = timePointerView.frame.maxX - thumbnailsView.frame.origin.x
+//
+//        return thumbnailsView.getTime(from: startPosition)
+//    }
     
     var thumbnailViewRect: CGRect {
         return CGRect(
@@ -419,7 +423,7 @@ open class TrimmerView: UIView {
         
         let thumbsPanGesture = UIPanGestureRecognizer(
             target: self,
-            action: #selector(handleScrabbingPan))
+            action: #selector(handleScrubbingPan))
         trimView.addGestureRecognizer(thumbsPanGesture)
     }
     
@@ -476,7 +480,7 @@ open class TrimmerView: UIView {
         }
     }
     
-    @objc func handleScrabbingPan(_ sender: UIPanGestureRecognizer) {
+    @objc func handleScrubbingPan(_ sender: UIPanGestureRecognizer) {
         guard let view = sender.view else { return }
         let translation = sender.translation(in: view)
         sender.setTranslation(.zero, in: view)
@@ -485,23 +489,26 @@ open class TrimmerView: UIView {
         switch sender.state {
         case .began:
             currentPointerLeadingConstraint = position.x + view.frame.minX - draggableViewWidth
+            
+            guard let time = thumbnailsView.getTime(
+                from: currentPointerLeadingConstraint) else { return }
+            delegate?.trimmerScrubbingDidBegin?(self,
+                                                with: time)
+            
         case .changed:
              currentPointerLeadingConstraint += translation.x
-             let time = thumbnailsView.getTime(from: currentPointerLeadingConstraint)!
-//             delegate?.trimmerScrubbingDidBegin!(self,
-//                                                 with: time)
+             guard let time = thumbnailsView.getTime(
+                from: currentPointerLeadingConstraint) else { return }
+             delegate?.trimmerScrubbingDidChange?(self,
+                                                 with: time)
         case .failed, .ended, .cancelled:
-            print("end")
-//            delegate?.trimmerScrubbingDidEnd?(self,
-//                                             with: currentPointerTime!)
+            guard let time = thumbnailsView.getTime(
+                from: currentPointerLeadingConstraint) else { return }
+            delegate?.trimmerScrubbingDidEnd?(self,
+                                             with: time)
         default:
             break
         }
-
-//        // FIXME: This delegate method should NOT be called every frame
-//        let time = thumbnailsView.getTime(from: translation.x)!
-//        delegate?.trimmerDidBeginScrabbing!(self,
-//                                           with: time)
     }
     
     //MARK: Methods
