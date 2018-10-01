@@ -11,7 +11,6 @@
 		0C41178EA809FD2FDD6ED2E617D9242A /* Pods-Trimmer_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 824065A6CE53076A8288149E7B04345F /* Pods-Trimmer_Tests-dummy.m */; };
 		252D1BE99BBBB9B1F0B698C8012D8FDC /* Pods-Trimmer_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 931DA35911F3E3D202B63E8C37CAD5A8 /* Pods-Trimmer_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D0E860884B95A1791217FE728C4CD9B /* Pods-Trimmer_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A54919135871A52D6033FD479800F099 /* Pods-Trimmer_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		35EEE5DE21620B2F00783154 /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EEE5DC21620B1F00783154 /* VideoPreviewView.swift */; };
 		8BFFCFF07436AD649247B671AF73A633 /* ThumbnailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A9FA07B90366F3862D11C5E9A5F4D /* ThumbnailsView.swift */; };
 		93D1213121AEA96924FEC9D89E4448D9 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C9EDFB75F54558F25A1503EF6681AA /* DraggableView.swift */; };
 		AC066183084679D624837D9EE4539643 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
@@ -20,6 +19,7 @@
 		C1535BA275D5F0A28B6901F0A3539DEE /* Trimmer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ED494865D9162F2DE0D6BED3A86726E7 /* Trimmer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E710B065226C696173D311B1D65FA5A6 /* Trimmer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AF609F7E909E37173B25D16BCBF6F /* Trimmer-dummy.m */; };
 		EFDE55C1F76A9987FD5C6DCB13E6C46D /* TrimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F2D88D4724E909BDFF9D8E77B37066 /* TrimmerView.swift */; };
+		F10FB49521620FDE00211E8C /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FB49421620FDE00211E8C /* VideoPreviewView.swift */; };
 		FB3174824715FBDDDC47B9B9FB52845E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +54,6 @@
 		21F8AA812370F4A9B617A3E97E3D52BF /* Pods-Trimmer_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Trimmer_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		335ABA6D2981E2C78506D8949777F86E /* Pods-Trimmer_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Trimmer_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		342516D357B7145E7EF7338B16603FB0 /* Pods-Trimmer_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Trimmer_Example-dummy.m"; sourceTree = "<group>"; };
-		35EEE5DC21620B1F00783154 /* VideoPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPreviewView.swift; path = Trimmer/Classes/VideoPreviewView.swift; sourceTree = "<group>"; };
 		4130D6EB882B203645E8BEA855EF7F64 /* Pods-Trimmer_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Trimmer_Tests-resources.sh"; sourceTree = "<group>"; };
 		4DF14515DB679EA534D0F41AA32082CD /* Pods-Trimmer_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Trimmer_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		52C9EDFB75F54558F25A1503EF6681AA /* DraggableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DraggableView.swift; path = Trimmer/Classes/DraggableView.swift; sourceTree = "<group>"; };
@@ -78,6 +77,7 @@
 		C27CBBE9C2A2B687FB4814D45704787C /* Trimmer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Trimmer-prefix.pch"; sourceTree = "<group>"; };
 		C7CB5982590E932F2AD01908E00462EE /* Pods-Trimmer_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Trimmer_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		ED494865D9162F2DE0D6BED3A86726E7 /* Trimmer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Trimmer-umbrella.h"; sourceTree = "<group>"; };
+		F10FB49421620FDE00211E8C /* VideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewView.swift; sourceTree = "<group>"; };
 		F124EECC31A3FE281FC5611151FA7A5E /* Pods_Trimmer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trimmer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFA3F4BDE9F97217944129F98C1498FC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -193,7 +193,7 @@
 		B74A272374B3BAFE82E80671085FA05E /* Trimmer */ = {
 			isa = PBXGroup;
 			children = (
-				35EEE5DC21620B1F00783154 /* VideoPreviewView.swift */,
+				F10FB49421620FDE00211E8C /* VideoPreviewView.swift */,
 				52C9EDFB75F54558F25A1503EF6681AA /* DraggableView.swift */,
 				921A9FA07B90366F3862D11C5E9A5F4D /* ThumbnailsView.swift */,
 				17F2D88D4724E909BDFF9D8E77B37066 /* TrimmerView.swift */,
@@ -390,7 +390,6 @@
 				93D1213121AEA96924FEC9D89E4448D9 /* DraggableView.swift in Sources */,
 				8BFFCFF07436AD649247B671AF73A633 /* ThumbnailsView.swift in Sources */,
 				E710B065226C696173D311B1D65FA5A6 /* Trimmer-dummy.m in Sources */,
-				35EEE5DE21620B2F00783154 /* VideoPreviewView.swift in Sources */,
 				EFDE55C1F76A9987FD5C6DCB13E6C46D /* TrimmerView.swift in Sources */,
 				0C2709C4CB3A2FC187C9681C6B69774C /* TrimmingController.swift in Sources */,
 			);
@@ -401,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B40B836AC649E52F0D29976CD388B3B4 /* Pods-Trimmer_Example-dummy.m in Sources */,
+				F10FB49521620FDE00211E8C /* VideoPreviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
