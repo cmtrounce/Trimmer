@@ -13,7 +13,7 @@ import Trimmer
 class ViewController: UIViewController {
 
     // MARK: IBOutlets
-    @IBOutlet var playerView: UIView!
+    @IBOutlet var playerView: VideoPreviewView!
     @IBOutlet var trimmingController: TrimmingController!
     
     
