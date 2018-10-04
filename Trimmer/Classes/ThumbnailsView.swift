@@ -197,7 +197,10 @@ class ThumbnailsView: UIView {
     /// Delete the old thumbnails
     func regenerateThumbViews(count: Int) {
         thumbsStackView.arrangedSubviews
-            .forEach(thumbsStackView.removeArrangedSubview)
+            .forEach { view in
+                thumbsStackView.removeArrangedSubview(view)
+                view.removeFromSuperview()
+        }
         
         (0..<count).map { _ in
             let imageView = UIImageView()
