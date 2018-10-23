@@ -12,7 +12,7 @@ import AVFoundation
 open class TrimmingController: NSObject {
     
     // MARK: IBInspectable
-    /// Precision when the value is true show only the keyframe for optimization
+    /// This boolean changes the update frequency of the preview view while scrubbing. If `false`, the scrubbing will only show the frames indicated as "keyframes" (depending on the file codec), if `true`, it will show every frame, at expense of a higher power consumption and worse performance.
     @IBInspectable open var isTimePrecisionInfinity: Bool = false
     
     // MARK: IBOutlets
@@ -22,8 +22,12 @@ open class TrimmingController: NSObject {
             trimmerView.delegate = self
         }
     }
-    
-    // MARK: Properties
+
+    // MARK: Public properties
+    private(set) var currentStartTime: CMTime? = nil
+    private(set) var currentEndTime: CMTime? = nil
+
+    // MARK: Private properties
     private var player: AVPlayer?
     private var isPlaying = false
     private var playbackTimeCheckerTimer: Timer?
@@ -52,11 +56,18 @@ open class TrimmingController: NSObject {
     open func setupPlayerLayer(for url: URL, with playerView: VideoPreviewView) {
         player = AVPlayer(url: url)
 
+        self.currentStartTime = CMTime.zero
+        self.currentEndTime = player?.currentItem?.duration
+
         playerView.setPlayer(player!)
         playerView.addSubview(playPauseButton)
     }
     
     open func setup( asset: AVAsset) {
+
+        self.currentStartTime = CMTime.zero
+        self.currentEndTime = asset.duration
+
         trimmerView.thumbnailsView.asset = asset
     }
     
@@ -124,9 +135,7 @@ extension TrimmingController: TrimmerViewDelegate {
         with currentTimePointer: CMTime) {
 
         assert(currentTimePointer.seconds >= 0)
-        
-//        assert(currentTimePointer.seconds <= trimmerView.thumbnailsView.asset.duration.seconds)
-        
+
         player?.seek(
             to: currentTimePointer,
             toleranceBefore: tolerance,
@@ -152,6 +161,9 @@ extension TrimmingController: TrimmerViewDelegate {
         assert(endTime.seconds >= 0)
         
         assert(endTime.seconds <= trimmerView.thumbnailsView.asset.duration.seconds)
+
+        self.currentStartTime = startTime
+        self.currentEndTime = endTime
     }
     
     public func trimmerScrubbingDidBegin(_ trimmer: TrimmerView,
