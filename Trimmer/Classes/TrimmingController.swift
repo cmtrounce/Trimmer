@@ -24,8 +24,8 @@ open class TrimmingController: NSObject {
     }
 
     // MARK: Public properties
-    private(set) var currentStartTime: CMTime? = nil
-    private(set) var currentEndTime: CMTime? = nil
+    public private(set) var currentStartTime: CMTime? = nil
+    public private(set) var currentEndTime: CMTime? = nil
 
     // MARK: Private properties
     private var player: AVPlayer?
