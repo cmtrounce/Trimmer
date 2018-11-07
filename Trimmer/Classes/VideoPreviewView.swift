@@ -29,6 +29,5 @@ open class VideoPreviewView: UIView {
     
     open func setPlayer(_ avPlayer: AVPlayer) {
         self.playerLayer.player = avPlayer
-        self.playerLayer.videoGravity = .resizeAspectFill
     }
 }
