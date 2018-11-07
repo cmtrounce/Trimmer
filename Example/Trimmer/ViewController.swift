@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         playerView.backgroundColor = UIColor.clear
         
         guard let path = Bundle(for: ViewController.self)
-            .path(forResource: "IMG_0065", ofType: "m4v")
+            .path(forResource: "frame", ofType: "mov")
             else { fatalError("impossible load video") }
 
         let fileURL = URL(fileURLWithPath: path, isDirectory: false)
