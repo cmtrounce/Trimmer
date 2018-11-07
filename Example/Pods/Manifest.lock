@@ -1,5 +1,5 @@
 PODS:
-  - Trimmer (0.1.9)
+  - Trimmer (0.1.14)
 
 DEPENDENCIES:
   - Trimmer (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Trimmer: 10582c98b83e6e10c05a5a02f821587a87f199a3
+  Trimmer: 4c01158eca676c26eb93c8535d3dfaf715e871d1
 
 PODFILE CHECKSUM: 1b2b4c866d23c6f76a30f241ada55807e3007582
 

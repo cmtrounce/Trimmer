@@ -15,6 +15,9 @@ open class TrimmingController: NSObject {
     /// This boolean changes the update frequency of the preview view while scrubbing. If `false`, the scrubbing will only show the frames indicated as "keyframes" (depending on the file codec), if `true`, it will show every frame, at expense of a higher power consumption and worse performance.
     @IBInspectable open var isTimePrecisionInfinity: Bool = false
     
+    @IBInspectable open var playImage: UIImage?
+    @IBInspectable open var pauseImage: UIImage?
+    
     // MARK: IBOutlets
     @IBOutlet open var playPauseButton: UIButton!
     @IBOutlet open var trimmerView: TrimmerView!{
@@ -36,18 +39,37 @@ open class TrimmingController: NSObject {
     private var tolerance: CMTime {
         return isTimePrecisionInfinity ? .indefinite : .zero
     }
+
+
     
     // MARK: IBActions
     @IBAction open func playPauseButtonPressed() {
         if !isPlaying {
             player?.play()
             startPlaybackTimeChecker()
-            playPauseButton.setTitle("Pause", for: .normal)
+
+            if pauseImage != nil {
+                playPauseButton.setBackgroundImage(
+                    pauseImage!.withRenderingMode(.alwaysOriginal),
+                for: .normal)
+            } else {
+                playPauseButton.setTitle("Pause", for: .normal)
+            }
+
+
             isPlaying = true
         } else {
             player?.pause()
             stopPlaybackTimeChecker()
-            playPauseButton.setTitle("Play", for: .normal)
+
+            if playImage != nil {
+                playPauseButton.setBackgroundImage(
+                    playImage!.withRenderingMode(.alwaysOriginal),
+                    for: .normal)
+            } else {
+                playPauseButton.setTitle("Play", for: .normal)
+            }
+
             isPlaying = false
         }
     }
@@ -63,7 +85,7 @@ open class TrimmingController: NSObject {
         playerView.addSubview(playPauseButton)
     }
     
-    open func setup( asset: AVAsset) {
+    open func setup(asset: AVAsset) {
 
         self.currentStartTime = CMTime.zero
         self.currentEndTime = asset.duration
@@ -75,7 +97,15 @@ open class TrimmingController: NSObject {
     private func pause() {
         player?.pause()
         stopPlaybackTimeChecker()
-        playPauseButton.setTitle("Play", for: .normal)
+        
+        if playImage != nil {
+            playPauseButton.setBackgroundImage(
+                playImage!.withRenderingMode(.alwaysOriginal),
+                for: .normal)
+        } else {
+            playPauseButton.setTitle("Play", for: .normal)
+        }
+
         isPlaying = false
     }
     

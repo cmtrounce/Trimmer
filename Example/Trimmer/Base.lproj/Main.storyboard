@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iH5-1x-9QG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iH5-1x-9QG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,10 +24,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0bz-if-uR0" customClass="VideoPreviewView" customModule="Trimmer">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="200"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yks-On-xqj">
-                                                <rect key="frame" x="147" y="80.5" width="41" height="39"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <state key="normal" title="Play">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yks-On-xqj">
+                                                <rect key="frame" x="143.5" y="76" width="48" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="2fk-YP-FqV"/>
+                                                    <constraint firstAttribute="width" constant="48" id="aP4-nq-mDw"/>
+                                                </constraints>
+                                                <state key="normal" backgroundImage="play">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -84,6 +87,8 @@
                 <customObject id="wTb-at-H1a" customClass="TrimmingController" customModule="Trimmer">
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isTimePrecisionInfinity" value="NO"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="playImage" value="play"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="pauseImage" value="pause"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="playPauseButton" destination="Yks-On-xqj" id="LqE-OK-4QU"/>
@@ -94,4 +99,8 @@
             <point key="canvasLocation" x="140" y="119.1904047976012"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pause" width="48" height="48"/>
+        <image name="play" width="48" height="48"/>
+    </resources>
 </document>

@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C2709C4CB3A2FC187C9681C6B69774C /* TrimmingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF64ED130BA1277DDE4285510BBC4956 /* TrimmingController.swift */; };
+		01E0F445A342C38220F6ADEDDFC6E999 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B5FDC580C485E2D5E0C53CAE50EF11 /* DraggableView.swift */; };
 		0C41178EA809FD2FDD6ED2E617D9242A /* Pods-Trimmer_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 824065A6CE53076A8288149E7B04345F /* Pods-Trimmer_Tests-dummy.m */; };
+		1812BCC92294D705C2732181AF2E1493 /* Trimmer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 728382DD1586D0AC79E9C5ECC7E69B02 /* Trimmer-dummy.m */; };
 		252D1BE99BBBB9B1F0B698C8012D8FDC /* Pods-Trimmer_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 931DA35911F3E3D202B63E8C37CAD5A8 /* Pods-Trimmer_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D0E860884B95A1791217FE728C4CD9B /* Pods-Trimmer_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A54919135871A52D6033FD479800F099 /* Pods-Trimmer_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8BFFCFF07436AD649247B671AF73A633 /* ThumbnailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921A9FA07B90366F3862D11C5E9A5F4D /* ThumbnailsView.swift */; };
-		93D1213121AEA96924FEC9D89E4448D9 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C9EDFB75F54558F25A1503EF6681AA /* DraggableView.swift */; };
+		363E8D7FC9BC67BA4E394EEDC918EF00 /* TrimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E16C4658B2D8D55CFE85376B173B10 /* TrimmerView.swift */; };
+		4B147A364C5B873B3A8E4B44EE47F054 /* ThumbnailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E57C68B342E11AF6E964E2993FEC4E /* ThumbnailsView.swift */; };
+		66737090091E71CF350BB2BB1C0732B5 /* TrimmingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0462B41342033E54698221C58002052 /* TrimmingController.swift */; };
 		AC066183084679D624837D9EE4539643 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
 		AE487A275FB59D7B057B1C9FC4464B33 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
 		B40B836AC649E52F0D29976CD388B3B4 /* Pods-Trimmer_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 342516D357B7145E7EF7338B16603FB0 /* Pods-Trimmer_Example-dummy.m */; };
-		C1535BA275D5F0A28B6901F0A3539DEE /* Trimmer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ED494865D9162F2DE0D6BED3A86726E7 /* Trimmer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E710B065226C696173D311B1D65FA5A6 /* Trimmer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 834AF609F7E909E37173B25D16BCBF6F /* Trimmer-dummy.m */; };
-		EFDE55C1F76A9987FD5C6DCB13E6C46D /* TrimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F2D88D4724E909BDFF9D8E77B37066 /* TrimmerView.swift */; };
-		F10FB4972162109700211E8C /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FB4962162109700211E8C /* VideoPreviewView.swift */; };
+		C1535BA275D5F0A28B6901F0A3539DEE /* Trimmer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D008F4B092700E85C6B6A714C0E940AA /* Trimmer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E401D93066C112484606B46C3087BA03 /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92673EBCFA30B3A84D5769576A833EC8 /* VideoPreviewView.swift */; };
 		FB3174824715FBDDDC47B9B9FB52845E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,45 +41,45 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		04A79E926FEA2C84443070E016E84E30 /* Trimmer.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = Trimmer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		04D24658C3F0F888409B63C9DD342F0F /* Pods-Trimmer_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Trimmer_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		093806B1758C26779D908190EB456A65 /* Pods_Trimmer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trimmer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05B5FDC580C485E2D5E0C53CAE50EF11 /* DraggableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DraggableView.swift; path = Trimmer/Classes/DraggableView.swift; sourceTree = "<group>"; };
+		093806B1758C26779D908190EB456A65 /* Pods_Trimmer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Trimmer_Example.framework; path = "Pods-Trimmer_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09B476A9FD3CCF420F146AF3E3B5AA76 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AF3C52FF8BBAAF616B7D80860CE542B /* Pods-Trimmer_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Trimmer_Example-frameworks.sh"; sourceTree = "<group>"; };
 		0C09EB1E58342F9A2ADD4603E5D72DD4 /* Pods-Trimmer_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Trimmer_Example-resources.sh"; sourceTree = "<group>"; };
+		10BA32298B833235E445433E0563B5B5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		110776F34464E1235E4637E9C6BEBEA8 /* Pods-Trimmer_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Trimmer_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		11C1B9F6EB2939E5D6729C1C7CDD61B6 /* Trimmer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Trimmer.xcconfig; sourceTree = "<group>"; };
 		140B84E064D7502ABEAB171761CB227D /* Pods-Trimmer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Trimmer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		17F2D88D4724E909BDFF9D8E77B37066 /* TrimmerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrimmerView.swift; path = Trimmer/Classes/TrimmerView.swift; sourceTree = "<group>"; };
+		1A63C1DE58DD2441C5EF939FF1FC96BC /* Trimmer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Trimmer.modulemap; sourceTree = "<group>"; };
+		1CDB0ECA87E346D93F8476BDEE1019CF /* Trimmer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Trimmer-prefix.pch"; sourceTree = "<group>"; };
 		21F8AA812370F4A9B617A3E97E3D52BF /* Pods-Trimmer_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Trimmer_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		335ABA6D2981E2C78506D8949777F86E /* Pods-Trimmer_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Trimmer_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		342516D357B7145E7EF7338B16603FB0 /* Pods-Trimmer_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Trimmer_Example-dummy.m"; sourceTree = "<group>"; };
+		37E16C4658B2D8D55CFE85376B173B10 /* TrimmerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrimmerView.swift; path = Trimmer/Classes/TrimmerView.swift; sourceTree = "<group>"; };
 		4130D6EB882B203645E8BEA855EF7F64 /* Pods-Trimmer_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Trimmer_Tests-resources.sh"; sourceTree = "<group>"; };
+		490872EB371D7496829EEE9EC5FA3A5E /* Trimmer.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = Trimmer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4DF14515DB679EA534D0F41AA32082CD /* Pods-Trimmer_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Trimmer_Tests-frameworks.sh"; sourceTree = "<group>"; };
-		52C9EDFB75F54558F25A1503EF6681AA /* DraggableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DraggableView.swift; path = Trimmer/Classes/DraggableView.swift; sourceTree = "<group>"; };
 		5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		5DCB22E873015AAF3D98517BD32D3B64 /* Trimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Trimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DCB22E873015AAF3D98517BD32D3B64 /* Trimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Trimmer.framework; path = Trimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		65E57C68B342E11AF6E964E2993FEC4E /* ThumbnailsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThumbnailsView.swift; path = Trimmer/Classes/ThumbnailsView.swift; sourceTree = "<group>"; };
 		66AEDD6322168920D945B9A826AC48BB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B7C6FC9EFA3439DAD2BD2F041EC8EF4 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D5099A4CB9D677A9FBC3E0A7A645CF5 /* Pods-Trimmer_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Trimmer_Tests.modulemap"; sourceTree = "<group>"; };
-		710B0CD61A5527CA5321555035909E10 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		728382DD1586D0AC79E9C5ECC7E69B02 /* Trimmer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Trimmer-dummy.m"; sourceTree = "<group>"; };
 		761F30CE27FC685B86F11EB1F9E38C6D /* Pods-Trimmer_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Trimmer_Example.modulemap"; sourceTree = "<group>"; };
-		7B3622EA5370199950604B4774C33F94 /* Trimmer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Trimmer.modulemap; sourceTree = "<group>"; };
 		824065A6CE53076A8288149E7B04345F /* Pods-Trimmer_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Trimmer_Tests-dummy.m"; sourceTree = "<group>"; };
-		834AF609F7E909E37173B25D16BCBF6F /* Trimmer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Trimmer-dummy.m"; sourceTree = "<group>"; };
 		8B49951B9F9915217FCCC8C606F9F50C /* Pods-Trimmer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Trimmer_Example.release.xcconfig"; sourceTree = "<group>"; };
-		91CE65F51920D1DB8924FD577F1641AF /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		921A9FA07B90366F3862D11C5E9A5F4D /* ThumbnailsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThumbnailsView.swift; path = Trimmer/Classes/ThumbnailsView.swift; sourceTree = "<group>"; };
+		92673EBCFA30B3A84D5769576A833EC8 /* VideoPreviewView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VideoPreviewView.swift; path = Trimmer/Classes/VideoPreviewView.swift; sourceTree = "<group>"; };
 		931DA35911F3E3D202B63E8C37CAD5A8 /* Pods-Trimmer_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Trimmer_Example-umbrella.h"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F69A178D334241F326074CB1B59527A /* Pods-Trimmer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Trimmer_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A54919135871A52D6033FD479800F099 /* Pods-Trimmer_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Trimmer_Tests-umbrella.h"; sourceTree = "<group>"; };
-		BF64ED130BA1277DDE4285510BBC4956 /* TrimmingController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrimmingController.swift; path = Trimmer/Classes/TrimmingController.swift; sourceTree = "<group>"; };
-		C27CBBE9C2A2B687FB4814D45704787C /* Trimmer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Trimmer-prefix.pch"; sourceTree = "<group>"; };
+		A759805B4714988AC77A1A291709614F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		C7CB5982590E932F2AD01908E00462EE /* Pods-Trimmer_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Trimmer_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		ED494865D9162F2DE0D6BED3A86726E7 /* Trimmer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Trimmer-umbrella.h"; sourceTree = "<group>"; };
-		F10FB4962162109700211E8C /* VideoPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoPreviewView.swift; path = Trimmer/Classes/VideoPreviewView.swift; sourceTree = "<group>"; };
-		F124EECC31A3FE281FC5611151FA7A5E /* Pods_Trimmer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trimmer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFA3F4BDE9F97217944129F98C1498FC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		D008F4B092700E85C6B6A714C0E940AA /* Trimmer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Trimmer-umbrella.h"; sourceTree = "<group>"; };
+		D0462B41342033E54698221C58002052 /* TrimmingController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrimmingController.swift; path = Trimmer/Classes/TrimmingController.swift; sourceTree = "<group>"; };
+		F124EECC31A3FE281FC5611151FA7A5E /* Pods_Trimmer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Trimmer_Tests.framework; path = "Pods-Trimmer_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA094F9EA9AAA491DA9245E15B8AFF68 /* Trimmer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Trimmer.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,15 +110,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		254C67CF6559D50FE05C30219AD8A2A3 /* Support Files */ = {
+		0618310D2C2A4ED53AF8456C6FE9EAE3 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				91CE65F51920D1DB8924FD577F1641AF /* Info.plist */,
-				7B3622EA5370199950604B4774C33F94 /* Trimmer.modulemap */,
-				11C1B9F6EB2939E5D6729C1C7CDD61B6 /* Trimmer.xcconfig */,
-				834AF609F7E909E37173B25D16BCBF6F /* Trimmer-dummy.m */,
-				C27CBBE9C2A2B687FB4814D45704787C /* Trimmer-prefix.pch */,
-				ED494865D9162F2DE0D6BED3A86726E7 /* Trimmer-umbrella.h */,
+				10BA32298B833235E445433E0563B5B5 /* LICENSE */,
+				A759805B4714988AC77A1A291709614F /* README.md */,
+				490872EB371D7496829EEE9EC5FA3A5E /* Trimmer.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		103440C6DA283C917C4F89B5DD0E1EBD /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				6B7C6FC9EFA3439DAD2BD2F041EC8EF4 /* Info.plist */,
+				1A63C1DE58DD2441C5EF939FF1FC96BC /* Trimmer.modulemap */,
+				FA094F9EA9AAA491DA9245E15B8AFF68 /* Trimmer.xcconfig */,
+				728382DD1586D0AC79E9C5ECC7E69B02 /* Trimmer-dummy.m */,
+				1CDB0ECA87E346D93F8476BDEE1019CF /* Trimmer-prefix.pch */,
+				D008F4B092700E85C6B6A714C0E940AA /* Trimmer-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "Example/Pods/Target Support Files/Trimmer";
@@ -131,16 +141,6 @@
 				FB3D9AB6C2EB32C8B82D6BAF40668CD5 /* Pods-Trimmer_Tests */,
 			);
 			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		562511C1AFC6FE0639BF053087D073C8 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				FFA3F4BDE9F97217944129F98C1498FC /* LICENSE */,
-				710B0CD61A5527CA5321555035909E10 /* README.md */,
-				04A79E926FEA2C84443070E016E84E30 /* Trimmer.podspec */,
-			);
-			name = Pod;
 			sourceTree = "<group>";
 		};
 		5A91B5507DF6FFAF3F6C1F6C4D5BD775 /* Products */ = {
@@ -165,7 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				FE6DC8159CE16244454A3C68860F5D76 /* Development Pods */,
+				B208D7761D56EC98307B41A7BFA16F7B /* Development Pods */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
 				5A91B5507DF6FFAF3F6C1F6C4D5BD775 /* Products */,
 				2996BEBC824AA85DD9DD7A1DD6F722D8 /* Targets Support Files */,
@@ -190,19 +190,27 @@
 			path = "Target Support Files/Pods-Trimmer_Example";
 			sourceTree = "<group>";
 		};
-		B74A272374B3BAFE82E80671085FA05E /* Trimmer */ = {
+		B1FC690C197793ACE000BC13E4536956 /* Trimmer */ = {
 			isa = PBXGroup;
 			children = (
-				F10FB4962162109700211E8C /* VideoPreviewView.swift */,
-				52C9EDFB75F54558F25A1503EF6681AA /* DraggableView.swift */,
-				921A9FA07B90366F3862D11C5E9A5F4D /* ThumbnailsView.swift */,
-				17F2D88D4724E909BDFF9D8E77B37066 /* TrimmerView.swift */,
-				BF64ED130BA1277DDE4285510BBC4956 /* TrimmingController.swift */,
-				562511C1AFC6FE0639BF053087D073C8 /* Pod */,
-				254C67CF6559D50FE05C30219AD8A2A3 /* Support Files */,
+				05B5FDC580C485E2D5E0C53CAE50EF11 /* DraggableView.swift */,
+				65E57C68B342E11AF6E964E2993FEC4E /* ThumbnailsView.swift */,
+				37E16C4658B2D8D55CFE85376B173B10 /* TrimmerView.swift */,
+				D0462B41342033E54698221C58002052 /* TrimmingController.swift */,
+				92673EBCFA30B3A84D5769576A833EC8 /* VideoPreviewView.swift */,
+				0618310D2C2A4ED53AF8456C6FE9EAE3 /* Pod */,
+				103440C6DA283C917C4F89B5DD0E1EBD /* Support Files */,
 			);
 			name = Trimmer;
 			path = ../..;
+			sourceTree = "<group>";
+		};
+		B208D7761D56EC98307B41A7BFA16F7B /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B1FC690C197793ACE000BC13E4536956 /* Trimmer */,
+			);
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -229,14 +237,6 @@
 			);
 			name = "Pods-Trimmer_Tests";
 			path = "Target Support Files/Pods-Trimmer_Tests";
-			sourceTree = "<group>";
-		};
-		FE6DC8159CE16244454A3C68860F5D76 /* Development Pods */ = {
-			isa = PBXGroup;
-			children = (
-				B74A272374B3BAFE82E80671085FA05E /* Trimmer */,
-			);
-			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,7 +293,7 @@
 			buildConfigurationList = 6645351D3D7FBE4217910178BC3EAA12 /* Build configuration list for PBXNativeTarget "Trimmer" */;
 			buildPhases = (
 				BC818AA1272BAD342ECD5A364EB6E883 /* Headers */,
-				7489FCEF82108CCD4C7E8C71E8156162 /* Sources */,
+				8A9A6D6772295B4981CF7E7AEEC5CBAC /* Sources */,
 				343F9BBDE321D2EAA7201B6F4BF4E5A1 /* Frameworks */,
 				BA09D7912B95C25F6B275D949451ADC3 /* Resources */,
 			);
@@ -378,16 +378,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		7489FCEF82108CCD4C7E8C71E8156162 /* Sources */ = {
+		8A9A6D6772295B4981CF7E7AEEC5CBAC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93D1213121AEA96924FEC9D89E4448D9 /* DraggableView.swift in Sources */,
-				8BFFCFF07436AD649247B671AF73A633 /* ThumbnailsView.swift in Sources */,
-				E710B065226C696173D311B1D65FA5A6 /* Trimmer-dummy.m in Sources */,
-				F10FB4972162109700211E8C /* VideoPreviewView.swift in Sources */,
-				EFDE55C1F76A9987FD5C6DCB13E6C46D /* TrimmerView.swift in Sources */,
-				0C2709C4CB3A2FC187C9681C6B69774C /* TrimmingController.swift in Sources */,
+				01E0F445A342C38220F6ADEDDFC6E999 /* DraggableView.swift in Sources */,
+				4B147A364C5B873B3A8E4B44EE47F054 /* ThumbnailsView.swift in Sources */,
+				1812BCC92294D705C2732181AF2E1493 /* Trimmer-dummy.m in Sources */,
+				363E8D7FC9BC67BA4E394EEDC918EF00 /* TrimmerView.swift in Sources */,
+				66737090091E71CF350BB2BB1C0732B5 /* TrimmingController.swift in Sources */,
+				E401D93066C112484606B46C3087BA03 /* VideoPreviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +427,7 @@
 /* Begin XCBuildConfiguration section */
 		6071BA685F89CDF9E8B2699D5EEC73CB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 11C1B9F6EB2939E5D6729C1C7CDD61B6 /* Trimmer.xcconfig */;
+			baseConfigurationReference = FA094F9EA9AAA491DA9245E15B8AFF68 /* Trimmer.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -460,7 +460,7 @@
 		};
 		81FB671AB62D5522BE46F0FBCF906CFB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 11C1B9F6EB2939E5D6729C1C7CDD61B6 /* Trimmer.xcconfig */;
+			baseConfigurationReference = FA094F9EA9AAA491DA9245E15B8AFF68 /* Trimmer.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -483,7 +483,8 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -554,7 +555,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
