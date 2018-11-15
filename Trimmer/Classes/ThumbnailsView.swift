@@ -87,7 +87,6 @@ class ThumbnailsView: UIView {
         self.setNeedsLayout()
     }
 
-
     override func layoutSubviews() {
         super.layoutSubviews()
 
@@ -102,7 +101,8 @@ class ThumbnailsView: UIView {
     }
 
     func resetAsset() {
-        guard bounds.width != 0 else { return }
+        guard bounds.width != 0 && bounds.height != 0 else { return }
+        
         self.lastThumbnailsCount = 0
         self.thumbnailSize = getThumbnailSize(from: asset, with: bounds)
         self.assetImageGenerator = makeAssetGenerator(
