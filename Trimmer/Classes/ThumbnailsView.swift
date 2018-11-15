@@ -150,16 +150,16 @@ class ThumbnailsView: UIView {
         let normalizedRatio = getNormalizedPosition(from: position)
 
         let positionTimeValue = Double(normalizedRatio)
-            * Double(asset.duration.value)
+            * Double(videoDuration.value)
 
         return CMTime(
             value: Int64(positionTimeValue),
-            timescale: asset.duration.timescale)
+            timescale: videoDuration.timescale)
     }
 
     /// Normalized time
     func getNormalizedTime(from time: CMTime) -> CGFloat? {
-        let result = CGFloat(time.seconds / asset.duration.seconds)
+        let result = CGFloat(time.seconds / videoDuration.seconds)
         assert(result < 1.05)
         return result
     }
