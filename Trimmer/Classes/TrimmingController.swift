@@ -9,6 +9,13 @@
 import UIKit
 import AVFoundation
 
+public protocol TrimmingControllerDelegate: class {
+    func didRequestUpdateTimes(
+        _ controller: TrimmingController,
+        startTime: CMTime,
+        endTime: CMTime)
+}
+
 open class TrimmingController: NSObject {
 
     // MARK: IBInspectable
@@ -25,6 +32,8 @@ open class TrimmingController: NSObject {
             trimmerView.delegate = self
         }
     }
+
+    public weak var delegate: TrimmingControllerDelegate?
 
     // MARK: Public properties
     public private(set) var currentStartTime: CMTime? = nil
@@ -193,6 +202,10 @@ extension TrimmingController: TrimmerViewDelegate {
 
         self.currentStartTime = startTime
         self.currentEndTime = endTime
+
+        delegate?.didRequestUpdateTimes(self,
+                                        startTime: startTime,
+                                        endTime: endTime)
     }
 
     public func trimmerScrubbingDidBegin(_ trimmer: TrimmerView,
