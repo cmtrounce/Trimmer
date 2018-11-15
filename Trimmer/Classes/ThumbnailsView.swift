@@ -35,7 +35,8 @@ class ThumbnailsView: UIView {
 
     /// Return the duration of the video
     var videoDuration: CMTime {
-        return asset.duration
+        guard let videoAssetTrack = asset.tracks(withMediaType: .video).first else { return .zero }
+        return videoAssetTrack.timeRange.duration
     }
 
     /// Return the width size that contains the thumbnails
@@ -102,7 +103,7 @@ class ThumbnailsView: UIView {
 
     func resetAsset() {
         guard bounds.width != 0 && bounds.height != 0 else { return }
-        
+
         self.lastThumbnailsCount = 0
         self.thumbnailSize = getThumbnailSize(from: asset, with: bounds)
         self.assetImageGenerator = makeAssetGenerator(
