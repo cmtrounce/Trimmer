@@ -57,7 +57,7 @@ open class TrimmingController: NSObject {
             startPlaybackTimeChecker()
 
             if pauseImage != nil {
-                playPauseButton.setBackgroundImage(
+                playPauseButton.setImage(
                     pauseImage!.withRenderingMode(.alwaysOriginal),
                     for: .normal)
             } else {
@@ -71,7 +71,7 @@ open class TrimmingController: NSObject {
             stopPlaybackTimeChecker()
 
             if playImage != nil {
-                playPauseButton.setBackgroundImage(
+                playPauseButton.setImage(
                     playImage!.withRenderingMode(.alwaysOriginal),
                     for: .normal)
             } else {
@@ -120,7 +120,7 @@ open class TrimmingController: NSObject {
         stopPlaybackTimeChecker()
 
         if playImage != nil {
-            playPauseButton.setBackgroundImage(
+            playPauseButton.setImage(
                 playImage!.withRenderingMode(.alwaysOriginal),
                 for: .normal)
         } else {
@@ -241,26 +241,36 @@ extension TrimmingController: TrimmerViewDelegate {
 
     public func trimmerScrubbingDidChange(_ trimmer: TrimmerView,
                                           with currentTimeScrub: CMTime) {
+        guard let currentPosition = trimmer
+            .thumbnailsView.getPosition(from: currentTimeScrub) else { return }
+        if currentPosition >= trimmer.leftDraggableView.frame.minX &&
+            currentPosition <= (trimmer.rightDraggableView.frame.minX - trimmer.draggableViewWidth) {
+            player?.seek(
+                to: currentTimeScrub,
+                toleranceBefore: tolerance,
+                toleranceAfter: tolerance)
+            trimmerView.seek(to: currentTimeScrub)
 
-        player?.seek(
-            to: currentTimeScrub,
-            toleranceBefore: tolerance,
-            toleranceAfter: tolerance)
-        trimmerView.seek(to: currentTimeScrub)
-
-        assert(currentTimeScrub.seconds >= 0)
+            assert(currentTimeScrub.seconds >= 0)
+        }
     }
 
     public func trimmerScrubbingDidEnd(_ trimmer: TrimmerView,
                                        with currentTimeScrub: CMTime) {
         playPauseButton.isHidden = false
 
-        player?.seek(
-            to: currentTimeScrub,
-            toleranceBefore: tolerance,
-            toleranceAfter: tolerance)
+        guard let currentPosition = trimmer
+            .thumbnailsView.getPosition(from: currentTimeScrub) else { return }
 
-        assert(currentTimeScrub.seconds >= 0)
+        if currentPosition >= trimmer.leftDraggableView.frame.minX &&
+            currentPosition <= (trimmer.rightDraggableView.frame.minX - trimmer.draggableViewWidth) {
+            player?.seek(
+                to: currentTimeScrub,
+                toleranceBefore: tolerance,
+                toleranceAfter: tolerance)
+
+            assert(currentTimeScrub.seconds >= 0)
+        }
     }
 
 }
