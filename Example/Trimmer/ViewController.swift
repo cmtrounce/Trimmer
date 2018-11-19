@@ -15,7 +15,9 @@ class ViewController: UIViewController {
     // MARK: IBOutlets
     @IBOutlet var playerView: VideoPreviewView!
     @IBOutlet var trimmingController: TrimmingController!
-    
+
+    var trimStartPosition: Int64 = 0
+    var trimEndPosition: Int64 = 0
     
     // MARK: Properties
     var asset: AVAsset!
@@ -34,13 +36,23 @@ class ViewController: UIViewController {
         asset = AVAsset(url: fileURL)
 
         trimmingController.setupPlayerLayer(for: fileURL, with: playerView)
+
+        guard let videoTrack = asset.tracks(withMediaType: .video).first else { return }
+
+        trimStartPosition = videoTrack.timeRange.duration.value / 2
+        trimEndPosition = (videoTrack.timeRange.duration.value )
+
+        trimmingController.setup(asset: asset!,
+                                 trimStartPosition: trimStartPosition,
+                                 trimEndPosition: trimEndPosition,
+                                 timeScale: videoTrack.naturalTimeScale)
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        trimmingController.setup(asset: asset)
-        
+        trimmingController.update()
     }
 
 }

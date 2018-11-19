@@ -38,6 +38,7 @@ open class TrimmingController: NSObject {
     // MARK: Public properties
     public private(set) var currentStartTime: CMTime? = nil
     public private(set) var currentEndTime: CMTime? = nil
+    public private(set) var timeScale: Int32? = nil
 
     // MARK: Private properties
     private var player: AVPlayer?
@@ -92,13 +93,25 @@ open class TrimmingController: NSObject {
         playerView.addSubview(playPauseButton)
     }
 
-    open func setup(asset: AVAsset) {
+    open func setup(asset: AVAsset,
+                    trimStartPosition: Int64,
+                    trimEndPosition: Int64,
+                    timeScale: Int32) {
 
-        self.currentStartTime = CMTime.zero
-        self.currentEndTime = asset.duration
+        self.currentStartTime = CMTime(value: trimStartPosition, timescale: timeScale)
+        self.currentEndTime = CMTime(value: trimEndPosition, timescale: timeScale)
+        self.timeScale = timeScale
 
         trimmerView.thumbnailsView.asset = asset
+        trimmerView.trimStartPosition = trimStartPosition
+        trimmerView.trimEndPosition = trimEndPosition
+        trimmerView.timeScale = timeScale
         trimmerView.thumbnailsView.resetAsset()
+
+        player?.seek(to: currentStartTime!,
+                     toleranceBefore: CMTime.zero,
+                     toleranceAfter: CMTime.zero)
+        trimmerView.seek(to: currentStartTime!)
     }
 
     /// When the video is finish reset the pointer at the beginning
@@ -134,14 +147,21 @@ open class TrimmingController: NSObject {
 
     /// Update the pointer position respects the current video time
     @objc func onPlaybackTimeChecker() {
-        guard let startTime = trimmerView.startTime,
-            let endTime = trimmerView.endTime,
+        guard let startTime = self.currentStartTime,
+            let endTime = self.currentEndTime,
+            let timeScale = self.timeScale,
             let player = player else {
                 return
         }
 
         let playBackTime = player.currentTime()
-        trimmerView.seek(to: playBackTime)
+
+        //convert the timescale of the current time to the current media timescale
+        let timeAccordingToMediaTimescale = CMTimeConvertScale(
+            playBackTime,
+            timescale: timeScale,
+            method: .default)
+        trimmerView.seek(to: timeAccordingToMediaTimescale)
 
         if playBackTime >= endTime {
             /// Leave this seek with tolerance zero otherwise will be a little delay of the update of pointer position
@@ -152,6 +172,10 @@ open class TrimmingController: NSObject {
             pause()
             trimmerView.resetTimePointer()
         }
+    }
+
+    public func update() {
+        trimmerView.update()
     }
 
 }

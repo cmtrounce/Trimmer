@@ -112,6 +112,10 @@ open class TrimmerView: UIView {
 
     open weak var delegate: TrimmerViewDelegate?
 
+    var trimStartPosition: Int64 = 0
+    var trimEndPosition: Int64 = 0
+    var timeScale: Int32 = 0
+
     //MARK: Views
     lazy var trimView: UIView = {
         let view = UIView()
@@ -217,12 +221,6 @@ open class TrimmerView: UIView {
 
         return thumbnailsView.getTime(from: endPosition)
     }
-    //
-    //    var currentPointerTime: CMTime? {
-    //        let startPosition = timePointerView.frame.maxX - thumbnailsView.frame.origin.x
-    //
-    //        return thumbnailsView.getTime(from: startPosition)
-    //    }
 
     var thumbnailViewRect: CGRect {
         return CGRect(
@@ -366,7 +364,6 @@ open class TrimmerView: UIView {
         super.layoutSubviews()
 
         thumbnailsView.frame = thumbnailViewRect
-
     }
 
     // MARK: Setups views
@@ -572,20 +569,22 @@ open class TrimmerView: UIView {
         timePointerViewLeadingAnchor.constant = 0
     }
 
-    public func update(trimStartPosition: Int64, trimEndPosition: Int64) {
-        let startTime = CMTime(value: trimStartPosition, timescale: 600)
-        guard let leadingValue = thumbnailsView.getPosition(from: startTime) else { return }
-        trimViewLeadingConstraint.constant = leadingValue
+    public func update() {
+        guard let videoTrack = thumbnailsView
+            .asset
+            .tracks(withMediaType: .video).first else { return }
 
-        let endTime = CMTime(value: trimEndPosition, timescale: 600)
-        guard let trailingValue = thumbnailsView.getPosition(from: endTime) else { return }
-        trimViewTrailingConstraint.constant = trailingValue
+        let newStartTime = CMTime(value: trimStartPosition, timescale: timeScale)
+        if let leadingValue = thumbnailsView.getPosition(from: newStartTime) {
+            trimViewLeadingConstraint.constant = leadingValue
+        }
 
-    }
-
-    public func reset() {
-        trimViewLeadingConstraint.constant = 0
-        trimViewTrailingConstraint.constant = 0
+        let newEndTime = CMTime(
+            value: trimEndPosition + videoTrack.minFrameDuration.value,
+            timescale: timeScale)
+        if let trailingValue = thumbnailsView.getPosition(from: newEndTime) {
+            trimViewTrailingConstraint.constant = trailingValue - bounds.width + draggableViewWidth * 2
+        }
     }
 
 }
