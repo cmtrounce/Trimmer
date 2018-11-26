@@ -174,8 +174,8 @@ open class TrimmingController: NSObject {
         }
     }
 
-    public func update() {
-        trimmerView.update()
+    public func updateSubviewsTrimmerView() {
+        trimmerView.updateSubviews()
     }
 
 }
