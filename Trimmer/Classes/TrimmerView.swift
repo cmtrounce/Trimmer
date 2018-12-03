@@ -86,23 +86,28 @@ open class TrimmerView: UIView {
         }
     }
 
-    @IBInspectable open var leftImage: UIImage? = nil {
+    @IBInspectable open var handleViewWidth: CGFloat = 2 {
         didSet {
-            leftImageView.image = leftImage
-            leftImageViewCenterX = leftImageView.centerXAnchor
-                .constraint(equalTo: leftDraggableView.centerXAnchor)
-            leftImageViewCenterY = leftImageView.centerYAnchor
-                .constraint(equalTo: leftDraggableView.centerYAnchor)
+            leftHandleViewWidth = leftHandleView.widthAnchor
+            .constraint(equalToConstant: handleViewWidth)
+            rightHandleViewWidth = rightHandleView.widthAnchor
+                .constraint(equalToConstant: handleViewWidth)
         }
     }
 
-    @IBInspectable open var rightImage: UIImage? = nil {
+    @IBInspectable open var handleViewHeight: CGFloat = 25 {
         didSet {
-            rightImageView.image = rightImage
-            rightImageViewCenterX = rightImageView.centerXAnchor
-                .constraint(equalTo: rightDraggableView.centerXAnchor)
-            rightImageViewCenterY = rightImageView.centerYAnchor
-                .constraint(equalTo: rightDraggableView.centerYAnchor)
+            leftHandleViewHeight = leftHandleView.heightAnchor
+                .constraint(equalToConstant: handleViewHeight)
+            rightHandleViewHeight = rightHandleView.heightAnchor
+                .constraint(equalToConstant: handleViewHeight)
+        }
+    }
+
+    @IBInspectable open var handleViewColor: UIColor = .white {
+        didSet {
+            leftHandleView.backgroundColor = handleViewColor
+            rightHandleView.backgroundColor = handleViewColor
         }
     }
 
@@ -166,22 +171,6 @@ open class TrimmerView: UIView {
         return view
     }()
 
-    private let leftImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.frame = .zero
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = false
-        return imageView
-    }()
-
-    private let rightImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.frame = .zero
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = false
-        return imageView
-    }()
-
     private let timePointerView: UIView = {
         let view = UIView()
         view.frame = .zero
@@ -197,6 +186,22 @@ open class TrimmerView: UIView {
         thumbsView.translatesAutoresizingMaskIntoConstraints = false
         thumbsView.isUserInteractionEnabled = true
         return thumbsView
+    }()
+
+    lazy var leftHandleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = handleViewColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 2
+        return view
+    }()
+
+    lazy var rightHandleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = handleViewColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 2
+        return view
     }()
 
     //MARK: Properties
@@ -300,15 +305,23 @@ open class TrimmerView: UIView {
     private lazy var timePointerViewLeadingAnchor = timePointerView.leadingAnchor
         .constraint(equalTo: leftDraggableView.trailingAnchor, constant: 0)
 
-    private lazy var leftImageViewCenterX = leftImageView.centerXAnchor
+    private lazy var leftHandleViewCenterX = leftHandleView.centerXAnchor
         .constraint(equalTo: leftDraggableView.centerXAnchor)
-    private lazy var leftImageViewCenterY = leftImageView.centerYAnchor
+    private lazy var leftHandleViewCenterY = leftHandleView.centerYAnchor
         .constraint(equalTo: leftDraggableView.centerYAnchor)
+    private lazy var leftHandleViewWidth = leftHandleView.widthAnchor
+        .constraint(equalToConstant: handleViewWidth)
+    private lazy var leftHandleViewHeight = leftHandleView.heightAnchor
+        .constraint(equalToConstant: handleViewHeight)
 
-    private lazy var rightImageViewCenterX = rightImageView.centerXAnchor
+    private lazy var rightHandleViewCenterX = rightHandleView.centerXAnchor
         .constraint(equalTo: rightDraggableView.centerXAnchor)
-    private lazy var rightImageViewCenterY = rightImageView.centerYAnchor
+    private lazy var rightHandleViewCenterY = rightHandleView.centerYAnchor
         .constraint(equalTo: rightDraggableView.centerYAnchor)
+    private lazy var rightHandleViewWidth = rightHandleView.widthAnchor
+        .constraint(equalToConstant: handleViewWidth)
+    private lazy var rightHandleViewHeight = rightHandleView.heightAnchor
+        .constraint(equalToConstant: handleViewHeight)
 
     // MARK: View Life Cycle
     override open func awakeFromNib() {
@@ -352,11 +365,15 @@ open class TrimmerView: UIView {
             rightMaskViewLeadingAnchor,
             rightMaskViewTrailingAnchor,
 
-            leftImageViewCenterX,
-            leftImageViewCenterY,
+            leftHandleViewCenterX,
+            leftHandleViewCenterY,
+            leftHandleViewWidth,
+            leftHandleViewHeight,
 
-            rightImageViewCenterX,
-            rightImageViewCenterY
+            rightHandleViewCenterX,
+            rightHandleViewCenterY,
+            rightHandleViewWidth,
+            rightHandleViewHeight
             ])
     }
 
@@ -377,8 +394,8 @@ open class TrimmerView: UIView {
         addSubview(rightDraggableView)
         addSubview(leftMaskView)
         addSubview(rightMaskView)
-        leftDraggableView.addSubview(leftImageView)
-        rightDraggableView.addSubview(rightImageView)
+        leftDraggableView.addSubview(leftHandleView)
+        rightDraggableView.addSubview(rightHandleView)
 
         setupTimePointer()
         setupPanGestures()
