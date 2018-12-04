@@ -26,7 +26,7 @@ open class TrimmingController: NSObject {
     @IBInspectable open var pauseImage: UIImage?
 
     // MARK: IBOutlets
-    @IBOutlet open var playPauseButton: UIButton!
+    @IBOutlet open var playPauseButton: UIButton?
     @IBOutlet open var trimmerView: TrimmerView!{
         didSet {
             trimmerView.delegate = self
@@ -57,11 +57,11 @@ open class TrimmingController: NSObject {
             startPlaybackTimeChecker()
 
             if pauseImage != nil {
-                playPauseButton.setImage(
+                playPauseButton?.setImage(
                     pauseImage!.withRenderingMode(.alwaysOriginal),
                     for: .normal)
             } else {
-                playPauseButton.setTitle("Pause", for: .normal)
+                playPauseButton?.setTitle("Pause", for: .normal)
             }
 
 
@@ -71,11 +71,11 @@ open class TrimmingController: NSObject {
             stopPlaybackTimeChecker()
 
             if playImage != nil {
-                playPauseButton.setImage(
+                playPauseButton?.setImage(
                     playImage!.withRenderingMode(.alwaysOriginal),
                     for: .normal)
             } else {
-                playPauseButton.setTitle("Play", for: .normal)
+                playPauseButton?.setTitle("Play", for: .normal)
             }
 
             isPlaying = false
@@ -90,7 +90,7 @@ open class TrimmingController: NSObject {
         self.currentEndTime = player?.currentItem?.duration
 
         playerView.setPlayer(player!)
-        playerView.addSubview(playPauseButton)
+        playPauseButton.map(playerView.addSubview)
     }
 
     open func setup(asset: AVAsset,
@@ -120,11 +120,11 @@ open class TrimmingController: NSObject {
         stopPlaybackTimeChecker()
 
         if playImage != nil {
-            playPauseButton.setImage(
+            playPauseButton?.setImage(
                 playImage!.withRenderingMode(.alwaysOriginal),
                 for: .normal)
         } else {
-            playPauseButton.setTitle("Play", for: .normal)
+            playPauseButton?.setTitle("Play", for: .normal)
         }
 
         isPlaying = false
@@ -189,7 +189,7 @@ extension TrimmingController: TrimmerViewDelegate {
         assert(currentTimeTrim.seconds >= 0)
 
         pause()
-        playPauseButton.isHidden = true
+        playPauseButton?.isHidden = true
     }
 
     public func trimmerDidChangeDraggingPosition(
@@ -209,7 +209,7 @@ extension TrimmingController: TrimmerViewDelegate {
         with startTime: CMTime,
         endTime: CMTime) {
 
-        playPauseButton.isHidden = false
+        playPauseButton?.isHidden = false
 
         player?.seek(
             to: startTime,
@@ -234,7 +234,7 @@ extension TrimmingController: TrimmerViewDelegate {
 
     public func trimmerScrubbingDidBegin(_ trimmer: TrimmerView,
                                          with currentTimeScrub: CMTime) {
-        playPauseButton.isHidden = true
+        playPauseButton?.isHidden = true
 
         assert(currentTimeScrub.seconds >= 0)
     }
@@ -257,7 +257,7 @@ extension TrimmingController: TrimmerViewDelegate {
 
     public func trimmerScrubbingDidEnd(_ trimmer: TrimmerView,
                                        with currentTimeScrub: CMTime) {
-        playPauseButton.isHidden = false
+        playPauseButton?.isHidden = false
 
         guard let currentPosition = trimmer
             .thumbnailsView.getPosition(from: currentTimeScrub) else { return }
