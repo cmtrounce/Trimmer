@@ -29,9 +29,9 @@ class ThumbnailsView: UIView {
 
     private lazy var thumbnailSize: CGSize = getThumbnailSize(from: asset, with: bounds)
 
-    private var totalTimeLength: Int {
-        return Int(videoDuration.seconds * Double(videoDuration.timescale))
-    }
+//    private var totalTimeLength: Int {
+//        return Int(videoDuration.seconds * Double(videoDuration.timescale))
+//    }
 
     /// Return the duration of the video
     var videoDuration: CMTime {
@@ -63,8 +63,10 @@ class ThumbnailsView: UIView {
     }
 
     /// Return the length of each step of the video
-    private var videoStep: Int {
-        return totalTimeLength / currentThumbnailsCount
+    private var videoStep: CMTime {
+        return CMTime(value: videoDuration.value / Int64(currentThumbnailsCount),
+                      timescale: videoDuration.timescale)
+
     }
 
     // MARK: Inits
@@ -115,8 +117,11 @@ class ThumbnailsView: UIView {
         assetImageGenerator.cancelAllCGImageGeneration()
 
         let frameForTimes: [NSValue] = (0..<currentThumbnailsCount).map {
-            let cmTime = CMTime(value: Int64($0 * videoStep),
-                                timescale: Int32(videoDuration.timescale))
+            let cmTime = CMTime(value: Int64($0) * videoStep.value,
+                                timescale: videoDuration.timescale)
+
+            assert(cmTime < videoDuration)
+
             return NSValue(time: cmTime)
         }
 
