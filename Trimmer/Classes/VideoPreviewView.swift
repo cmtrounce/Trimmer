@@ -10,14 +10,18 @@ import AVFoundation
 
 open class VideoPreviewView: UIView {
 
-//    @IBInspectable open var cornerRadius: CGFloat = 0
+    @IBInspectable open var cornerRadius: CGFloat = 0
+    @IBInspectable open var layerColor: UIColor = .white
 
     open lazy var playerLayer: AVPlayerLayer = {
         let layer = AVPlayerLayer()
         layer.frame = self.bounds
-//        layer.masksToBounds = true
-//        layer.cornerRadius = cornerRadius
-//        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        layer.masksToBounds = true
+        layer.backgroundColor = layerColor.cgColor
+        layer.cornerRadius = cornerRadius
+        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        layer.videoGravity = .resizeAspect
+
         return layer
     }()
     
