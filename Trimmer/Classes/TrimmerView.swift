@@ -386,6 +386,7 @@ open class TrimmerView: UIView {
     // MARK: Setups views
     private func setup() {
         backgroundColor = UIColor.clear
+        thumbnailsView.frame = thumbnailViewRect
 
         addSubview(thumbnailsView)
         addSubview(trimView)
@@ -587,8 +588,8 @@ open class TrimmerView: UIView {
     }
 
     public func updateSubviews() {
-        guard let videoTrack = thumbnailsView
-            .asset
+        guard let asset = thumbnailsView.asset,
+            let videoTrack = asset
             .tracks(withMediaType: .video).first else { return }
 
         let newStartTime = CMTime(value: trimStartPosition, timescale: timeScale)

@@ -106,7 +106,7 @@ open class TrimmingController: NSObject {
         trimmerView.trimStartPosition = trimStartPosition
         trimmerView.trimEndPosition = trimEndPosition
         trimmerView.timeScale = timeScale
-        trimmerView.thumbnailsView.resetAsset()
+
 
         player?.seek(to: currentStartTime!,
                      toleranceBefore: CMTime.zero,
@@ -218,11 +218,11 @@ extension TrimmingController: TrimmerViewDelegate {
 
         assert(startTime.seconds >= 0)
 
-        assert(startTime.seconds <= trimmerView.thumbnailsView.asset.duration.seconds)
+        assert(startTime.seconds <= trimmerView.thumbnailsView.asset!.duration.seconds)
 
         assert(endTime.seconds >= 0)
 
-        assert(endTime.seconds <= trimmerView.thumbnailsView.asset.duration.seconds)
+        assert(endTime.seconds <= trimmerView.thumbnailsView.asset!.duration.seconds)
 
         self.currentStartTime = startTime
         self.currentEndTime = endTime
