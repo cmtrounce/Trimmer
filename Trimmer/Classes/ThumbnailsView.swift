@@ -91,9 +91,10 @@ class ThumbnailsView: UIView {
 
     /// Normalized time
     func getNormalizedTime(from time: CMTime) -> CGFloat? {
-//        let result = CGFloat(time.seconds / videoDuration.seconds)
-//        assert(result < 1.05)
-        return max(min(1, CGFloat(time.seconds / videoDuration.seconds)), 0)
+        let result = CGFloat(time.seconds / videoDuration.seconds)
+        assert(result < 1.05)
+        return result
+//        return max(min(1, CGFloat(time.seconds / videoDuration.seconds)), 0)
     }
 
     /// Return the the position of a view from the video time
@@ -181,7 +182,7 @@ class ThumbnailsView: UIView {
             return NSValue(time: cmTime)
         }
 
-//        assert(frameForTimes.count == thumbsStackView.arrangedSubviews.count)
+        assert(frameForTimes.count == thumbsStackView.arrangedSubviews.count)
 
         DispatchQueue.global(qos: .userInitiated).async { [assetImageGenerator] in
             var index = 0

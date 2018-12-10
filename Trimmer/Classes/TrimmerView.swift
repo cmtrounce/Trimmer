@@ -603,6 +603,8 @@ open class TrimmerView: UIView {
         if let trailingValue = thumbnailsView.getPosition(from: newEndTime) {
             trimViewTrailingConstraint.constant = trailingValue - bounds.width + draggableViewWidth * 2
         }
+
+        setNeedsLayout()
     }
 
 }
