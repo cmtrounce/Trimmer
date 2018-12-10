@@ -108,16 +108,17 @@ class ThumbnailsView: UIView {
     }
 
     private func getThumbnailSize(from asset: AVAsset) -> CGSize? {
-        guard let track = asset.tracks(withMediaType: AVMediaType.video)
-            .first else { return nil }
+        guard let track = asset.tracks(withMediaType: AVMediaType.video).first,
+            bounds.width != 0,
+            bounds.height != 0 else { return nil }
 
         layoutIfNeeded()
 
         let targetSize = bounds.size
         let assetSize = track.naturalSize.applying(track.preferredTransform)
 
-//        assert(targetSize.width > 0)
-//        assert(targetSize.height > 0)
+        assert(targetSize.width > 0)
+        assert(targetSize.height > 0)
 
         let scaleFactor = targetSize.height / assetSize.height
         let newWidth = assetSize.width * scaleFactor
