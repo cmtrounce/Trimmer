@@ -107,6 +107,22 @@ open class TrimmingController: NSObject {
         trimmerView.trimEndPosition = trimEndPosition
         trimmerView.timeScale = timeScale
 
+        player?.seek(to: currentStartTime!,
+                     toleranceBefore: CMTime.zero,
+                     toleranceAfter: CMTime.zero)
+        trimmerView.seek(to: currentStartTime!)
+    }
+
+    open func updateTimes(trimStartPosition: Int64,
+                          trimEndPosition: Int64,
+                          timeScale: Int32) {
+        self.currentStartTime = CMTime(value: trimStartPosition, timescale: timeScale)
+        self.currentEndTime = CMTime(value: trimEndPosition, timescale: timeScale)
+        self.timeScale = timeScale
+
+        trimmerView.trimStartPosition = trimStartPosition
+        trimmerView.trimEndPosition = trimEndPosition
+        trimmerView.timeScale = timeScale
 
         player?.seek(to: currentStartTime!,
                      toleranceBefore: CMTime.zero,
@@ -115,7 +131,7 @@ open class TrimmingController: NSObject {
     }
 
     /// When the video is finish reset the pointer at the beginning
-    private func pause() {
+    public func pause() {
         player?.pause()
         stopPlaybackTimeChecker()
 

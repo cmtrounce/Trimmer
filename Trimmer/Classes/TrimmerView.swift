@@ -377,11 +377,11 @@ open class TrimmerView: UIView {
             ])
     }
 
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-
-        thumbnailsView.frame = thumbnailViewRect
-    }
+//    open override func layoutSubviews() {
+//        super.layoutSubviews()
+//
+//        thumbnailsView.frame = thumbnailViewRect
+//    }
 
     // MARK: Setups views
     private func setup() {
@@ -605,8 +605,6 @@ open class TrimmerView: UIView {
         if let trailingValue = thumbnailsView.getPosition(from: newEndTime) {
             trimViewTrailingConstraint.constant = trailingValue - bounds.width + draggableViewWidth * 2
         }
-
-        setNeedsLayout()
     }
 
 }
