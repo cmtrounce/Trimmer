@@ -588,6 +588,8 @@ open class TrimmerView: UIView {
     }
 
     public func updateSubviews() {
+        resetTimePointer()
+        
         guard let asset = thumbnailsView.asset,
             let videoTrack = asset
             .tracks(withMediaType: .video).first else { return }
