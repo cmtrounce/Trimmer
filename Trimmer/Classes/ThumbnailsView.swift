@@ -323,8 +323,7 @@ class ThumbnailGenerationOperation: Operation {
             self._isExecuting = true
             thumbnailView?.thumbs
                 .append(UIImage(cgImage: image))
-
-            if thumbnailView?.thumbs.count ?? 0 == self.frameForTimes.count - 1 {
+            if thumbnailView?.thumbs.count ?? 0 == self.frameForTimes.count {
                 self._isExecuting = false
                 self._isFinished = true
             }
