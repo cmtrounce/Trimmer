@@ -211,7 +211,6 @@ class ThumbnailsView: UIView {
         }
 
         imageGenerationQueue.cancelAllOperations()
-//        imageGenerationQueue.operations.forEach { $0. }
         imageGenerationQueue.addOperation(operation)
     }
 }
@@ -265,33 +264,6 @@ class ThumbnailGenerationOperation: Operation {
         self.thumbnailView = thumbnailView
     }
 
-//    override func main() {
-//
-//        guard !isCancelled else { return }
-//
-//        thumbnailView?.thumbs = []
-//
-//        assetGenerator?.generateCGImagesAsynchronously(
-//        forTimes: frameForTimes) { [weak thumbnailView] (time, image, _, result, error) in
-//
-//            guard error == nil else {
-//                    print("\n Asset generation Error = \(error!)\n")
-//                    return
-//            }
-//
-//            guard let image = image else {
-//                print("\n Asset generation result = \(result.rawValue)\n")
-//                return
-//            }
-//
-//            guard !self.isCancelled
-//                else { return }
-//
-//            thumbnailView?.thumbs
-//                .append(UIImage(cgImage: image))
-//        }
-//    }
-
     override func start() {
         guard !isCancelled else {
             _isFinished = true
@@ -301,8 +273,10 @@ class ThumbnailGenerationOperation: Operation {
         thumbnailView?.thumbs = []
 
        assetGenerator?.generateCGImagesAsynchronously(
-        forTimes: frameForTimes) { [weak thumbnailView] (time, image, _, result, error) in
+        forTimes: frameForTimes) { [weak self, weak thumbnailView] (time, image, _, result, error) in
 
+            guard let self = self else { return }
+            
             guard error == nil else {
                 print("\n Asset generation Error = \(error!)\n")
                 self._isFinished = true
