@@ -24,7 +24,15 @@ class ThumbnailsView: UIView {
         }
     }
 
-    private var assetImageGenerator: AVAssetImageGenerator?
+    var assetImageGenerator: AVAssetImageGenerator?
+    let imageGenerationQueue: OperationQueue = {
+        var queue = OperationQueue()
+        queue.name = "Image Generation queue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+
+    var thumbs: [UIImage] = []
 
     /// Return the duration of the video
     var videoDuration: CMTime {
@@ -91,10 +99,10 @@ class ThumbnailsView: UIView {
 
     /// Normalized time
     func getNormalizedTime(from time: CMTime) -> CGFloat? {
-        let result = CGFloat(time.seconds / videoDuration.seconds)
-        assert(result < 1.05)
-        return result
-//        return max(min(1, CGFloat(time.seconds / videoDuration.seconds)), 0)
+//        let result = CGFloat(time.seconds / videoDuration.seconds)
+//        assert(result < 1.05)
+//        return result
+        return max(min(1, CGFloat(time.seconds / videoDuration.seconds)), 0)
     }
 
     /// Return the the position of a view from the video time
@@ -183,25 +191,141 @@ class ThumbnailsView: UIView {
 
         assert(frameForTimes.count == thumbsStackView.arrangedSubviews.count)
 
-        DispatchQueue.global(qos: .userInitiated).async { [assetImageGenerator] in
-            var index = 0
+        let operation = ThumbnailGenerationOperation(
+            frameForTimes: frameForTimes,
+            thumbnailView: self)
 
-            assetImageGenerator?.generateCGImagesAsynchronously(
-            forTimes: frameForTimes) { (time, image, _, _, error) in
+        operation.completionBlock = {
 
-                guard error == nil else {
-                    print("\nError = \(error!)\n")
-                    return
-                }
+            guard !operation.isCancelled else { return }
 
-                guard let image = image else { return }
+            DispatchQueue.main.async { [weak self] in
+                guard
+                    let imageViews = self?.thumbsStackView
+                        .arrangedSubviews as? [UIImageView],
+                    let thumbs = self?.thumbs
+                    else { return }
 
-                DispatchQueue.main.async { [weak self] in
-                    guard let imageViews = self?.thumbsStackView
-                        .arrangedSubviews as? [UIImageView] else { return }
-                    imageViews[index].image = UIImage(cgImage: image)
-                    index += 1
-                }
+                zip(imageViews, thumbs).forEach { $0.image = $1 }
+            }
+        }
+
+        imageGenerationQueue.cancelAllOperations()
+//        imageGenerationQueue.operations.forEach { $0. }
+        imageGenerationQueue.addOperation(operation)
+    }
+}
+
+class ThumbnailGenerationOperation: Operation {
+
+    let frameForTimes: [NSValue]
+    weak var thumbnailView: ThumbnailsView?
+
+    var assetGenerator: AVAssetImageGenerator? {
+        return thumbnailView?.assetImageGenerator
+    }
+
+    override var isAsynchronous: Bool {
+        return true
+    }
+
+    private var _isExecuting = false {
+        willSet {
+            willChangeValue(forKey: "isExecuting")
+        }
+        didSet {
+            didChangeValue(forKey: "isExecuting")
+        }
+    }
+    override var isExecuting: Bool {
+        return _isExecuting
+    }
+
+    var _isFinished = false {
+        willSet {
+            willChangeValue(forKey: "isFinished")
+        }
+        didSet {
+            didChangeValue(forKey: "isFinished")
+        }
+    }
+
+    override var isFinished: Bool {
+        return _isFinished
+    }
+
+    init(
+        frameForTimes: [NSValue],
+        thumbnailView: ThumbnailsView) {
+
+        _isExecuting = false
+        _isFinished = false
+
+        self.frameForTimes = frameForTimes
+        self.thumbnailView = thumbnailView
+    }
+
+//    override func main() {
+//
+//        guard !isCancelled else { return }
+//
+//        thumbnailView?.thumbs = []
+//
+//        assetGenerator?.generateCGImagesAsynchronously(
+//        forTimes: frameForTimes) { [weak thumbnailView] (time, image, _, result, error) in
+//
+//            guard error == nil else {
+//                    print("\n Asset generation Error = \(error!)\n")
+//                    return
+//            }
+//
+//            guard let image = image else {
+//                print("\n Asset generation result = \(result.rawValue)\n")
+//                return
+//            }
+//
+//            guard !self.isCancelled
+//                else { return }
+//
+//            thumbnailView?.thumbs
+//                .append(UIImage(cgImage: image))
+//        }
+//    }
+
+    override func start() {
+        guard !isCancelled else {
+            _isFinished = true
+            return
+        }
+
+        thumbnailView?.thumbs = []
+
+       assetGenerator?.generateCGImagesAsynchronously(
+        forTimes: frameForTimes) { [weak thumbnailView] (time, image, _, result, error) in
+
+            guard error == nil else {
+                print("\n Asset generation Error = \(error!)\n")
+                self._isFinished = true
+                return
+            }
+
+            guard let image = image else {
+                print("\n Asset generation result = \(result.rawValue)\n")
+                self._isFinished = true
+                return
+            }
+
+            guard !self.isCancelled else {
+                self._isFinished = true
+                return
+            }
+
+            self._isExecuting = true
+            thumbnailView?.thumbs
+                .append(UIImage(cgImage: image))
+            if thumbnailView?.thumbs.count ?? 0 == self.frameForTimes.count {
+                self._isExecuting = false
+                self._isFinished = true
             }
         }
     }
