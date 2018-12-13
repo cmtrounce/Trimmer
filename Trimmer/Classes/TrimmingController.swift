@@ -39,6 +39,7 @@ open class TrimmingController: NSObject {
     public private(set) var currentStartTime: CMTime? = nil
     public private(set) var currentEndTime: CMTime? = nil
     public private(set) var timeScale: Int32? = nil
+    private let maxDuration: Double = 3
 
     // MARK: Private properties
     private var player: AVPlayer?
@@ -102,10 +103,16 @@ open class TrimmingController: NSObject {
         self.currentEndTime = CMTime(value: trimEndPosition, timescale: timeScale)
         self.timeScale = timeScale
 
+        let newMaxDuration = CMTime(seconds: maxDuration, preferredTimescale: timeScale)
+        let newEndTime = min(newMaxDuration, currentEndTime!)
+
+         self.currentEndTime = CMTime(value: newEndTime.value, timescale: timeScale)
+
         trimmerView.thumbnailsView.asset = asset
         trimmerView.trimStartPosition = trimStartPosition
-        trimmerView.trimEndPosition = trimEndPosition
+        trimmerView.trimEndPosition = newEndTime.value
         trimmerView.timeScale = timeScale
+        trimmerView.maxVideoDurationAfterTrimming = newEndTime.seconds
 
         player?.seek(to: currentStartTime!,
                      toleranceBefore: CMTime.zero,

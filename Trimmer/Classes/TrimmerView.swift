@@ -111,7 +111,8 @@ open class TrimmerView: UIView {
         }
     }
 
-    @IBInspectable open var minVideoDurationAfterTrimming: Double = 0
+    @IBInspectable open var minVideoDurationAfterTrimming: Double = 2
+    @IBInspectable open var maxVideoDurationAfterTrimming: Double = 6
 
     @IBInspectable open var isTimePointerVisible: Bool = true
 
@@ -209,6 +210,13 @@ open class TrimmerView: UIView {
     // Return the minimum distance between the left and right view expressed in seconds
     private var minimumDistanceBetweenDraggableViews: CGFloat? {
         return CGFloat(minVideoDurationAfterTrimming)
+            * thumbnailsView.durationSize
+            / CGFloat(thumbnailsView.videoDuration.seconds)
+    }
+
+    // Return the maximum distance between the left and right view expressed in seconds
+    private var maximumDistanceBetweenDraggableViews: CGFloat? {
+        return CGFloat(maxVideoDurationAfterTrimming)
             * thumbnailsView.durationSize
             / CGFloat(thumbnailsView.videoDuration.seconds)
     }
@@ -449,8 +457,19 @@ open class TrimmerView: UIView {
         switch sender.state {
 
         case .began:
-            if isLeftGesture {
+            if isLeftGesture,
+                let maxDistance = maximumDistanceBetweenDraggableViews,
+                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) >= maxDistance,
+                trimViewLeadingConstraint.constant >= 0 {
                 currentLeadingConstraint = trimViewLeadingConstraint.constant
+                currentTrailingConstraint = trimViewTrailingConstraint.constant
+            } else if isLeftGesture {
+                currentLeadingConstraint = trimViewLeadingConstraint.constant
+            } else if let maxDistance = maximumDistanceBetweenDraggableViews,
+            (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) >= maxDistance,
+                trimViewTrailingConstraint.constant <= 0 {
+                currentLeadingConstraint = trimViewLeadingConstraint.constant
+                currentTrailingConstraint = trimViewTrailingConstraint.constant
             } else {
                 currentTrailingConstraint = trimViewTrailingConstraint.constant
             }
@@ -461,8 +480,22 @@ open class TrimmerView: UIView {
 
         case .changed:
             let translation = sender.translation(in: view)
-            if isLeftGesture {
+
+            if isLeftGesture,
+                let maxDistance = maximumDistanceBetweenDraggableViews,
+                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) >= maxDistance,
+                currentLeadingConstraint >= 0 {
+//                translation.x >= 0 {
                 updateLeadingConstraint(with: translation)
+                updateTrailingConstraint(with: translation)
+            } else if isLeftGesture {
+                updateLeadingConstraint(with: translation)
+            } else if let maxDistance = maximumDistanceBetweenDraggableViews,
+                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) >= maxDistance,
+                currentTrailingConstraint <= 0 {
+//                translation.x <= 0 {
+                updateLeadingConstraint(with: translation)
+                updateTrailingConstraint(with: translation)
             } else {
                 updateTrailingConstraint(with: translation)
             }
@@ -544,6 +577,7 @@ open class TrimmerView: UIView {
             0, maxConstraint)
 
         trimViewLeadingConstraint.constant = newPosition
+
     }
 
     /// Update the trailing contraint of the right draggable view after the pan gesture
