@@ -459,15 +459,14 @@ open class TrimmerView: UIView {
         case .began:
             if isLeftGesture,
                 let maxDistance = maximumDistanceBetweenDraggableViews,
-                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) >= maxDistance,
-                trimViewLeadingConstraint.constant >= 0 {
+                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) > maxDistance {
                 currentLeadingConstraint = trimViewLeadingConstraint.constant
                 currentTrailingConstraint = trimViewTrailingConstraint.constant
             } else if isLeftGesture {
                 currentLeadingConstraint = trimViewLeadingConstraint.constant
-            } else if let maxDistance = maximumDistanceBetweenDraggableViews,
-            (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) >= maxDistance,
-                trimViewTrailingConstraint.constant <= 0 {
+            } else if !isLeftGesture,
+                let maxDistance = maximumDistanceBetweenDraggableViews,
+            (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) > maxDistance {
                 currentLeadingConstraint = trimViewLeadingConstraint.constant
                 currentTrailingConstraint = trimViewTrailingConstraint.constant
             } else {
@@ -483,17 +482,14 @@ open class TrimmerView: UIView {
 
             if isLeftGesture,
                 let maxDistance = maximumDistanceBetweenDraggableViews,
-                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) >= maxDistance,
-                currentLeadingConstraint >= 0 {
-//                translation.x >= 0 {
+                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) > maxDistance {
                 updateLeadingConstraint(with: translation)
                 updateTrailingConstraint(with: translation)
             } else if isLeftGesture {
                 updateLeadingConstraint(with: translation)
-            } else if let maxDistance = maximumDistanceBetweenDraggableViews,
-                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) >= maxDistance,
-                currentTrailingConstraint <= 0 {
-//                translation.x <= 0 {
+            } else if !isLeftGesture,
+                let maxDistance = maximumDistanceBetweenDraggableViews,
+                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) > maxDistance {
                 updateLeadingConstraint(with: translation)
                 updateTrailingConstraint(with: translation)
             } else {
