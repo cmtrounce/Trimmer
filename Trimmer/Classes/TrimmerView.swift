@@ -68,8 +68,8 @@ open class TrimmerView: UIView {
                 .constraint(equalTo: leadingAnchor, constant: draggableViewWidth)
             dimmingViewTrailingAnchor = thumbnailsView.trailingAnchor
                 .constraint(equalTo: trailingAnchor, constant: -draggableViewWidth)
-            trimViewWidthContraint = trimView.widthAnchor
-                .constraint(greaterThanOrEqualToConstant: draggableViewWidth * 2 + borderWidth)
+//            trimViewWidthContraint = trimView.widthAnchor
+//                .constraint(greaterThanOrEqualToConstant: draggableViewWidth * 2 + borderWidth)
             leftDraggableViewWidthAnchor = leftDraggableView.widthAnchor
                 .constraint(equalToConstant: draggableViewWidth)
             rightDraggableViewWidthAnchor = rightDraggableView.widthAnchor
@@ -209,9 +209,12 @@ open class TrimmerView: UIView {
 
     // Return the minimum distance between the left and right view expressed in seconds
     private var minimumDistanceBetweenDraggableViews: CGFloat? {
-        return CGFloat(minVideoDurationAfterTrimming)
+        return (CGFloat(maxVideoDurationAfterTrimming)
             * thumbnailsView.durationSize
-            / CGFloat(thumbnailsView.videoDuration.seconds)
+            / CGFloat(thumbnailsView.videoDuration.seconds))/3
+//        return CGFloat(minVideoDurationAfterTrimming)
+//            * thumbnailsView.durationSize
+//            / CGFloat(thumbnailsView.videoDuration.seconds)
     }
 
     // Return the maximum distance between the left and right view expressed in seconds
@@ -257,16 +260,16 @@ open class TrimmerView: UIView {
     private lazy var dimmingViewTrailingAnchor = thumbnailsView.trailingAnchor
         .constraint(equalTo: trailingAnchor, constant: -draggableViewWidth)
 
-    private lazy var trimViewTopAnchorConstraint = trimView.topAnchor
-        .constraint(equalTo: topAnchor, constant: 0)
-    private lazy var trimViewBottomAnchorConstraint = trimView.bottomAnchor
-        .constraint(equalTo: bottomAnchor, constant: 0)
-    lazy var trimViewLeadingConstraint = trimView.leadingAnchor
-        .constraint(equalTo: leadingAnchor, constant: 0)
-    lazy var trimViewTrailingConstraint = trimView.trailingAnchor
-        .constraint(equalTo: trailingAnchor, constant: 0)
-    private lazy var trimViewWidthContraint = trimView.widthAnchor
-        .constraint(greaterThanOrEqualToConstant: draggableViewWidth * 2 + borderWidth)
+//    private lazy var trimViewTopAnchorConstraint = trimView.topAnchor
+//        .constraint(equalTo: topAnchor, constant: 0)
+//    private lazy var trimViewBottomAnchorConstraint = trimView.bottomAnchor
+//        .constraint(equalTo: bottomAnchor, constant: 0)
+//    lazy var trimViewLeadingConstraint = trimView.leadingAnchor
+//        .constraint(equalTo: leadingAnchor, constant: 0)
+//    lazy var trimViewTrailingConstraint = trimView.trailingAnchor
+//        .constraint(equalTo: trailingAnchor, constant: 0)
+//    private lazy var trimViewWidthContraint = trimView.widthAnchor
+//        .constraint(greaterThanOrEqualToConstant: draggableViewWidth * 2 + borderWidth)
 
     private lazy var leftDraggableViewLeadingAnchor = leftDraggableView.leadingAnchor
         .constraint(equalTo: trimView.leadingAnchor, constant: 0)
@@ -286,23 +289,23 @@ open class TrimmerView: UIView {
     private lazy var rightDraggableViewWidthAnchor = rightDraggableView.widthAnchor
         .constraint(equalToConstant: draggableViewWidth)
 
-    private lazy var leftMaskViewTopAnchor = leftMaskView.topAnchor
-        .constraint(equalTo: trimView.topAnchor, constant: 0)
-    private lazy var leftMaskViewBottomAnchor = leftMaskView.bottomAnchor
-        .constraint(equalTo: trimView.bottomAnchor, constant: 0)
-    private lazy var leftMaskViewLeadingAnchor = leftMaskView.leadingAnchor
-        .constraint(equalTo: leadingAnchor, constant: 0)
-    private lazy var leftMaskViewTrailingAnchor = leftMaskView.trailingAnchor
-        .constraint(equalTo: leftDraggableView.leadingAnchor, constant: 0)
-
-    private lazy var rightMaskViewTopAnchor = rightMaskView.topAnchor
-        .constraint(equalTo: topAnchor, constant: 0)
-    private lazy var rightMaskViewBottomAnchor = rightMaskView.bottomAnchor
-        .constraint(equalTo: bottomAnchor, constant: 0)
-    private lazy var rightMaskViewTrailingAnchor = rightMaskView.trailingAnchor
-        .constraint(equalTo: trailingAnchor, constant: 0)
-    private lazy var rightMaskViewLeadingAnchor = rightMaskView.leadingAnchor
-        .constraint(equalTo: rightDraggableView.trailingAnchor, constant: 0)
+//    private lazy var leftMaskViewTopAnchor = leftMaskView.topAnchor
+//        .constraint(equalTo: trimView.topAnchor, constant: 0)
+//    private lazy var leftMaskViewBottomAnchor = leftMaskView.bottomAnchor
+//        .constraint(equalTo: trimView.bottomAnchor, constant: 0)
+//    private lazy var leftMaskViewLeadingAnchor = leftMaskView.leadingAnchor
+//        .constraint(equalTo: leadingAnchor, constant: 0)
+//    private lazy var leftMaskViewTrailingAnchor = leftMaskView.trailingAnchor
+//        .constraint(equalTo: leftDraggableView.leadingAnchor, constant: 0)
+//
+//    private lazy var rightMaskViewTopAnchor = rightMaskView.topAnchor
+//        .constraint(equalTo: topAnchor, constant: 0)
+//    private lazy var rightMaskViewBottomAnchor = rightMaskView.bottomAnchor
+//        .constraint(equalTo: bottomAnchor, constant: 0)
+//    private lazy var rightMaskViewTrailingAnchor = rightMaskView.trailingAnchor
+//        .constraint(equalTo: trailingAnchor, constant: 0)
+//    private lazy var rightMaskViewLeadingAnchor = rightMaskView.leadingAnchor
+//        .constraint(equalTo: rightDraggableView.trailingAnchor, constant: 0)
 
     private lazy var timePointerViewWidthgAnchor = timePointerView.widthAnchor
         .constraint(equalToConstant: timePointerViewWidth)
@@ -337,8 +340,8 @@ open class TrimmerView: UIView {
 
         setup()
 
-        trimViewLeadingConstraint.priority = .defaultHigh
-        trimViewTrailingConstraint.priority = .defaultHigh
+//        trimViewLeadingConstraint.priority = .defaultHigh
+//        trimViewTrailingConstraint.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
             dimmingViewTopAnchor,
@@ -346,12 +349,12 @@ open class TrimmerView: UIView {
             dimmingViewLeadingAnchor,
             dimmingViewTrailingAnchor,
 
-            trimViewTopAnchorConstraint,
-            trimViewBottomAnchorConstraint,
-            trimViewLeadingConstraint,
-            trimViewTrailingConstraint,
-
-            trimViewWidthContraint,
+//            trimViewTopAnchorConstraint,
+//            trimViewBottomAnchorConstraint,
+//            trimViewLeadingConstraint,
+//            trimViewTrailingConstraint,
+//
+//            trimViewWidthContraint,
 
             leftDraggableViewLeadingAnchor,
             leftDraggableViewWidthAnchor,
@@ -363,15 +366,15 @@ open class TrimmerView: UIView {
             rightDraggableViewTrailingAnchor,
             rightDraggableViewWidthAnchor,
 
-            leftMaskViewTopAnchor,
-            leftMaskViewBottomAnchor,
-            leftMaskViewLeadingAnchor,
-            leftMaskViewTrailingAnchor,
-
-            rightMaskViewTopAnchor,
-            rightMaskViewBottomAnchor,
-            rightMaskViewLeadingAnchor,
-            rightMaskViewTrailingAnchor,
+//            leftMaskViewTopAnchor,
+//            leftMaskViewBottomAnchor,
+//            leftMaskViewLeadingAnchor,
+//            leftMaskViewTrailingAnchor,
+//
+//            rightMaskViewTopAnchor,
+//            rightMaskViewBottomAnchor,
+//            rightMaskViewLeadingAnchor,
+//            rightMaskViewTrailingAnchor,
 
             leftHandleViewCenterX,
             leftHandleViewCenterY,
@@ -397,12 +400,12 @@ open class TrimmerView: UIView {
         thumbnailsView.frame = thumbnailViewRect
 
         addSubview(thumbnailsView)
-        addSubview(trimView)
+//        addSubview(trimView)
 
         addSubview(leftDraggableView)
         addSubview(rightDraggableView)
-        addSubview(leftMaskView)
-        addSubview(rightMaskView)
+//        addSubview(leftMaskView)
+//        addSubview(rightMaskView)
         leftDraggableView.addSubview(leftHandleView)
         rightDraggableView.addSubview(rightHandleView)
 
@@ -439,6 +442,7 @@ open class TrimmerView: UIView {
             action: #selector(handlePan))
         leftDraggableView.addGestureRecognizer(leftPanGesture)
 
+
         let rightPanGesture = UIPanGestureRecognizer(
             target: self,
             action: #selector(handlePan))
@@ -452,26 +456,28 @@ open class TrimmerView: UIView {
 
     @objc func handlePan(_ sender: UIPanGestureRecognizer) {
         guard let view = sender.view else { return }
-
+        sender.maximumNumberOfTouches = 1
         let isLeftGesture = (view == leftDraggableView)
         switch sender.state {
 
         case .began:
-            if isLeftGesture,
-                let maxDistance = maximumDistanceBetweenDraggableViews,
-                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) > maxDistance {
-                currentLeadingConstraint = trimViewLeadingConstraint.constant
-                currentTrailingConstraint = trimViewTrailingConstraint.constant
-            } else if isLeftGesture {
-                currentLeadingConstraint = trimViewLeadingConstraint.constant
-            } else if !isLeftGesture,
-                let maxDistance = maximumDistanceBetweenDraggableViews,
-            (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) > maxDistance {
-                currentLeadingConstraint = trimViewLeadingConstraint.constant
-                currentTrailingConstraint = trimViewTrailingConstraint.constant
-            } else {
-                currentTrailingConstraint = trimViewTrailingConstraint.constant
-            }
+//            currentLeadingConstraint = trimViewLeadingConstraint.constant
+//            currentTrailingConstraint = trimViewTrailingConstraint.constant
+
+//            guard let maxDistance = maximumDistanceBetweenDraggableViews else { return }
+//            if isLeftGesture,
+//                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) >= maxDistance {
+//                currentLeadingConstraint = trimViewLeadingConstraint.constant
+//                currentTrailingConstraint = trimViewTrailingConstraint.constant
+//            } else if isLeftGesture {
+//                currentLeadingConstraint = trimViewLeadingConstraint.constant
+//            } else if !isLeftGesture {
+////            (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) > maxDistance {
+//                currentLeadingConstraint = trimViewLeadingConstraint.constant
+//                currentTrailingConstraint = trimViewTrailingConstraint.constant
+//            } else {
+//                currentTrailingConstraint = trimViewTrailingConstraint.constant
+//            }
 
             if let start = startTime {
                 delegate?.trimmerDidBeginDragging?(self, with: start)
@@ -479,21 +485,31 @@ open class TrimmerView: UIView {
 
         case .changed:
             let translation = sender.translation(in: view)
+            guard let maxDistance = maximumDistanceBetweenDraggableViews else { return }
+            guard let minDistance = minimumDistanceBetweenDraggableViews else { return }
+            let currenAreaBetweenPan = rightDraggableView.frame.origin.x - leftDraggableView.frame.origin.x
+            let newDestionation = CGAffineTransform(translationX: translation.x, y: 0)
+            let newScale = CGAffineTransform(scaleX: translation.x, y: 0)
 
-            if isLeftGesture,
-                let maxDistance = maximumDistanceBetweenDraggableViews,
-                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) > maxDistance {
-                updateLeadingConstraint(with: translation)
-                updateTrailingConstraint(with: translation)
-            } else if isLeftGesture {
-                updateLeadingConstraint(with: translation)
-            } else if !isLeftGesture,
-                let maxDistance = maximumDistanceBetweenDraggableViews,
-                (bounds.width - draggableViewWidth * 2 - trimViewLeadingConstraint.constant - abs(trimViewTrailingConstraint.constant)) > maxDistance {
-                updateLeadingConstraint(with: translation)
-                updateTrailingConstraint(with: translation)
-            } else {
-                updateTrailingConstraint(with: translation)
+            if isLeftGesture{
+                if currenAreaBetweenPan >= maxDistance {
+                    if translation.x < 0 {
+                        leftDraggableView.transform = newDestionation
+                        rightDraggableView.transform = newDestionation
+                    }else {
+                        leftDraggableView.transform = newDestionation
+                    }
+                }
+            }else {
+                if currenAreaBetweenPan >= maxDistance {
+                    if translation.x > 0 {
+                        leftDraggableView.transform = newDestionation
+                        rightDraggableView.transform = newDestionation
+                    }else {
+                        rightDraggableView.transform = newDestionation
+
+                    }
+                }
             }
 
             UIView.animate(withDuration: 0.1) {
@@ -572,7 +588,7 @@ open class TrimmerView: UIView {
             currentLeadingConstraint + translation.x,
             0, maxConstraint)
 
-        trimViewLeadingConstraint.constant = newPosition
+//        trimViewLeadingConstraint.constant = newPosition
 
     }
 
@@ -589,7 +605,7 @@ open class TrimmerView: UIView {
             currentTrailingConstraint + translation.x,
             -maxConstraint, 0)
 
-        trimViewTrailingConstraint.constant = newPosition
+//        trimViewTrailingConstraint.constant = newPosition
     }
 
     /// Set up the new position of the pointer when the video play
@@ -626,14 +642,14 @@ open class TrimmerView: UIView {
 
         let newStartTime = CMTime(value: trimStartPosition, timescale: timeScale)
         if let leadingValue = thumbnailsView.getPosition(from: newStartTime) {
-            trimViewLeadingConstraint.constant = leadingValue
+//            trimViewLeadingConstraint.constant = leadingValue
         }
 
         let newEndTime = CMTime(
             value: trimEndPosition + videoTrack.minFrameDuration.value,
             timescale: timeScale)
         if let trailingValue = thumbnailsView.getPosition(from: newEndTime) {
-            trimViewTrailingConstraint.constant = trailingValue - bounds.width + draggableViewWidth * 2
+//            trimViewTrailingConstraint.constant = trailingValue - bounds.width + draggableViewWidth * 2
         }
     }
 
