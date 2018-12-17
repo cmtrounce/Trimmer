@@ -79,12 +79,6 @@ open class TrimmerView: UIView {
         }
     }
 
-    @IBInspectable open var handleViewHeight: CGFloat = 25 {
-        didSet {
-
-        }
-    }
-
     @IBInspectable open var handleViewColor: UIColor = .white {
         didSet {
             //            leftHandleView.backgroundColor = handleViewColor
@@ -119,6 +113,7 @@ open class TrimmerView: UIView {
         view.frame = .zero
         view.backgroundColor = mainColor
         view.isUserInteractionEnabled = true
+        view.tag = 0
         return view
     }()
 
@@ -127,6 +122,7 @@ open class TrimmerView: UIView {
         view.frame = .zero
         view.backgroundColor = mainColor
         view.isUserInteractionEnabled = true
+        view.tag = 1
         return view
     }()
 
@@ -136,6 +132,45 @@ open class TrimmerView: UIView {
         thumbsView.isUserInteractionEnabled = true
         return thumbsView
     }()
+
+    lazy var leftMaskView: UIView = {
+        let view = UIView()
+        view.frame = .zero
+        view.backgroundColor = .white
+        view.alpha = alphaView
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+
+    lazy var rightMaskView: UIView = {
+        let view = UIView()
+        view.frame = .zero
+        view.backgroundColor = .white
+        view.alpha = alphaView
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+
+    lazy var leftHandleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = handleViewColor
+        view.layer.cornerRadius = 2
+        return view
+    }()
+
+    lazy var rightHandleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = handleViewColor
+        view.layer.cornerRadius = 2
+        return view
+    }()
+
+    var trimViewRect: CGRect {
+        return CGRect(x: leftDraggableView.frame.minX,
+                      y: 0,
+                      width: rightDraggableView.frame.maxX - leftDraggableView.frame.minX,
+                      height: bounds.height)
+    }
 
     var thumbnailsViewRect: CGRect {
         return CGRect(x: 0,
@@ -156,6 +191,34 @@ open class TrimmerView: UIView {
                       y: 0,
                       width: draggableViewWidth,
                       height: bounds.height)
+    }
+
+    var leftMaskViewRect: CGRect {
+        return CGRect(x: 0,
+                      y: 0,
+                      width: leftDraggableView.frame.minX,
+                      height: bounds.height)
+    }
+
+    var rightMaskViewRect: CGRect {
+        return CGRect(x: rightDraggableView.frame.maxX,
+                      y: 0,
+                      width: bounds.width - rightDraggableView.frame.maxX,
+                      height: bounds.height)
+    }
+
+    var leftHandleViewRect: CGRect {
+        return CGRect(x: leftDraggableView.frame.width/2,
+                      y: rightDraggableView.frame.height/4,
+                      width: handleViewWidth,
+                      height: leftDraggableView.bounds.height / 2)
+    }
+
+    var rightHandleViewRect: CGRect {
+        return CGRect(x: rightDraggableView.frame.width/2,
+                      y: rightDraggableView.frame.height/4,
+                      width: handleViewWidth,
+                      height: rightDraggableView.bounds.height / 2)
     }
 
     let maximumDistance: CGFloat = 150
@@ -187,8 +250,15 @@ open class TrimmerView: UIView {
 
     private func commonInit() {
         addSubview(thumbnailsView)
+        addSubview(trimView)
         addSubview(leftDraggableView)
         addSubview(rightDraggableView)
+
+        leftDraggableView.addSubview(leftHandleView)
+        rightDraggableView.addSubview(rightHandleView)
+
+        addSubview(leftMaskView)
+        addSubview(rightMaskView)
 
         updateFrame()
 
@@ -199,6 +269,14 @@ open class TrimmerView: UIView {
         thumbnailsView.frame = thumbnailsViewRect
         leftDraggableView.frame = leftDraggableViewRect
         rightDraggableView.frame = rightDraggableViewRect
+
+        trimView.frame = trimViewRect
+
+        leftMaskView.frame = leftMaskViewRect
+        rightMaskView.frame = rightMaskViewRect
+
+        leftHandleView.frame = leftHandleViewRect
+        rightHandleView.frame = rightHandleViewRect
     }
 
     //MARK: Gestures
@@ -274,14 +352,14 @@ open class TrimmerView: UIView {
         } else if currentDistance <= minimumDistance {
             print("less than min distance")
             if isLeftGesture {
-                if translation.x < 0 && leftDraggableView.center.x >= 0 {
+                if translation.x < 0 && leftDraggableView.center.x > leftDraggableView.bounds.width/2 {
                     moveDraggable(sender : sender, pan: leftDraggableView)
                 }
                 if translation.x > 0 {
                     moveBoth(sender : sender, isLeftPan: isLeftGesture, currentDistance: currentDistance)
                 }
             } else {
-                if translation.x > 0 && rightDraggableView.center.x <= bounds.width{
+                if translation.x > 0 && rightDraggableView.center.x < bounds.width - rightDraggableView.bounds.width/2{
                     moveDraggable(sender : sender, pan: rightDraggableView)
                 }
                 if translation.x < 0 {
@@ -373,13 +451,15 @@ open class TrimmerView: UIView {
 
     func moveBoth(sender : UIPanGestureRecognizer, isLeftPan : Bool, currentDistance : CGFloat) {
         if isLeftPan {
-            if leftDraggableView.center.x <= 0.1 {
+            if leftDraggableView.center.x < leftDraggableView.bounds.width/2 {
                 sender.setTranslation(CGPoint.zero, in: self)
                 return
-            } else if rightDraggableView.center.x >= bounds.width - 0.1 {
+            } else if rightDraggableView.center.x > bounds.width - rightDraggableView.bounds.width/2 {
                 if (sender.translation(in: self).x < 0){
                     if(currentDistance < maximumDistance){
+
                         moveDraggable(sender: sender, pan: leftDraggableView)
+
                     }else {
                         leftDraggableView.center = CGPoint(x: leftDraggableView.center.x + sender.translation(in: self).x, y: leftDraggableView.center.y)
                         rightDraggableView.center = CGPoint(x: rightDraggableView.center.x + sender.translation(in: self).x, y: rightDraggableView.center.y)
@@ -404,10 +484,10 @@ open class TrimmerView: UIView {
             }
         }
         else {
-            if rightDraggableView.center.x >= bounds.width - 0.1  {
+            if rightDraggableView.center.x >= bounds.width - rightDraggableView.bounds.width/2 {
                 sender.setTranslation(CGPoint.zero, in: self)
                 return
-            } else if leftDraggableView.center.x <= 0.1 {
+            } else if leftDraggableView.center.x < leftDraggableView.bounds.width/2 {
                 if (sender.translation(in: self).x > 0){
                     if(currentDistance < maximumDistance){
                         moveDraggable(sender: sender, pan: rightDraggableView)
@@ -435,16 +515,24 @@ open class TrimmerView: UIView {
             }
         }
 
+        trimView.frame = trimViewRect
+        leftMaskView.frame = leftMaskViewRect
+        rightMaskView.frame = rightMaskViewRect
 
-
-//        leftDraggableView.center.x = leftDraggableView.center.x + point.x
-//        rightDraggableView.center.x = rightDraggableView.center.x + point.x
     }
 
     func moveDraggable(sender: UIPanGestureRecognizer, pan: UIView) {
-            pan.center = CGPoint(x: pan.center.x + sender.translation(in: self).x, y: pan.center.y)
-            sender.setTranslation(CGPoint.zero, in: self)
+
+        pan.center = CGPoint(x: pan.center.x + sender.translation(in: self).x, y: pan.center.y)
+        if pan.tag == 0 {
+            leftMaskView.frame = leftMaskViewRect
+        } else {
+            rightMaskView.frame = rightMaskViewRect
+        }
+        trimView.frame = trimViewRect
+        sender.setTranslation(CGPoint.zero, in: self)
 //        pan.center.x = pan.center.x + point.x
+
     }
 
 
@@ -462,25 +550,7 @@ enum Direction {
 //@IBDesignable
 //open class TrimmerViewOld: UIView {
 //
-//    lazy var leftMaskView: UIView = {
-//        let view = UIView()
-//        view.frame = .zero
-//        view.backgroundColor = .white
-//        view.alpha = alphaView
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.isUserInteractionEnabled = false
-//        return view
-//    }()
-//
-//    lazy var rightMaskView: UIView = {
-//        let view = UIView()
-//        view.frame = .zero
-//        view.backgroundColor = .white
-//        view.alpha = alphaView
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.isUserInteractionEnabled = false
-//        return view
-//    }()
+
 //
 //    private let timePointerView: UIView = {
 //        let view = UIView()
@@ -493,21 +563,7 @@ enum Direction {
 //
 //
 //
-//    lazy var leftHandleView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = handleViewColor
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.layer.cornerRadius = 2
-//        return view
-//    }()
-//
-//    lazy var rightHandleView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = handleViewColor
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.layer.cornerRadius = 2
-//        return view
-//    }()
+
 //
 //    //MARK: Properties
 //
