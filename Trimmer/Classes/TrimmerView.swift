@@ -585,13 +585,12 @@ open class TrimmerView: UIView {
 
         @objc func handleScrubbingPan(_ sender: UIPanGestureRecognizer) {
             switch sender.state {
-//            case .began:
-//                currentPointerLeadingConstraint = position.x + view.frame.minX - draggableViewWidth
-//
-//                guard let time = thumbnailsView.getTime(
-//                    from: currentPointerLeadingConstraint) else { return }
-//                delegate?.trimmerScrubbingDidBegin?(self,
-//                                                    with: time)
+            case .began:
+
+                guard let time = thumbnailsView.getTime(
+                    from: pointerView.frame.minX) else { return }
+                delegate?.trimmerScrubbingDidBegin?(self,
+                                                    with: time)
 
             case .changed:
                 if pointerView.frame.minX >= (leftDraggableView.frame.maxX + 5) && pointerView.frame.maxX <= (rightDraggableView.frame.minX - 5) {
@@ -608,27 +607,40 @@ open class TrimmerView: UIView {
                         sender.setTranslation(CGPoint.zero, in: self)
                     }
                 }
-//                guard let time = thumbnailsView.getTime(
-//                    from: currentPointerLeadingConstraint) else { return }
-//                delegate?.trimmerScrubbingDidChange?(self,
-//                                                     with: time)
-//            case .failed, .ended, .cancelled:
-//                guard let time = thumbnailsView.getTime(
-//                    from: currentPointerLeadingConstraint) else { return }
-//                delegate?.trimmerScrubbingDidEnd?(self,
-//                                                  with: time)
+                guard let time = thumbnailsView.getTime(
+                    from: pointerView.frame.minX) else { return }
+                delegate?.trimmerScrubbingDidChange?(self,
+                                                     with: time)
+            case .failed, .ended, .cancelled:
+                guard let time = thumbnailsView.getTime(
+                    from: pointerView.frame.minX) else { return }
+                delegate?.trimmerScrubbingDidEnd?(self,
+                                                  with: time)
             default:
                 break
             }
         }
 
+//     Set up the new position of the pointer when the video play
+        func seek(to time: CMTime) {
+            guard let newPosition = thumbnailsView.getPosition(from: time)
+                else { return }
 
+            assert(thumbnailsView.getNormalizedTime(from: time)! < 1.1)
+
+            let offsetPosition = thumbnailsView
+                .convert(CGPoint(x: newPosition, y: 0), to: trimView)
+                .x - draggableViewWidth
+
+            let maxPosition = rightDraggableView.frame.minX
+
+            let clampedPosition = clamp(offsetPosition, 0, maxPosition)
+            pointerView.center = CGPoint(x: clampedPosition, y: pointerView.center.y)
+//            layoutIfNeeded()
+        }
 }
 
-enum Direction {
-    case left
-    case right
-}
+
 
 
 
@@ -760,25 +772,7 @@ enum Direction {
 ////        trimViewTrailingConstraint.constant = newPosition
 //    }
 //
-//    /// Set up the new position of the pointer when the video play
-//    func seek(to time: CMTime) {
-//        guard let newPosition = thumbnailsView.getPosition(from: time)
-//            else { return }
 //
-//        assert(thumbnailsView.getNormalizedTime(from: time)! < 1.1)
-//
-//        let offsetPosition = thumbnailsView
-//            .convert(CGPoint(x: newPosition, y: 0), to: trimView)
-//            .x - draggableViewWidth
-//
-//        let maxPosition = rightDraggableView.frame.minX
-//            - leftDraggableView.frame.maxX
-//            - timePointerView.frame.width
-//
-//        let clampedPosition = clamp(offsetPosition, 0, maxPosition)
-//        timePointerViewLeadingAnchor.constant = CGFloat(clampedPosition)
-//        layoutIfNeeded()
-//    }
 //
 //    /// Reset the pointer near the left draggable view
 //    func resetTimePointer() {

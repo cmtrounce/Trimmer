@@ -272,7 +272,7 @@ extension TrimmingController: TrimmerViewDelegate {
                 to: currentTimeScrub,
                 toleranceBefore: tolerance,
                 toleranceAfter: tolerance)
-//            trimmerView.seek(to: currentTimeScrub)
+            trimmerView.seek(to: currentTimeScrub)
 
             assert(currentTimeScrub.seconds >= 0)
         }
