@@ -117,7 +117,7 @@ open class TrimmingController: NSObject {
         player?.seek(to: currentStartTime!,
                      toleranceBefore: CMTime.zero,
                      toleranceAfter: CMTime.zero)
-//        trimmerView.seek(to: currentStartTime!)
+        trimmerView.seek(to: currentStartTime!)
     }
 
     open func updateTimes(trimStartPosition: Int64,
@@ -134,7 +134,7 @@ open class TrimmingController: NSObject {
         player?.seek(to: currentStartTime!,
                      toleranceBefore: CMTime.zero,
                      toleranceAfter: CMTime.zero)
-//        trimmerView.seek(to: currentStartTime!)
+        trimmerView.seek(to: currentStartTime!)
     }
 
     /// When the video is finish reset the pointer at the beginning
@@ -184,14 +184,14 @@ open class TrimmingController: NSObject {
             playBackTime,
             timescale: timeScale,
             method: .default)
-//        trimmerView.seek(to: timeAccordingToMediaTimescale)
+        trimmerView.seek(to: timeAccordingToMediaTimescale)
 
         if playBackTime >= endTime {
             /// Leave this seek with tolerance zero otherwise will be a little delay of the update of pointer position
             player.seek(to: startTime,
                         toleranceBefore: CMTime.zero,
                         toleranceAfter: CMTime.zero)
-//            trimmerView.seek(to: startTime)
+            trimmerView.seek(to: startTime)
             pause()
 //            trimmerView.resetTimePointer()
         }

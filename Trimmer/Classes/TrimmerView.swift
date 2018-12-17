@@ -625,16 +625,8 @@ open class TrimmerView: UIView {
         func seek(to time: CMTime) {
             guard let newPosition = thumbnailsView.getPosition(from: time)
                 else { return }
-
             assert(thumbnailsView.getNormalizedTime(from: time)! < 1.1)
-
-            let offsetPosition = thumbnailsView
-                .convert(CGPoint(x: newPosition, y: 0), to: trimView)
-                .x - draggableViewWidth
-
-            let maxPosition = rightDraggableView.frame.minX
-
-            let clampedPosition = clamp(offsetPosition, 0, maxPosition)
+            let clampedPosition = clamp(pointerView.center.x , 0, rightDraggableView.center.x)
             pointerView.center = CGPoint(x: clampedPosition, y: pointerView.center.y)
 //            layoutIfNeeded()
         }
