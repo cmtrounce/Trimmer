@@ -51,6 +51,11 @@
                BlueprintName = "Trimmer_Tests"
                ReferencedContainer = "container:Trimmer.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "TrimmerViewTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
