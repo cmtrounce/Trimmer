@@ -594,30 +594,20 @@ open class TrimmerView: UIView {
 //                                                    with: time)
 
             case .changed:
-                if pointerView.frame.minX >= (leftDraggableView.frame.maxX + 5) {
+                if pointerView.frame.minX >= (leftDraggableView.frame.maxX + 5) && pointerView.frame.maxX <= (rightDraggableView.frame.minX - 5) {
                     pointerView.center = CGPoint(x: pointerView.center.x + sender.translation(in: self).x, y: pointerView.center.y)
                     sender.setTranslation(CGPoint.zero, in: self)
-                }
-                else {
+                } else if pointerView.frame.minX <= (leftDraggableView.frame.maxX + 5) {
                     if sender.translation(in: self).x > 0{
                         pointerView.center = CGPoint(x: pointerView.center.x + sender.translation(in: self).x, y: pointerView.center.y)
                         sender.setTranslation(CGPoint.zero, in: self)
                     }
-                }
-
-                if pointerView.frame.maxX <= (rightDraggableView.frame.maxX - 5) {
-                    pointerView.center = CGPoint(x: pointerView.center.x + sender.translation(in: self).x, y: pointerView.center.y)
-                    sender.setTranslation(CGPoint.zero, in: self)
-                }
-                else {
+                }else if pointerView.frame.maxX >= (rightDraggableView.frame.minX - 5) {
                     if sender.translation(in: self).x < 0{
                         pointerView.center = CGPoint(x: pointerView.center.x + sender.translation(in: self).x, y: pointerView.center.y)
                         sender.setTranslation(CGPoint.zero, in: self)
                     }
                 }
-
-
-
 //                guard let time = thumbnailsView.getTime(
 //                    from: currentPointerLeadingConstraint) else { return }
 //                delegate?.trimmerScrubbingDidChange?(self,
@@ -634,6 +624,15 @@ open class TrimmerView: UIView {
 
 
 }
+
+enum Direction {
+    case left
+    case right
+}
+
+
+
+
 //
 //@IBDesignable
 //open class TrimmerViewOld: UIView {
