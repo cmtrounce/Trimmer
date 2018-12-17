@@ -56,33 +56,21 @@ open class TrimmerView: UIView {
 
     @IBInspectable open var alphaView: CGFloat = 0.7 {
         didSet {
-            //            leftMaskView.alpha = alphaView
-            //            rightMaskView.alpha = alphaView
+            leftMaskView.alpha = alphaView
+            rightMaskView.alpha = alphaView
         }
     }
 
-    @IBInspectable open var draggableViewWidth: CGFloat = 20 {
-        didSet {
+    @IBInspectable open var draggableViewWidth: CGFloat = 20
 
-        }
-    }
+    @IBInspectable open var pointerViewWidth: CGFloat = 2
 
-    @IBInspectable open var timePointerViewWidth: CGFloat = 2 {
-        didSet {
-
-        }
-    }
-
-    @IBInspectable open var handleViewWidth: CGFloat = 2 {
-        didSet {
-
-        }
-    }
+    @IBInspectable open var handleViewWidth: CGFloat = 2
 
     @IBInspectable open var handleViewColor: UIColor = .white {
         didSet {
-            //            leftHandleView.backgroundColor = handleViewColor
-            //            rightHandleView.backgroundColor = handleViewColor
+            leftHandleView.backgroundColor = handleViewColor
+            rightHandleView.backgroundColor = handleViewColor
         }
     }
 
@@ -165,6 +153,15 @@ open class TrimmerView: UIView {
         return view
     }()
 
+    lazy var pointerView: UIView = {
+        let view = UIView()
+        view.frame = .zero
+        view.backgroundColor = UIColor.white
+        return view
+    }()
+
+    
+
     var trimViewRect: CGRect {
         return CGRect(x: leftDraggableView.frame.minX,
                       y: 0,
@@ -221,6 +218,13 @@ open class TrimmerView: UIView {
                       height: rightDraggableView.bounds.height / 2)
     }
 
+    var pointerViewRect: CGRect {
+        return CGRect(x: leftDraggableView.frame.maxX,
+                      y: borderWidth,
+                      width: pointerViewWidth,
+                      height: bounds.height - borderWidth * 2)
+    }
+
     let maximumDistance: CGFloat = 150
     let minimumDistance: CGFloat = 20
 
@@ -245,12 +249,22 @@ open class TrimmerView: UIView {
     open override func layoutSubviews() {
         super.layoutSubviews()
 
-        //updateFrame()
+//        thumbnailsView.frame = thumbnailsViewRect
+//        trimView.frame = trimViewRect
+//        leftDraggableView.frame = leftDraggableViewRect
+//        rightDraggableView.frame = rightDraggableViewRect
+//
+//        leftMaskView.frame = leftMaskViewRect
+//        rightMaskView.frame = rightMaskViewRect
+//
+//        leftHandleView.frame = leftHandleViewRect
+//        rightHandleView.frame = rightHandleViewRect
     }
 
     private func commonInit() {
         addSubview(thumbnailsView)
         addSubview(trimView)
+        addSubview(pointerView)
         addSubview(leftDraggableView)
         addSubview(rightDraggableView)
 
@@ -277,6 +291,8 @@ open class TrimmerView: UIView {
 
         leftHandleView.frame = leftHandleViewRect
         rightHandleView.frame = rightHandleViewRect
+
+        pointerView.frame = pointerViewRect
     }
 
     //MARK: Gestures
@@ -292,10 +308,10 @@ open class TrimmerView: UIView {
             action: #selector(handlePan))
         rightDraggableView.addGestureRecognizer(rightPanGesture)
 
-        //        let thumbsPanGesture = UIPanGestureRecognizer(
-        //            target: self,
-        //            action: #selector(handleScrubbingPan))
-        //        trimView.addGestureRecognizer(thumbsPanGesture)
+        let thumbsPanGesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(handleScrubbingPan))
+        trimView.addGestureRecognizer(thumbsPanGesture)
     }
 
     var currentLeftPosition = CGFloat()
@@ -463,7 +479,13 @@ open class TrimmerView: UIView {
                     }else {
                         leftDraggableView.center = CGPoint(x: leftDraggableView.center.x + sender.translation(in: self).x, y: leftDraggableView.center.y)
                         rightDraggableView.center = CGPoint(x: rightDraggableView.center.x + sender.translation(in: self).x, y: rightDraggableView.center.y)
+                        if rightDraggableView.frame.minX - pointerView.frame.maxX <= 0.1 && sender.translation(in: self).x < 0 {
+                            pointerView.frame.origin.x = rightDraggableView.frame.minX
+                        } else if pointerView.frame.minX - leftDraggableView.frame.maxX <= 0.1 && sender.translation(in: self).x > 0 {
+                            pointerView.frame.origin.x = leftDraggableView.frame.maxX
+                        }
                         sender.setTranslation(CGPoint.zero, in: self)
+
                     }
                 }else if (sender.translation(in: self).x > 0){
                     if(currentDistance < maximumDistance ) {
@@ -478,6 +500,12 @@ open class TrimmerView: UIView {
             } else if currentDistance <= minimumDistance || currentDistance >= maximumDistance {
                 leftDraggableView.center = CGPoint(x: leftDraggableView.center.x + sender.translation(in: self).x, y: leftDraggableView.center.y)
                 rightDraggableView.center = CGPoint(x: rightDraggableView.center.x + sender.translation(in: self).x, y: rightDraggableView.center.y)
+
+                if rightDraggableView.frame.minX - pointerView.frame.maxX <= 0.1 && sender.translation(in: self).x < 0 {
+                    pointerView.frame.origin.x = rightDraggableView.frame.minX
+                } else if pointerView.frame.minX - leftDraggableView.frame.maxX <= 0.1 && sender.translation(in: self).x > 0 {
+                    pointerView.frame.origin.x = leftDraggableView.frame.maxX
+                }
                 sender.setTranslation(CGPoint.zero, in: self)
             } else if currentDistance >= minimumDistance {
                 moveDraggable(sender: sender, pan: leftDraggableView)
@@ -494,6 +522,13 @@ open class TrimmerView: UIView {
                     }else {
                         leftDraggableView.center = CGPoint(x: leftDraggableView.center.x + sender.translation(in: self).x, y: leftDraggableView.center.y)
                         rightDraggableView.center = CGPoint(x: rightDraggableView.center.x + sender.translation(in: self).x, y: rightDraggableView.center.y)
+
+                        if rightDraggableView.frame.minX - pointerView.frame.maxX <= 0.1 && sender.translation(in: self).x < 0 {
+                            pointerView.frame.origin.x = rightDraggableView.frame.minX
+                        } else if pointerView.frame.minX - leftDraggableView.frame.maxX <= 0.1 && sender.translation(in: self).x > 0 {
+                            pointerView.frame.origin.x = leftDraggableView.frame.maxX
+                        }
+
                         sender.setTranslation(CGPoint.zero, in: self)
                     }
                 }else if (sender.translation(in: self).x < 0){
@@ -509,6 +544,13 @@ open class TrimmerView: UIView {
             } else if currentDistance <= minimumDistance || currentDistance >= maximumDistance {
                 leftDraggableView.center = CGPoint(x: leftDraggableView.center.x + sender.translation(in: self).x, y: leftDraggableView.center.y)
                 rightDraggableView.center = CGPoint(x: rightDraggableView.center.x + sender.translation(in: self).x, y: rightDraggableView.center.y)
+
+                if rightDraggableView.frame.minX - pointerView.frame.maxX <= 0.1 && sender.translation(in: self).x < 0 {
+                    pointerView.frame.origin.x = rightDraggableView.frame.minX
+                } else if pointerView.frame.minX - leftDraggableView.frame.maxX <= 0.1 && sender.translation(in: self).x > 0 {
+                    pointerView.frame.origin.x = leftDraggableView.frame.maxX
+                }
+
                 sender.setTranslation(CGPoint.zero, in: self)
             } else if currentDistance >= minimumDistance {
                 moveDraggable(sender: sender, pan: rightDraggableView)
@@ -526,8 +568,14 @@ open class TrimmerView: UIView {
         pan.center = CGPoint(x: pan.center.x + sender.translation(in: self).x, y: pan.center.y)
         if pan.tag == 0 {
             leftMaskView.frame = leftMaskViewRect
+            if pointerView.frame.minX - pan.frame.maxX <= 0.1 && sender.translation(in: self).x > 0 {
+                pointerView.frame.origin.x = pan.frame.maxX
+            }
         } else {
             rightMaskView.frame = rightMaskViewRect
+            if pan.frame.minX - pointerView.frame.maxX <= 0.1 && sender.translation(in: self).x < 0 {
+                pointerView.frame.origin.x = pan.frame.minX
+            }
         }
         trimView.frame = trimViewRect
         sender.setTranslation(CGPoint.zero, in: self)
@@ -535,35 +583,60 @@ open class TrimmerView: UIView {
 
     }
 
+        @objc func handleScrubbingPan(_ sender: UIPanGestureRecognizer) {
+            switch sender.state {
+//            case .began:
+//                currentPointerLeadingConstraint = position.x + view.frame.minX - draggableViewWidth
+//
+//                guard let time = thumbnailsView.getTime(
+//                    from: currentPointerLeadingConstraint) else { return }
+//                delegate?.trimmerScrubbingDidBegin?(self,
+//                                                    with: time)
+
+            case .changed:
+                if pointerView.frame.minX >= (leftDraggableView.frame.maxX + 5) {
+                    pointerView.center = CGPoint(x: pointerView.center.x + sender.translation(in: self).x, y: pointerView.center.y)
+                    sender.setTranslation(CGPoint.zero, in: self)
+                }
+                else {
+                    if sender.translation(in: self).x > 0{
+                        pointerView.center = CGPoint(x: pointerView.center.x + sender.translation(in: self).x, y: pointerView.center.y)
+                        sender.setTranslation(CGPoint.zero, in: self)
+                    }
+                }
+
+                if pointerView.frame.maxX <= (rightDraggableView.frame.maxX - 5) {
+                    pointerView.center = CGPoint(x: pointerView.center.x + sender.translation(in: self).x, y: pointerView.center.y)
+                    sender.setTranslation(CGPoint.zero, in: self)
+                }
+                else {
+                    if sender.translation(in: self).x < 0{
+                        pointerView.center = CGPoint(x: pointerView.center.x + sender.translation(in: self).x, y: pointerView.center.y)
+                        sender.setTranslation(CGPoint.zero, in: self)
+                    }
+                }
+
+
+
+//                guard let time = thumbnailsView.getTime(
+//                    from: currentPointerLeadingConstraint) else { return }
+//                delegate?.trimmerScrubbingDidChange?(self,
+//                                                     with: time)
+//            case .failed, .ended, .cancelled:
+//                guard let time = thumbnailsView.getTime(
+//                    from: currentPointerLeadingConstraint) else { return }
+//                delegate?.trimmerScrubbingDidEnd?(self,
+//                                                  with: time)
+            default:
+                break
+            }
+        }
+
 
 }
-
-enum Direction {
-    case left
-    case right
-}
-
-
-
-
 //
 //@IBDesignable
 //open class TrimmerViewOld: UIView {
-//
-
-//
-//    private let timePointerView: UIView = {
-//        let view = UIView()
-//        view.frame = .zero
-//        view.backgroundColor = .white
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.isUserInteractionEnabled = false
-//        return view
-//    }()
-//
-//
-//
-
 //
 //    //MARK: Properties
 //
@@ -604,154 +677,6 @@ enum Direction {
 //            y: 0,
 //            width: bounds.width - draggableViewWidth * 2,
 //            height: bounds.height)
-//    }
-//
-//    // MARK: Constraints
-//    private(set) lazy var currentLeadingConstraint: CGFloat = 0
-//    private(set) lazy var currentTrailingConstraint: CGFloat = 0
-//    private(set) lazy var currentPointerLeadingConstraint: CGFloat = 0
-//
-//    private lazy var dimmingViewTopAnchor = thumbnailsView.topAnchor
-//        .constraint(equalTo: topAnchor, constant: 0)
-//    private lazy var dimmingViewBottomAnchor = thumbnailsView.bottomAnchor
-//        .constraint(equalTo: bottomAnchor, constant: 0)
-//    private lazy var dimmingViewLeadingAnchor = thumbnailsView.leadingAnchor
-//        .constraint(equalTo: leadingAnchor, constant: draggableViewWidth)
-//    private lazy var dimmingViewTrailingAnchor = thumbnailsView.trailingAnchor
-//        .constraint(equalTo: trailingAnchor, constant: -draggableViewWidth)
-//
-////    private lazy var trimViewTopAnchorConstraint = trimView.topAnchor
-////        .constraint(equalTo: topAnchor, constant: 0)
-////    private lazy var trimViewBottomAnchorConstraint = trimView.bottomAnchor
-////        .constraint(equalTo: bottomAnchor, constant: 0)
-////    lazy var trimViewLeadingConstraint = trimView.leadingAnchor
-////        .constraint(equalTo: leadingAnchor, constant: 0)
-////    lazy var trimViewTrailingConstraint = trimView.trailingAnchor
-////        .constraint(equalTo: trailingAnchor, constant: 0)
-////    private lazy var trimViewWidthContraint = trimView.widthAnchor
-////        .constraint(greaterThanOrEqualToConstant: draggableViewWidth * 2 + borderWidth)
-//
-//    private lazy var leftDraggableViewLeadingAnchor = leftDraggableView.leadingAnchor
-//        .constraint(equalTo: trimView.leadingAnchor, constant: 0)
-//    private lazy var leftDraggableViewWidthAnchor = leftDraggableView.widthAnchor
-//        .constraint(equalToConstant: draggableViewWidth)
-//    private lazy var leftDraggableViewTopAnchor = leftDraggableView.topAnchor
-//        .constraint(equalTo: trimView.topAnchor, constant: 0)
-//    private lazy var leftDraggableViewBottomAnchor = leftDraggableView.bottomAnchor
-//        .constraint(equalTo: trimView.bottomAnchor, constant: 0)
-//
-//    private lazy var rightDraggableViewTopAnchor = rightDraggableView.topAnchor
-//        .constraint(equalTo: trimView.topAnchor, constant: 0)
-//    private lazy var rightDraggableViewBottomAnchor = rightDraggableView.bottomAnchor
-//        .constraint(equalTo: trimView.bottomAnchor, constant: 0)
-//    private lazy var rightDraggableViewTrailingAnchor = rightDraggableView.trailingAnchor
-//        .constraint(equalTo: trimView.trailingAnchor, constant: 0)
-//    private lazy var rightDraggableViewWidthAnchor = rightDraggableView.widthAnchor
-//        .constraint(equalToConstant: draggableViewWidth)
-//
-////    private lazy var leftMaskViewTopAnchor = leftMaskView.topAnchor
-////        .constraint(equalTo: trimView.topAnchor, constant: 0)
-////    private lazy var leftMaskViewBottomAnchor = leftMaskView.bottomAnchor
-////        .constraint(equalTo: trimView.bottomAnchor, constant: 0)
-////    private lazy var leftMaskViewLeadingAnchor = leftMaskView.leadingAnchor
-////        .constraint(equalTo: leadingAnchor, constant: 0)
-////    private lazy var leftMaskViewTrailingAnchor = leftMaskView.trailingAnchor
-////        .constraint(equalTo: leftDraggableView.leadingAnchor, constant: 0)
-////
-////    private lazy var rightMaskViewTopAnchor = rightMaskView.topAnchor
-////        .constraint(equalTo: topAnchor, constant: 0)
-////    private lazy var rightMaskViewBottomAnchor = rightMaskView.bottomAnchor
-////        .constraint(equalTo: bottomAnchor, constant: 0)
-////    private lazy var rightMaskViewTrailingAnchor = rightMaskView.trailingAnchor
-////        .constraint(equalTo: trailingAnchor, constant: 0)
-////    private lazy var rightMaskViewLeadingAnchor = rightMaskView.leadingAnchor
-////        .constraint(equalTo: rightDraggableView.trailingAnchor, constant: 0)
-//
-//    private lazy var timePointerViewWidthgAnchor = timePointerView.widthAnchor
-//        .constraint(equalToConstant: timePointerViewWidth)
-//    private lazy var timePointerViewHeightAnchor = timePointerView.heightAnchor
-//        .constraint(equalToConstant: bounds.height - borderWidth * 2)
-//    private lazy var timePointerViewTopAnchor = timePointerView.topAnchor
-//        .constraint(equalTo: topAnchor, constant: borderWidth)
-//    private lazy var timePointerViewLeadingAnchor = timePointerView.leadingAnchor
-//        .constraint(equalTo: leftDraggableView.trailingAnchor, constant: 0)
-//
-//    private lazy var leftHandleViewCenterX = leftHandleView.centerXAnchor
-//        .constraint(equalTo: leftDraggableView.centerXAnchor)
-//    private lazy var leftHandleViewCenterY = leftHandleView.centerYAnchor
-//        .constraint(equalTo: leftDraggableView.centerYAnchor)
-//    private lazy var leftHandleViewWidth = leftHandleView.widthAnchor
-//        .constraint(equalToConstant: handleViewWidth)
-//    private lazy var leftHandleViewHeight = leftHandleView.heightAnchor
-//        .constraint(equalToConstant: handleViewHeight)
-//
-//    private lazy var rightHandleViewCenterX = rightHandleView.centerXAnchor
-//        .constraint(equalTo: rightDraggableView.centerXAnchor)
-//    private lazy var rightHandleViewCenterY = rightHandleView.centerYAnchor
-//        .constraint(equalTo: rightDraggableView.centerYAnchor)
-//    private lazy var rightHandleViewWidth = rightHandleView.widthAnchor
-//        .constraint(equalToConstant: handleViewWidth)
-//    private lazy var rightHandleViewHeight = rightHandleView.heightAnchor
-//        .constraint(equalToConstant: handleViewHeight)
-//
-//    // MARK: View Life Cycle
-//    override open func awakeFromNib() {
-//        super.awakeFromNib()
-//
-//        setup()
-//
-////        trimViewLeadingConstraint.priority = .defaultHigh
-////        trimViewTrailingConstraint.priority = .defaultHigh
-//
-//        NSLayoutConstraint.activate([
-//            dimmingViewTopAnchor,
-//            dimmingViewBottomAnchor,
-//            dimmingViewLeadingAnchor,
-//            dimmingViewTrailingAnchor,
-//
-////            trimViewTopAnchorConstraint,
-////            trimViewBottomAnchorConstraint,
-////            trimViewLeadingConstraint,
-////            trimViewTrailingConstraint,
-////
-////            trimViewWidthContraint,
-//
-//            leftDraggableViewLeadingAnchor,
-//            leftDraggableViewWidthAnchor,
-//            leftDraggableViewTopAnchor,
-//            leftDraggableViewBottomAnchor,
-//
-//            rightDraggableViewTopAnchor,
-//            rightDraggableViewBottomAnchor,
-//            rightDraggableViewTrailingAnchor,
-//            rightDraggableViewWidthAnchor,
-//
-////            leftMaskViewTopAnchor,
-////            leftMaskViewBottomAnchor,
-////            leftMaskViewLeadingAnchor,
-////            leftMaskViewTrailingAnchor,
-////
-////            rightMaskViewTopAnchor,
-////            rightMaskViewBottomAnchor,
-////            rightMaskViewLeadingAnchor,
-////            rightMaskViewTrailingAnchor,
-//
-//            leftHandleViewCenterX,
-//            leftHandleViewCenterY,
-//            leftHandleViewWidth,
-//            leftHandleViewHeight,
-//
-//            rightHandleViewCenterX,
-//            rightHandleViewCenterY,
-//            rightHandleViewWidth,
-//            rightHandleViewHeight
-//            ])
-//    }
-//
-//    open override func layoutSubviews() {
-//        super.layoutSubviews()
-//
-//        thumbnailsView.frame = thumbnailViewRect
 //    }
 //
 //    // MARK: Setups views
@@ -797,36 +722,7 @@ enum Direction {
 //
 
 //
-//    @objc func handleScrubbingPan(_ sender: UIPanGestureRecognizer) {
-//        guard let view = sender.view else { return }
-//        let translation = sender.translation(in: view)
-//        sender.setTranslation(.zero, in: view)
-//        let position = sender.location(in: view)
-//
-//        switch sender.state {
-//        case .began:
-//            currentPointerLeadingConstraint = position.x + view.frame.minX - draggableViewWidth
-//
-//            guard let time = thumbnailsView.getTime(
-//                from: currentPointerLeadingConstraint) else { return }
-//            delegate?.trimmerScrubbingDidBegin?(self,
-//                                                with: time)
-//
-//        case .changed:
-//            currentPointerLeadingConstraint += translation.x
-//            guard let time = thumbnailsView.getTime(
-//                from: currentPointerLeadingConstraint) else { return }
-//            delegate?.trimmerScrubbingDidChange?(self,
-//                                                 with: time)
-//        case .failed, .ended, .cancelled:
-//            guard let time = thumbnailsView.getTime(
-//                from: currentPointerLeadingConstraint) else { return }
-//            delegate?.trimmerScrubbingDidEnd?(self,
-//                                              with: time)
-//        default:
-//            break
-//        }
-//    }
+
 //
 //    //MARK: Methods
 //
