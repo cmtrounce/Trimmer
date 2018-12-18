@@ -367,6 +367,7 @@ open class TrimmerView: UIView {
                         moveDraggable(sender: sender, pan: leftDraggableView)
                     } else if translation.x < 0 {
                         moveBoth(sender: sender, isLeftPan: isLeftGesture, currentDistance: currentDistance)
+                        
                     }
                 } else if (leftDraggableView.frame.maxX <= 0){
                     if(translation.x > 0){
@@ -421,6 +422,9 @@ open class TrimmerView: UIView {
     func moveBoth(sender: UIPanGestureRecognizer, isLeftPan: Bool, currentDistance: CGFloat) {
         leftDraggableView.center = CGPoint(x: leftDraggableView.center.x + sender.translation(in: self).x, y: leftDraggableView.center.y)
         rightDraggableView.center = CGPoint(x: rightDraggableView.center.x + sender.translation(in: self).x, y: rightDraggableView.center.y)
+
+        dragPointerIfNeeded(sender: sender)
+
         sender.setTranslation(CGPoint.zero, in: self)
 
         //Update the views
@@ -443,10 +447,21 @@ open class TrimmerView: UIView {
                 pointerView.frame.origin.x = pan.frame.minX
             }
         }
+        
+        dragPointerIfNeeded(sender: sender)
 
         //Update the views
         trimView.frame = trimViewRect
         sender.setTranslation(CGPoint.zero, in: self)
+    }
+
+    func dragPointerIfNeeded(sender : UIPanGestureRecognizer){
+        //Check if we have to also drag the pointer with a pan
+        if rightDraggableView.frame.minX - pointerView.frame.maxX <= 0.05 && sender.translation(in: self).x < 0 {
+            pointerView.frame.origin.x = rightDraggableView.frame.minX
+        } else if pointerView.frame.minX - leftDraggableView.frame.maxX <= 0.05 && sender.translation(in: self).x > 0 {
+            pointerView.frame.origin.x = leftDraggableView.frame.maxX
+        }
     }
 
     @objc func handleScrubbingPan(_ sender: UIPanGestureRecognizer) {
