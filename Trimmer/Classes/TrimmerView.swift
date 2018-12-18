@@ -77,13 +77,12 @@ open class TrimmerView: UIView {
     @IBInspectable open var minVideoDurationAfterTrimming: Double = 2
     @IBInspectable open var maxVideoDurationAfterTrimming: Double = 6
 
-    @IBInspectable open var isTimePointerVisible: Bool = true
-
     open weak var delegate: TrimmerViewDelegate?
 
     var trimStartPosition: Int64 = 0
     var trimEndPosition: Int64 = 0
     var timeScale: Int32 = 0
+    var firtsTime = false
 
     //MARK: Views
     lazy var trimView: UIView = {
@@ -225,8 +224,15 @@ open class TrimmerView: UIView {
                       height: bounds.height - borderWidth * 2)
     }
 
-    let maximumDistance: CGFloat = 150
-    let minimumDistance: CGFloat = 20
+    var maximumDistance: CGFloat = 0 {
+        didSet {
+            if !firtsTime {
+                updateFrame()
+                firtsTime = true
+            }
+        }
+    }
+    var minimumDistance: CGFloat = 0
     var isDraggingByUser = false
 
     /// Return the time of the start
@@ -261,6 +267,7 @@ open class TrimmerView: UIView {
 
     open override func layoutSubviews() {
         super.layoutSubviews()
+        updateDistances()
 
         //        thumbnailsView.frame = thumbnailsViewRect
         //        trimView.frame = trimViewRect
@@ -291,7 +298,7 @@ open class TrimmerView: UIView {
         setupPanGestures()
     }
 
-    private func updateFrame() {
+    open func updateFrame() {
         thumbnailsView.frame = thumbnailsViewRect
         leftDraggableView.frame = leftDraggableViewRect
         rightDraggableView.frame = rightDraggableViewRect
@@ -475,8 +482,8 @@ open class TrimmerView: UIView {
         } else {
             if rightDraggableView.frame.minX > bounds.width {
                 if(sender.translation(in: self).x > 0) {
-                        sender.setTranslation(CGPoint.zero, in: self)
-                        return
+                    sender.setTranslation(CGPoint.zero, in: self)
+                    return
                 }else if sender.translation(in: self).x < 0 {
                     if currentDistance >= maximumDistance {
                         leftDraggableView.center = CGPoint(x: leftDraggableView.center.x + sender.translation(in: self).x, y: leftDraggableView.center.y)
@@ -607,73 +614,25 @@ open class TrimmerView: UIView {
             pointerView.center = CGPoint(x: clampedPosition, y: pointerView.center.y)
             
         }
-
-
-//        pointerView.center = CGPoint(x: pointerView.center.x + newPosition, y: pointerView.center.y)
     }
-
-//        func seek(to time: CMTime) {
-//            guard let newPosition = thumbnailsView.getPosition(from: time)
-//                else { return }
-//
-//            assert(thumbnailsView.getNormalizedTime(from: time)! < 1.1)
-//
-//    //        let offsetPosition = thumbnailsView
-//    //            .convert(CGPoint(x: newPosition, y: 0), to: trimView)
-//    //            .x - draggableViewWidth
-//    //
-//    //        let maxPosition = rightDraggableView.frame.minX
-//    //
-//    //        let clampedPosition = clamp(offsetPosition, 0, maxPosition)
-//            let clampedPosition = clamp(pointerView.center.x , 0, rightDraggableView.center.x)
-//            pointerView.center = CGPoint(x: clampedPosition, y: pointerView.center.y)
-//
-//    }
 
     /// Reset the pointer near the left draggable view
     func resetPointerView() {
         pointerView.frame.origin.x = leftDraggableView.frame.maxX
     }
 
-    open func getCurrentEndTime(duration: CMTime) -> CMTime{
-        print("rightDraggableView.center.x : \(rightDraggableView.center.x)")
-        return thumbnailsView.getTimeWithMaxDuration(from: rightDraggableView.frame.minX, maxDuration: duration)!
+    func updateDistances() {
+        maximumDistance = (bounds.width/CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(maxVideoDurationAfterTrimming)
+        minimumDistance = (bounds.width/CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(minVideoDurationAfterTrimming)
     }
 }
 
-//
-//@IBDesignable
-//open class TrimmerViewOld: UIView {
-//
-//    //MARK: Properties
-//
-//    // Return the minimum distance between the left and right view expressed in seconds
-//    private var minimumDistanceBetweenDraggableViews: CGFloat? {
-//        return (CGFloat(maxVideoDurationAfterTrimming)
-//            * thumbnailsView.durationSize
-//            / CGFloat(thumbnailsView.videoDuration.seconds))/3
-////        return CGFloat(minVideoDurationAfterTrimming)
-////            * thumbnailsView.durationSize
-////            / CGFloat(thumbnailsView.videoDuration.seconds)
-//    }
-//
-//    // Return the maximum distance between the left and right view expressed in seconds
-//    private var maximumDistanceBetweenDraggableViews: CGFloat? {
-//        return CGFloat(maxVideoDurationAfterTrimming)
-//            * thumbnailsView.durationSize
-//            / CGFloat(thumbnailsView.videoDuration.seconds)
-//    }
-//
+private func clamp<T: Comparable>(_ number: T, _ minimum: T, _ maximum: T) -> T {
+    return min(maximum, max(minimum, number))
+}
 
-//
-//    var thumbnailViewRect: CGRect {
-//        return CGRect(
-//            x: draggableViewWidth,
-//            y: 0,
-//            width: bounds.width - draggableViewWidth * 2,
-//            height: bounds.height)
-//    }
-//
+
+
 //    public func updateSubviews() {
 //        resetTimePointer()
 //        
@@ -696,6 +655,3 @@ open class TrimmerView: UIView {
 //
 //}
 
-private func clamp<T: Comparable>(_ number: T, _ minimum: T, _ maximum: T) -> T {
-    return min(maximum, max(minimum, number))
-}
