@@ -45,7 +45,6 @@ class ViewController: UIViewController {
         guard let videoTrack = asset.tracks(withMediaType: .video).first else { return }
 
         trimEndPosition = videoTrack.timeRange.duration.value
-//        trimmingController.trimmerView.updateDistances()
 
         timescale = videoTrack.naturalTimeScale
         trimmingController.setup(asset: asset!,

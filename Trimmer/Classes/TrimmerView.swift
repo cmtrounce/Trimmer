@@ -298,20 +298,23 @@ open class TrimmerView: UIView {
         setupPanGestures()
     }
 
-    open func updateFrame() {
+    func updateOnlyNeededFrame() {
+        trimView.frame = trimViewRect
+        leftMaskView.frame = leftMaskViewRect
+        rightMaskView.frame = rightMaskViewRect
+
+    }
+
+    func updateFrame() {
         thumbnailsView.frame = thumbnailsViewRect
         leftDraggableView.frame = leftDraggableViewRect
         rightDraggableView.frame = rightDraggableViewRect
 
-        trimView.frame = trimViewRect
-
-        leftMaskView.frame = leftMaskViewRect
-        rightMaskView.frame = rightMaskViewRect
-
         leftHandleView.frame = leftHandleViewRect
         rightHandleView.frame = rightHandleViewRect
-
         pointerView.frame = pointerViewRect
+
+        updateOnlyNeededFrame()
     }
 
     //MARK: Gestures
@@ -625,6 +628,28 @@ open class TrimmerView: UIView {
         maximumDistance = (bounds.width/CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(maxVideoDurationAfterTrimming)
         minimumDistance = (bounds.width/CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(minVideoDurationAfterTrimming)
     }
+
+    public func updateSubviews() {
+
+//        guard let asset = thumbnailsView.asset,
+//            let videoTrack = asset
+//                .tracks(withMediaType: .video).first else { return }
+
+        let newStartTime = CMTime(value: trimStartPosition, timescale: timeScale)
+        if let leadingValue = thumbnailsView.getPosition(from: newStartTime) {
+            leftDraggableView.center.x = leadingValue - (draggableViewWidth/2)
+        }
+
+        let newEndTime = CMTime(
+            value: trimEndPosition, //+ videoTrack.minFrameDuration.value,
+            timescale: timeScale)
+        if let trailingValue = thumbnailsView.getPosition(from: newEndTime) {
+            rightDraggableView.center.x = trailingValue + (draggableViewWidth/2)
+        }
+
+        updateOnlyNeededFrame()
+        resetPointerView()
+    }
 }
 
 private func clamp<T: Comparable>(_ number: T, _ minimum: T, _ maximum: T) -> T {
@@ -633,25 +658,7 @@ private func clamp<T: Comparable>(_ number: T, _ minimum: T, _ maximum: T) -> T 
 
 
 
-//    public func updateSubviews() {
-//        resetTimePointer()
-//        
-//        guard let asset = thumbnailsView.asset,
-//            let videoTrack = asset
-//            .tracks(withMediaType: .video).first else { return }
-//
-//        let newStartTime = CMTime(value: trimStartPosition, timescale: timeScale)
-//        if let leadingValue = thumbnailsView.getPosition(from: newStartTime) {
-////            trimViewLeadingConstraint.constant = leadingValue
-//        }
-//
-//        let newEndTime = CMTime(
-//            value: trimEndPosition + videoTrack.minFrameDuration.value,
-//            timescale: timeScale)
-//        if let trailingValue = thumbnailsView.getPosition(from: newEndTime) {
-////            trimViewTrailingConstraint.constant = trailingValue - bounds.width + draggableViewWidth * 2
-//        }
-//    }
-//
-//}
+
+
+
 

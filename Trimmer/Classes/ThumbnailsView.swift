@@ -95,9 +95,6 @@ class ThumbnailsView: UIView {
         return CMTime(
             value: Int64(positionTimeValue),
             timescale: videoDuration.timescale)
-
-//        let positionToTime = (bounds.width / CGFloat(videoDuration.seconds)) * position
-//        return CMTime(value: CMTimeValue(positionToTime), timescale: videoDuration.timescale)
     }
 
     func getTimeWithMaxDuration(from position: CGFloat, maxDuration : CMTime) -> CMTime? {
