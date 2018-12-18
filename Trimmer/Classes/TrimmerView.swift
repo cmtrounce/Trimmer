@@ -278,14 +278,13 @@ open class TrimmerView: UIView {
         addSubview(thumbnailsView)
         addSubview(trimView)
         addSubview(pointerView)
+        addSubview(leftMaskView)
+        addSubview(rightMaskView)
         addSubview(leftDraggableView)
         addSubview(rightDraggableView)
 
         leftDraggableView.addSubview(leftHandleView)
         rightDraggableView.addSubview(rightHandleView)
-
-        addSubview(leftMaskView)
-        addSubview(rightMaskView)
 
         updateFrame()
         
@@ -350,6 +349,7 @@ open class TrimmerView: UIView {
                 print("greater than max distance")
                 if isLeftGesture {
                     if translation.x < 0 {
+
                         moveBoth(sender: sender, isLeftPan: isLeftGesture, currentDistance: currentDistance)
                     }
                     if translation.x > 0 {
