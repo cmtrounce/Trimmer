@@ -35,6 +35,10 @@ import AVFoundation
     @objc optional func trimmerScrubbingDidEnd(
         _ trimmer: TrimmerView,
         with currentTimeScrub: CMTime)
+
+    @objc optional func trimmerDidOrientationChanged(
+        _ trimmer: TrimmerView,
+        isOrientationChanged: Bool)
 }
 
 @IBDesignable
@@ -159,8 +163,6 @@ open class TrimmerView: UIView {
         return view
     }()
 
-    
-
     var trimViewRect: CGRect {
         return CGRect(x: leftDraggableView.frame.minX,
                       y: 0,
@@ -265,17 +267,40 @@ open class TrimmerView: UIView {
         commonInit()
     }
 
+    var isFirstTimePortrait = false
+    var isFirstTimeLandscape = false
     open override func layoutSubviews() {
         super.layoutSubviews()
         updateDistances()
 
-        //        thumbnailsView.frame = thumbnailsViewRect
+        thumbnailsView.frame = thumbnailsViewRect
+
+//        if UIDevice.current.orientation.isPortrait {
+//            if !isFirstTimePortrait {
+////                updateFrame()
+//                updateSubviews()
+//                isFirstTimePortrait = true
+//                isFirstTimeLandscape = false
+//            }
+//        }
+//
+//        if UIDevice.current.orientation.isLandscape {
+//            if !isFirstTimeLandscape {
+////                updateFrame()
+//                updateSubviews()
+//                isFirstTimeLandscape = true
+//                isFirstTimePortrait = false
+//            }
+//        }
         //        trimView.frame = trimViewRect
-        //        leftDraggableView.frame = leftDraggableViewRect
-        //        rightDraggableView.frame = rightDraggableViewRect
-        //
-        //        leftMaskView.frame = leftMaskViewRect
-        //        rightMaskView.frame = rightMaskViewRect
+
+
+//        leftDraggableView.frame = leftDraggableViewRect
+//        rightDraggableView.frame = rightDraggableViewRect
+//
+//        leftMaskView.frame = leftMaskViewRect
+//        rightMaskView.frame = rightMaskViewRect
+
         //
         //        leftHandleView.frame = leftHandleViewRect
         //        rightHandleView.frame = rightHandleViewRect
@@ -305,7 +330,7 @@ open class TrimmerView: UIView {
 
     }
 
-    func updateFrame() {
+    open func updateFrame() {
         thumbnailsView.frame = thumbnailsViewRect
         leftDraggableView.frame = leftDraggableViewRect
         rightDraggableView.frame = rightDraggableViewRect
@@ -655,10 +680,3 @@ open class TrimmerView: UIView {
 private func clamp<T: Comparable>(_ number: T, _ minimum: T, _ maximum: T) -> T {
     return min(maximum, max(minimum, number))
 }
-
-
-
-
-
-
-

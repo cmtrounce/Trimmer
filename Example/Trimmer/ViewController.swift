@@ -20,16 +20,20 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBOutlet open var trimmerView: TrimmerView!
+
     var trimStartPosition: Int64 = 0
     var trimEndPosition: Int64 = 0
     var timescale: Int32 = 0
-    
+
     // MARK: Properties
     var asset: AVAsset!
     
     // MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
+         trimmerView.delegate = self
 
         playerView.backgroundColor = UIColor.clear
         
@@ -59,6 +63,11 @@ class ViewController: UIViewController {
         trimmingController.updateSubviewsTrimmerView()
     }
 
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        trimmerView.trimmerDidOrientationChanged!(trimmerView, isOrientationChanged: true)
+    }
+
 }
 
 extension ViewController: TrimmingControllerDelegate {
@@ -66,5 +75,11 @@ extension ViewController: TrimmingControllerDelegate {
         controller.updateTimes(trimStartPosition: startTime.value,
                                trimEndPosition: endTime.value,
                                timeScale: timescale)
+    }
+}
+
+extension ViewController: TrimmerViewDelegate {
+    func trimmerDidOrientationChanged(_ trimmer: TrimmerView, isOrientationChanged: Bool) {
+        trimmer.updateSubviews()
     }
 }
