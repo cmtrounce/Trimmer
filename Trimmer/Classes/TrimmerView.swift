@@ -203,14 +203,14 @@ open class TrimmerView: UIView {
     var leftMaskViewRect: CGRect {
         return CGRect(x: 0,
                       y: 0,
-                      width: leftDraggableView.frame.minX,
+                      width: leftDraggableView.frame.maxX,
                       height: bounds.height)
     }
 
     var rightMaskViewRect: CGRect {
-        return CGRect(x: rightDraggableView.frame.maxX,
+        return CGRect(x: rightDraggableView.frame.minX,
                       y: 0,
-                      width: bounds.width - rightDraggableView.frame.maxX,
+                      width: bounds.width - rightDraggableView.frame.minX,
                       height: bounds.height)
     }
 
