@@ -11,7 +11,11 @@ import AVFoundation
 open class VideoPreviewView: UIView {
 
     @IBInspectable open var cornerRadius: CGFloat = 0
-    @IBInspectable open var layerColor: UIColor = .white
+    @IBInspectable open var layerColor: UIColor = .white {
+        didSet {
+            playerLayer.backgroundColor = layerColor.cgColor
+        }
+    }
 
     open lazy var playerLayer: AVPlayerLayer = {
         let layer = AVPlayerLayer()
