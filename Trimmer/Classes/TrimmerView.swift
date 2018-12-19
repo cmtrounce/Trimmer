@@ -115,6 +115,19 @@ open class TrimmerView: UIView {
 
     @IBInspectable open var isTimePointerVisible: Bool = true
 
+    @IBInspectable open var cornerRadiusDraggableViews: CGFloat = 0 {
+        didSet {
+            leftDraggableView.layer.cornerRadius = cornerRadiusDraggableViews
+            rightDraggableView.layer.cornerRadius = cornerRadiusDraggableViews
+            trimView.layer.cornerRadius = cornerRadiusDraggableViews
+
+            if cornerRadiusDraggableViews != 0 {
+                leftDraggableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+                rightDraggableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            }
+        }
+    }
+
     open weak var delegate: TrimmerViewDelegate?
 
     var trimStartPosition: Int64 = 0
