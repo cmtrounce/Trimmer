@@ -398,14 +398,16 @@ open class TrimmerView: UIView {
                         moveDraggable(sender: sender, pan: leftDraggableView)
                     }
                 }
-            }
-            else {
+            } else {
                 if currentDistance < maximumDistance
                     && currentDistance > minimumDistance
-                    && rightDraggableView.frame.minX < bounds.width {
+                    && rightDraggableView.frame.minX < bounds.maxX {
                     //We are inside max distance range
-                    moveDraggable(sender: sender,
-                                  pan: rightDraggableView)
+                    #warning("fix")
+                    if rightDraggableView.frame.minX + translation.x <= bounds.maxX {
+                        moveDraggable(sender: sender,
+                                      pan: rightDraggableView)
+                    }
                 } else if currentDistance >= maximumDistance {
                     //Outside max distance range (move together case)
                     if translation.x < 0 {
@@ -423,7 +425,7 @@ open class TrimmerView: UIView {
                         //Moving towards right
                         moveDraggable(sender: sender, pan: rightDraggableView)
                     } else if translation.x < 0 &&
-                        leftDraggableView.frame.maxX > bounds.minX{
+                        leftDraggableView.frame.maxX > bounds.minX {
                         moveBoth(sender: sender,
                                  isLeftPan: isLeftGesture,
                                  currentDistance: currentDistance)
