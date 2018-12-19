@@ -298,7 +298,7 @@ open class TrimmerView: UIView {
     private lazy var leftMaskViewLeadingAnchor = leftMaskView.leadingAnchor
         .constraint(equalTo: leadingAnchor, constant: 0)
     private lazy var leftMaskViewTrailingAnchor = leftMaskView.trailingAnchor
-        .constraint(equalTo: leftDraggableView.leadingAnchor, constant: 0)
+        .constraint(equalTo: leftDraggableView.trailingAnchor, constant: 0)
 
     private lazy var rightMaskViewTopAnchor = rightMaskView.topAnchor
         .constraint(equalTo: topAnchor, constant: 0)
@@ -307,7 +307,7 @@ open class TrimmerView: UIView {
     private lazy var rightMaskViewTrailingAnchor = rightMaskView.trailingAnchor
         .constraint(equalTo: trailingAnchor, constant: 0)
     private lazy var rightMaskViewLeadingAnchor = rightMaskView.leadingAnchor
-        .constraint(equalTo: rightDraggableView.trailingAnchor, constant: 0)
+        .constraint(equalTo: rightDraggableView.leadingAnchor, constant: 0)
 
     private lazy var timePointerViewWidthgAnchor = timePointerView.widthAnchor
         .constraint(equalToConstant: timePointerViewWidth)
@@ -403,11 +403,11 @@ open class TrimmerView: UIView {
 
         addSubview(thumbnailsView)
         addSubview(trimView)
+        addSubview(leftMaskView)
+        addSubview(rightMaskView)
 
         addSubview(leftDraggableView)
         addSubview(rightDraggableView)
-        addSubview(leftMaskView)
-        addSubview(rightMaskView)
         leftDraggableView.addSubview(leftHandleView)
         rightDraggableView.addSubview(rightHandleView)
 
