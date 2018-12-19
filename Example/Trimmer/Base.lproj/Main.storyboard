@@ -19,13 +19,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="A7j-M4-aWl">
-                                <rect key="frame" x="20" y="40" width="335" height="300"/>
+                                <rect key="frame" x="30" y="40" width="315" height="300"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0bz-if-uR0" customClass="VideoPreviewView" customModule="Trimmer">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="200"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="200"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yks-On-xqj">
-                                                <rect key="frame" x="143.5" y="76" width="48" height="48"/>
+                                                <rect key="frame" x="133.5" y="76" width="48" height="48"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="2fk-YP-FqV"/>
                                                     <constraint firstAttribute="width" constant="48" id="aP4-nq-mDw"/>
@@ -46,7 +46,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IGh-EI-xGQ" customClass="TrimmerView" customModule="Trimmer">
-                                        <rect key="frame" x="0.0" y="230" width="335" height="70"/>
+                                        <rect key="frame" x="0.0" y="230" width="315" height="70"/>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="a5R-rr-a1h"/>
@@ -58,10 +58,6 @@
                                             <userDefinedRuntimeAttribute type="color" keyPath="mainColor">
                                                 <color key="value" red="0.94499999280000002" green="0.62699997429999998" blue="0.16205512150000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isTimePointerVisible" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="timePointerViewWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
@@ -72,9 +68,9 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="A7j-M4-aWl" firstAttribute="leading" secondItem="hfe-3R-HPK" secondAttribute="leading" constant="20" id="PVU-9G-5q9"/>
+                            <constraint firstItem="A7j-M4-aWl" firstAttribute="leading" secondItem="hfe-3R-HPK" secondAttribute="leading" constant="30" id="PVU-9G-5q9"/>
                             <constraint firstItem="A7j-M4-aWl" firstAttribute="top" secondItem="hfe-3R-HPK" secondAttribute="top" constant="20" id="dp7-Fh-qhf"/>
-                            <constraint firstItem="hfe-3R-HPK" firstAttribute="trailing" secondItem="A7j-M4-aWl" secondAttribute="trailing" constant="20" id="oKT-2x-6Hx"/>
+                            <constraint firstItem="hfe-3R-HPK" firstAttribute="trailing" secondItem="A7j-M4-aWl" secondAttribute="trailing" constant="30" id="oKT-2x-6Hx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hfe-3R-HPK"/>
                     </view>

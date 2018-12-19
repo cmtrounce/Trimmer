@@ -308,4 +308,3 @@ extension TrimmingController: TrimmerViewDelegate {
     }
 
 }
-

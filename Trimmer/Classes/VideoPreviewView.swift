@@ -27,6 +27,19 @@ open class VideoPreviewView: UIView {
     
     open override func awakeFromNib() {
         super.awakeFromNib()
+
+        self.layer.addSublayer(playerLayer)
+    }
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        self.layer.addSublayer(playerLayer)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+
         self.layer.addSublayer(playerLayer)
     }
     
