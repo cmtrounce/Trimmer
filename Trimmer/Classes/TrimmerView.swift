@@ -381,7 +381,7 @@ open class TrimmerView: UIView {
                     if(translation.x < 0){
                         //Moving towards left
                         moveDraggable(sender: sender, pan: leftDraggableView)
-                    } else if translation.x > 0 && rightDraggableView.frame.minX > bounds.maxX {
+                    } else if translation.x > 0 && rightDraggableView.frame.minX < bounds.maxX {
                         moveBoth(sender: sender, isLeftPan: isLeftGesture, currentDistance: currentDistance)
                     }
                 } else if (leftDraggableView.frame.maxX <= 0){
