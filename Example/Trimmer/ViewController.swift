@@ -14,10 +14,15 @@ class ViewController: UIViewController {
 
     // MARK: IBOutlets
     @IBOutlet var playerView: VideoPreviewView!
-    @IBOutlet var trimmingController: TrimmingController!
+    @IBOutlet var trimmingController: TrimmingController! {
+        didSet {
+            trimmingController.delegate = self
+        }
+    }
 
     var trimStartPosition: Int64 = 0
     var trimEndPosition: Int64 = 0
+    var timescale: Int32 = 0
     
     // MARK: Properties
     var asset: AVAsset!
@@ -39,14 +44,13 @@ class ViewController: UIViewController {
 
         guard let videoTrack = asset.tracks(withMediaType: .video).first else { return }
 
-        trimStartPosition = videoTrack.timeRange.duration.value / 2
-        trimEndPosition = (videoTrack.timeRange.duration.value )
+        trimEndPosition = videoTrack.timeRange.duration.value
 
+        timescale = videoTrack.naturalTimeScale
         trimmingController.setup(asset: asset!,
-                                 trimStartPosition: trimStartPosition,
+                                 trimStartPosition: 0,
                                  trimEndPosition: trimEndPosition,
-                                 timeScale: videoTrack.naturalTimeScale)
-
+                                 timeScale: timescale)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -55,4 +59,12 @@ class ViewController: UIViewController {
         trimmingController.updateSubviewsTrimmerView()
     }
 
+}
+
+extension ViewController: TrimmingControllerDelegate {
+    func didRequestUpdateTimes(_ controller: TrimmingController, startTime: CMTime, endTime: CMTime) {
+        controller.updateTimes(trimStartPosition: startTime.value,
+                               trimEndPosition: endTime.value,
+                               timeScale: timescale)
+    }
 }

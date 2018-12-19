@@ -40,6 +40,9 @@ open class TrimmingController: NSObject {
     public private(set) var currentEndTime: CMTime? = nil
     public private(set) var timeScale: Int32? = nil
 
+    // if maxDuration == 0 equal to not have a maxDuration
+    private let maxDuration: Double = 6
+
     // MARK: Private properties
     private var player: AVPlayer?
     private var isPlaying = false
@@ -102,10 +105,21 @@ open class TrimmingController: NSObject {
         self.currentEndTime = CMTime(value: trimEndPosition, timescale: timeScale)
         self.timeScale = timeScale
 
+        let newMaxDuration = CMTime(seconds: maxDuration, preferredTimescale: timeScale)
+        var newEndTime: CMTime = .zero
+
+        if maxDuration != 0 {
+            newEndTime = min(newMaxDuration, currentEndTime!)
+        } else {
+            newEndTime = currentEndTime!
+        }
+         self.currentEndTime = CMTime(value: newEndTime.value, timescale: timeScale)
+
         trimmerView.thumbnailsView.asset = asset
         trimmerView.trimStartPosition = trimStartPosition
-        trimmerView.trimEndPosition = trimEndPosition
+        trimmerView.trimEndPosition = newEndTime.value
         trimmerView.timeScale = timeScale
+        trimmerView.maxVideoDurationAfterTrimming = newEndTime.seconds
 
         player?.seek(to: currentStartTime!,
                      toleranceBefore: CMTime.zero,
@@ -186,7 +200,7 @@ open class TrimmingController: NSObject {
                         toleranceAfter: CMTime.zero)
             trimmerView.seek(to: startTime)
             pause()
-            trimmerView.resetTimePointer()
+            trimmerView.resetPointerView()
         }
     }
 
@@ -220,11 +234,13 @@ extension TrimmingController: TrimmerViewDelegate {
             toleranceAfter: tolerance)
     }
 
+
     public func trimmerDidEndDragging(
         _ trimmer: TrimmerView,
         with startTime: CMTime,
         endTime: CMTime) {
 
+        print("start time \(startTime.seconds), end time: \(endTime.seconds)")
         playPauseButton?.isHidden = false
 
         player?.seek(
@@ -250,6 +266,7 @@ extension TrimmingController: TrimmerViewDelegate {
 
     public func trimmerScrubbingDidBegin(_ trimmer: TrimmerView,
                                          with currentTimeScrub: CMTime) {
+        pause()
         playPauseButton?.isHidden = true
 
         assert(currentTimeScrub.seconds >= 0)
@@ -257,10 +274,11 @@ extension TrimmingController: TrimmerViewDelegate {
 
     public func trimmerScrubbingDidChange(_ trimmer: TrimmerView,
                                           with currentTimeScrub: CMTime) {
+        print(" time is \(currentTimeScrub.seconds)")
         guard let currentPosition = trimmer
             .thumbnailsView.getPosition(from: currentTimeScrub) else { return }
-        if currentPosition >= trimmer.leftDraggableView.frame.minX &&
-            currentPosition <= (trimmer.rightDraggableView.frame.minX - trimmer.draggableViewWidth) {
+        if currentPosition >= trimmer.leftDraggableView.frame.maxX &&
+            currentPosition <= (trimmer.rightDraggableView.frame.minX ) {
             player?.seek(
                 to: currentTimeScrub,
                 toleranceBefore: tolerance,
