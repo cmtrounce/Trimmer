@@ -155,6 +155,8 @@ class ThumbnailsView: UIView {
         assetImageGenerator?.cancelAllCGImageGeneration()
         removeOldThumbnails()
         let thumbnailCount = getThumbnailsCount(from: thumbnailSize)
+        
+        guard thumbnailCount != 0 else { return }
         addThumbnailViews(for: thumbnailCount, thumbnailSize: thumbnailSize)
         generateThumbnails(for: asset, thumbnailSize: thumbnailSize, thumbnailCount: thumbnailCount)
     }

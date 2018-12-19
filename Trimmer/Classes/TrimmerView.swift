@@ -67,6 +67,19 @@ open class TrimmerView: UIView {
 
     @IBInspectable open var handleViewWidth: CGFloat = 2
 
+    @IBInspectable open var cornerRadiusDraggableViews: CGFloat = 0 {
+        didSet {
+            leftDraggableView.layer.cornerRadius = cornerRadiusDraggableViews
+            rightDraggableView.layer.cornerRadius = cornerRadiusDraggableViews
+            trimView.layer.cornerRadius = cornerRadiusDraggableViews
+
+            if cornerRadiusDraggableViews != 0 {
+                leftDraggableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+                rightDraggableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            }
+        }
+    }
+
     @IBInspectable open var handleViewColor: UIColor = .white {
         didSet {
             leftHandleView.backgroundColor = handleViewColor

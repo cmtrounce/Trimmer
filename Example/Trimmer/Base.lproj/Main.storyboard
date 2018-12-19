@@ -58,6 +58,9 @@
                                             <userDefinedRuntimeAttribute type="color" keyPath="mainColor">
                                                 <color key="value" red="0.94499999280000002" green="0.62699997429999998" blue="0.16205512150000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusDraggableViews">
+                                                <real key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
