@@ -20,10 +20,12 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBOutlet open var trimmerView: TrimmerView!
+
     var trimStartPosition: Int64 = 0
     var trimEndPosition: Int64 = 0
     var timescale: Int32 = 0
-    
+
     // MARK: Properties
     var asset: AVAsset!
     
@@ -68,3 +70,4 @@ extension ViewController: TrimmingControllerDelegate {
                                timeScale: timescale)
     }
 }
+

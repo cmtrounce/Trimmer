@@ -78,12 +78,12 @@ open class TrimmerView: UIView {
     @IBInspectable open var maxVideoDurationAfterTrimming: Double = 6
 
     open weak var delegate: TrimmerViewDelegate?
-
+    
     var trimStartPosition: Int64 = 0
     var trimEndPosition: Int64 = 0
     var timeScale: Int32 = 0
     var firtsTime = false
-
+    
     //MARK: Views
     lazy var trimView: UIView = {
         let view = UIView()
@@ -158,8 +158,6 @@ open class TrimmerView: UIView {
         view.backgroundColor = UIColor.white
         return view
     }()
-
-    
 
     var trimViewRect: CGRect {
         return CGRect(x: leftDraggableView.frame.minX,
@@ -265,23 +263,20 @@ open class TrimmerView: UIView {
         commonInit()
     }
 
+    var oldBounds: CGRect?
+    
     open override func layoutSubviews() {
         super.layoutSubviews()
         updateDistances()
-
-        //        thumbnailsView.frame = thumbnailsViewRect
-        //        trimView.frame = trimViewRect
-        //        leftDraggableView.frame = leftDraggableViewRect
-        //        rightDraggableView.frame = rightDraggableViewRect
-        //
-        //        leftMaskView.frame = leftMaskViewRect
-        //        rightMaskView.frame = rightMaskViewRect
-        //
-        //        leftHandleView.frame = leftHandleViewRect
-        //        rightHandleView.frame = rightHandleViewRect
+        if bounds.width != oldBounds?.width {
+            updateFrame()
+            updateSubviews()
+            oldBounds = bounds
+        }
     }
 
     private func commonInit() {
+        oldBounds = bounds
         addSubview(thumbnailsView)
         addSubview(trimView)
         addSubview(pointerView)
@@ -305,7 +300,7 @@ open class TrimmerView: UIView {
 
     }
 
-    func updateFrame() {
+    open func updateFrame() {
         thumbnailsView.frame = thumbnailsViewRect
         leftDraggableView.frame = leftDraggableViewRect
         rightDraggableView.frame = rightDraggableViewRect
