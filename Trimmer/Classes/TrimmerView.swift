@@ -35,10 +35,6 @@ import AVFoundation
     @objc optional func trimmerScrubbingDidEnd(
         _ trimmer: TrimmerView,
         with currentTimeScrub: CMTime)
-
-    @objc optional func trimmerDidOrientationChanged(
-        _ trimmer: TrimmerView,
-        isOrientationChanged: Bool)
 }
 
 @IBDesignable
@@ -82,12 +78,12 @@ open class TrimmerView: UIView {
     @IBInspectable open var maxVideoDurationAfterTrimming: Double = 6
 
     open weak var delegate: TrimmerViewDelegate?
-
+    
     var trimStartPosition: Int64 = 0
     var trimEndPosition: Int64 = 0
     var timeScale: Int32 = 0
     var firtsTime = false
-
+    
     //MARK: Views
     lazy var trimView: UIView = {
         let view = UIView()
@@ -267,46 +263,20 @@ open class TrimmerView: UIView {
         commonInit()
     }
 
-    var isFirstTimePortrait = false
-    var isFirstTimeLandscape = false
+    var oldBounds: CGRect?
+    
     open override func layoutSubviews() {
         super.layoutSubviews()
         updateDistances()
-
-        thumbnailsView.frame = thumbnailsViewRect
-
-//        if UIDevice.current.orientation.isPortrait {
-//            if !isFirstTimePortrait {
-////                updateFrame()
-//                updateSubviews()
-//                isFirstTimePortrait = true
-//                isFirstTimeLandscape = false
-//            }
-//        }
-//
-//        if UIDevice.current.orientation.isLandscape {
-//            if !isFirstTimeLandscape {
-////                updateFrame()
-//                updateSubviews()
-//                isFirstTimeLandscape = true
-//                isFirstTimePortrait = false
-//            }
-//        }
-        //        trimView.frame = trimViewRect
-
-
-//        leftDraggableView.frame = leftDraggableViewRect
-//        rightDraggableView.frame = rightDraggableViewRect
-//
-//        leftMaskView.frame = leftMaskViewRect
-//        rightMaskView.frame = rightMaskViewRect
-
-        //
-        //        leftHandleView.frame = leftHandleViewRect
-        //        rightHandleView.frame = rightHandleViewRect
+        if bounds.width != oldBounds?.width {
+            updateFrame()
+            updateSubviews()
+            oldBounds = bounds
+        }
     }
 
     private func commonInit() {
+        oldBounds = bounds
         addSubview(thumbnailsView)
         addSubview(trimView)
         addSubview(pointerView)
