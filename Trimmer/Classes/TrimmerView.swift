@@ -87,8 +87,8 @@ open class TrimmerView: UIView {
         }
     }
 
-    @IBInspectable open var minVideoDurationAfterTrimming: Double = 2
-    @IBInspectable open var maxVideoDurationAfterTrimming: Double = 6
+    var minVideoDurationAfterTrimming: Double = 0
+    var maxVideoDurationAfterTrimming: Double = 0
 
     open weak var delegate: TrimmerViewDelegate?
     
@@ -113,7 +113,7 @@ open class TrimmerView: UIView {
         view.frame = .zero
         view.backgroundColor = mainColor
         view.isUserInteractionEnabled = true
-        view.tag = 0
+        view.tag = 101
         return view
     }()
 
@@ -122,7 +122,7 @@ open class TrimmerView: UIView {
         view.frame = .zero
         view.backgroundColor = mainColor
         view.isUserInteractionEnabled = true
-        view.tag = 1
+        view.tag = 102
         return view
     }()
 
@@ -365,54 +365,71 @@ open class TrimmerView: UIView {
 
             if isLeftGesture {
                 //Left draggable view dragged
-                if (currentDistance < maximumDistance && currentDistance > minimumDistance && leftDraggableView.frame.maxX > bounds.minX) {
+                if currentDistance < maximumDistance &&
+                    currentDistance > minimumDistance &&
+                    leftDraggableView.frame.maxX > bounds.minX {
                     //We are inside max distance range
                     moveDraggable(sender: sender, pan: leftDraggableView)
-                } else if (currentDistance >= maximumDistance ) {
+                } else if currentDistance >= maximumDistance {
                     //Outside max distance range (move together case)
-                    if(translation.x > 0){
+                    if translation.x > 0 {
                         //Moving towards right
                         moveDraggable(sender: sender, pan: leftDraggableView)
-                    } else if translation.x < 0 && leftDraggableView.frame.maxX > bounds.minX {
-                        moveBoth(sender: sender, isLeftPan: isLeftGesture, currentDistance: currentDistance)
+                    } else if translation.x < 0 &&
+                        leftDraggableView.frame.maxX > bounds.minX {
+                        moveBoth(sender: sender,
+                                 isLeftPan: isLeftGesture,
+                                 currentDistance: currentDistance)
                     }
-                } else if (currentDistance <= minimumDistance ) {
+                } else if currentDistance <= minimumDistance {
                     //Outside max distance range (move together case)
-                    if(translation.x < 0){
+                    if translation.x < 0 {
                         //Moving towards left
                         moveDraggable(sender: sender, pan: leftDraggableView)
-                    } else if translation.x > 0 && rightDraggableView.frame.minX < bounds.maxX {
-                        moveBoth(sender: sender, isLeftPan: isLeftGesture, currentDistance: currentDistance)
+                    } else if translation.x > 0 &&
+                        rightDraggableView.frame.minX < bounds.maxX {
+                        moveBoth(sender: sender,
+                                 isLeftPan: isLeftGesture,
+                                 currentDistance: currentDistance)
                     }
-                } else if (leftDraggableView.frame.maxX <= 0){
-                    if(translation.x > 0){
+                } else if leftDraggableView.frame.maxX <= 0 {
+                    if translation.x > 0 {
                         //Moving towards right
                         moveDraggable(sender: sender, pan: leftDraggableView)
                     }
                 }
             }
             else {
-                if(currentDistance < maximumDistance && currentDistance > minimumDistance && rightDraggableView.frame.minX < bounds.width){
+                if currentDistance < maximumDistance
+                    && currentDistance > minimumDistance
+                    && rightDraggableView.frame.minX < bounds.width {
                     //We are inside max distance range
-                    moveDraggable(sender: sender, pan: rightDraggableView)
-                } else if (currentDistance >= maximumDistance ) {
+                    moveDraggable(sender: sender,
+                                  pan: rightDraggableView)
+                } else if currentDistance >= maximumDistance {
                     //Outside max distance range (move together case)
-                    if(translation.x < 0){
+                    if translation.x < 0 {
                         //Moving towards left
                         moveDraggable(sender: sender, pan: rightDraggableView)
-                    } else if translation.x > 0 && rightDraggableView.frame.maxX > bounds.minX {
-                        moveBoth(sender: sender, isLeftPan: isLeftGesture, currentDistance: currentDistance)
+                    } else if translation.x > 0 &&
+                        rightDraggableView.frame.maxX < bounds.maxX {
+                        moveBoth(sender: sender,
+                                 isLeftPan: isLeftGesture,
+                                 currentDistance: currentDistance)
                     }
-                } else if (currentDistance <= minimumDistance ) {
+                } else if currentDistance <= minimumDistance {
                     //Outside max distance range (move together case)
-                    if(translation.x > 0){
+                    if translation.x > 0 {
                         //Moving towards right
                         moveDraggable(sender: sender, pan: rightDraggableView)
-                    } else if translation.x < 0 && leftDraggableView.frame.maxX > bounds.minX{
-                        moveBoth(sender: sender, isLeftPan: isLeftGesture, currentDistance: currentDistance)
+                    } else if translation.x < 0 &&
+                        leftDraggableView.frame.maxX > bounds.minX{
+                        moveBoth(sender: sender,
+                                 isLeftPan: isLeftGesture,
+                                 currentDistance: currentDistance)
                     }
-                } else if (rightDraggableView.frame.minX >= bounds.width){
-                    if(translation.x < 0){
+                } else if rightDraggableView.frame.minX >= bounds.width {
+                    if translation.x < 0 {
                         //Moving towards left
                         moveDraggable(sender: sender, pan: rightDraggableView)
                     }
@@ -442,20 +459,25 @@ open class TrimmerView: UIView {
         }
     }
 
-    func moveBoth(sender: UIPanGestureRecognizer, isLeftPan: Bool, currentDistance: CGFloat) {
+    func moveBoth(sender: UIPanGestureRecognizer,
+                  isLeftPan: Bool,
+                  currentDistance: CGFloat) {
 
-        leftDraggableView.center = CGPoint(x: leftDraggableView.center.x + sender.translation(in: self).x, y: leftDraggableView.center.y)
-        rightDraggableView.center = CGPoint(x: rightDraggableView.center.x + sender.translation(in: self).x, y: rightDraggableView.center.y)
+        leftDraggableView.center = CGPoint(
+            x: leftDraggableView.center.x + sender.translation(in: self).x,
+            y: leftDraggableView.center.y)
+        rightDraggableView.center = CGPoint(
+            x: rightDraggableView.center.x + sender.translation(in: self).x,
+            y: rightDraggableView.center.y)
 
         dragPointerIfNeeded(sender: sender)
 
-
-        if (leftDraggableView.frame.maxX < 0) {
+        if leftDraggableView.frame.maxX < 0 {
             print("Oh shit too fast buddy")
             leftDraggableView.center = CGPoint(x: -leftDraggableView.frame.width/2,
                                                y: leftDraggableView.center.y)
         }
-        if (rightDraggableView.frame.minX > frame.maxX) {
+        if rightDraggableView.frame.minX > frame.maxX {
             print("Oh shit too fast buddy")
             rightDraggableView.center = CGPoint(x: frame.maxX + leftDraggableView.frame.width/2,
                                                 y: rightDraggableView.center.y)
@@ -472,18 +494,18 @@ open class TrimmerView: UIView {
     func moveDraggable(sender: UIPanGestureRecognizer, pan: UIView) {
 
         pan.center = CGPoint(x: pan.center.x + sender.translation(in: self).x, y: pan.center.y)
-        if ( pan.frame.maxX < 0 ){
+        if pan.frame.maxX < 0 {
             print("Oh shit too fast buddy")
             leftDraggableView.center = CGPoint(x: -leftDraggableView.frame.width/2,
                                                y: leftDraggableView.center.y)
         }
-        if (pan.frame.minX > frame.maxX) {
+        if pan.frame.minX > frame.maxX {
             print("Oh shit too fast buddy")
             rightDraggableView.center = CGPoint(x: frame.maxX + leftDraggableView.frame.width/2,
                                                 y: rightDraggableView.center.y)
         }
 
-        if pan.tag == 0 {
+        if pan.tag == 101 {
             leftMaskView.frame = leftMaskViewRect
             if pointerView.frame.minX - pan.frame.maxX <= 0.01 && sender.translation(in: self).x > 0 {
                 pointerView.frame.origin.x = pan.frame.maxX
@@ -502,7 +524,7 @@ open class TrimmerView: UIView {
         sender.setTranslation(CGPoint.zero, in: self)
     }
 
-    func dragPointerIfNeeded(sender : UIPanGestureRecognizer){
+    func dragPointerIfNeeded(sender : UIPanGestureRecognizer) {
         //Check if we have to also drag the pointer with a pan
         if rightDraggableView.frame.minX - pointerView.frame.maxX <= 0.05 && sender.translation(in: self).x < 0 {
             pointerView.frame.origin.x = rightDraggableView.frame.minX
@@ -522,8 +544,6 @@ open class TrimmerView: UIView {
             isDraggingByUser = true
 
         case .changed:
-
-
             if pointerView.frame.minX >= (leftDraggableView.frame.maxX + 0.1 ) && pointerView.frame.maxX <= (rightDraggableView.frame.minX - 0.1) {
                 pointerView.center = CGPoint(x: pointerView.center.x + sender.translation(in: self).x, y: pointerView.center.y)
                 sender.setTranslation(CGPoint.zero, in: self)
@@ -574,23 +594,18 @@ open class TrimmerView: UIView {
     }
 
     func updateDistances() {
-        maximumDistance = (bounds.width/CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(maxVideoDurationAfterTrimming)
-        minimumDistance = (bounds.width/CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(minVideoDurationAfterTrimming)
+        maximumDistance = (bounds.width / CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(maxVideoDurationAfterTrimming)
+        minimumDistance = (bounds.width / CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(minVideoDurationAfterTrimming)
     }
 
     public func updateSubviews() {
-
-        //        guard let asset = thumbnailsView.asset,
-        //            let videoTrack = asset
-        //                .tracks(withMediaType: .video).first else { return }
-
         let newStartTime = CMTime(value: trimStartPosition, timescale: timeScale)
         if let leadingValue = thumbnailsView.getPosition(from: newStartTime) {
             leftDraggableView.center.x = leadingValue - (draggableViewWidth/2)
         }
 
         let newEndTime = CMTime(
-            value: trimEndPosition, //+ videoTrack.minFrameDuration.value,
+            value: trimEndPosition,
             timescale: timeScale)
         if let trailingValue = thumbnailsView.getPosition(from: newEndTime) {
             rightDraggableView.center.x = trailingValue + (draggableViewWidth/2)
