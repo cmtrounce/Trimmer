@@ -64,10 +64,7 @@ open class TrimmingController: NSObject {
                 playPauseButton?.setImage(
                     pauseImage!.withRenderingMode(.alwaysOriginal),
                     for: .normal)
-            } else {
-                playPauseButton?.setTitle("Pause", for: .normal)
             }
-
 
             isPlaying = true
         } else {
@@ -78,8 +75,6 @@ open class TrimmingController: NSObject {
                 playPauseButton?.setImage(
                     playImage!.withRenderingMode(.alwaysOriginal),
                     for: .normal)
-            } else {
-                playPauseButton?.setTitle("Play", for: .normal)
             }
 
             isPlaying = false
@@ -158,8 +153,6 @@ open class TrimmingController: NSObject {
             playPauseButton?.setImage(
                 playImage!.withRenderingMode(.alwaysOriginal),
                 for: .normal)
-        } else {
-            playPauseButton?.setTitle("Play", for: .normal)
         }
 
         isPlaying = false
