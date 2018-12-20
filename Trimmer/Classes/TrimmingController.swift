@@ -53,7 +53,7 @@ open class TrimmingController: NSObject {
     private var tolerance: CMTime {
         return isTimePrecisionInfinity ? .indefinite : .zero
     }
-    var asset: AVAsset?
+    public var asset: AVAsset?
 
     // MARK: IBActions
     @IBAction open func playPauseButtonPressed() {
