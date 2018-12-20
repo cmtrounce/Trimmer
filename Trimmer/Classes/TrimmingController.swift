@@ -53,6 +53,7 @@ open class TrimmingController: NSObject {
     private var tolerance: CMTime {
         return isTimePrecisionInfinity ? .indefinite : .zero
     }
+    var asset: AVAsset?
 
     // MARK: IBActions
     @IBAction open func playPauseButtonPressed() {
@@ -100,6 +101,7 @@ open class TrimmingController: NSObject {
         self.currentStartTime = CMTime(value: trimStartPosition, timescale: timeScale)
         self.currentEndTime = CMTime(value: trimEndPosition, timescale: timeScale)
         self.timeScale = timeScale
+        self.asset = asset
 
         let newMaxDuration = CMTime(seconds: maxDuration, preferredTimescale: timeScale)
         var newEndTime: CMTime = .zero
