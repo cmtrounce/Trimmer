@@ -88,6 +88,12 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isTimePrecisionInfinity" value="NO"/>
                         <userDefinedRuntimeAttribute type="image" keyPath="playImage" value="play"/>
                         <userDefinedRuntimeAttribute type="image" keyPath="pauseImage" value="pause"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="maxDuration">
+                            <real key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="minDuration">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="playPauseButton" destination="Yks-On-xqj" id="LqE-OK-4QU"/>
