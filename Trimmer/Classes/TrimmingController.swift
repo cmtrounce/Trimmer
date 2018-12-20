@@ -116,7 +116,7 @@ open class TrimmingController: NSObject {
             guard let videoAssetTrack = asset.tracks(withMediaType: .video).first else { return }
             trimmerView.maxVideoDurationAfterTrimming = videoAssetTrack.timeRange.duration.seconds
         }
-         self.currentEndTime = newEndTime
+        self.currentEndTime = newEndTime
 
         trimmerView.thumbnailsView.asset = asset
         trimmerView.trimStartPosition = trimStartPosition
