@@ -10,10 +10,23 @@ import AVFoundation
 
 open class VideoPreviewView: UIView {
 
-    @IBInspectable open var cornerRadius: CGFloat = 0
+    @IBInspectable open var cornerRadius: CGFloat = 0 {
+        didSet {
+            playerLayer.cornerRadius = cornerRadius
+            layer.cornerRadius = cornerRadius
+        }
+    }
+
     @IBInspectable open var layerColor: UIColor = .white {
         didSet {
             playerLayer.backgroundColor = layerColor.cgColor
+        }
+    }
+
+    open var maskedCorners: CACornerMask = [] {
+        didSet {
+            playerLayer.maskedCorners = maskedCorners
+            layer.maskedCorners = maskedCorners
         }
     }
 
