@@ -597,6 +597,12 @@ open class TrimmerView: UIView {
     func updateDistances() {
         let videoDuration: CGFloat = CGFloat(thumbnailsView.videoDuration.seconds)
         guard !videoDuration.isNaN, videoDuration >= 0 else {
+            print("TrimmerView: attempted to update distances with invalid video asset.")
+            return
+        }
+        
+        guard !(maxVideoDurationAfterTrimming == 0), !(minVideoDurationAfterTrimming == 0) else {
+            print("TrimmerView: attempted to update distances with invalid max and min duration")
             return
         }
         
