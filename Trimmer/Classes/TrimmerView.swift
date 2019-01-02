@@ -260,20 +260,16 @@ open class TrimmerView: UIView {
 
     open override func awakeFromNib() {
         super.awakeFromNib()
-
         commonInit()
     }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-
         commonInit()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
-        commonInit()
     }
 
     var oldBounds: CGRect?
