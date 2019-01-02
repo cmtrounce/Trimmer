@@ -194,6 +194,12 @@ open class TrimmerView: UIView {
     }
 
     var rightDraggableViewRect: CGRect {
+        if maximumDistance.isNaN {
+            return CGRect(x: leftDraggableView.frame.maxX,
+                          y: 0,
+                          width: draggableViewWidth,
+                          height: bounds.height)
+        }
         return CGRect(x: leftDraggableView.frame.maxX + maximumDistance,
                       y: 0,
                       width: draggableViewWidth,
