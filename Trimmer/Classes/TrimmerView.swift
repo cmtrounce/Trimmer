@@ -595,8 +595,13 @@ open class TrimmerView: UIView {
     }
 
     func updateDistances() {
-        maximumDistance = (bounds.width / CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(maxVideoDurationAfterTrimming)
-        minimumDistance = (bounds.width / CGFloat(thumbnailsView.videoDuration.seconds)) * CGFloat(minVideoDurationAfterTrimming)
+        let videoDuration: CGFloat = CGFloat(thumbnailsView.videoDuration.seconds)
+        guard !videoDuration.isNaN, videoDuration >= 0 else {
+            return
+        }
+        
+        maximumDistance = bounds.width / videoDuration * CGFloat(maxVideoDurationAfterTrimming)
+        minimumDistance = bounds.width / videoDuration * CGFloat(minVideoDurationAfterTrimming)
     }
 
     public func updateSubviews() {
