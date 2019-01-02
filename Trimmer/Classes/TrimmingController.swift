@@ -90,7 +90,6 @@ open class TrimmingController: NSObject {
         self.currentEndTime = player?.currentItem?.duration
 
         playerView.setPlayer(player!)
-        playPauseButton.map(playerView.addSubview)
     }
 
     open func setup(asset: AVAsset,
